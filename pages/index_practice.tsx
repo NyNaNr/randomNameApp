@@ -5,11 +5,11 @@ function Header({ title }: { title: string }) {
 }
 
 export default function HomePage() {
-  const names = ['Ada Lovelace', 'Grace Hopper', 'Margaret Hamilton'];
-  const [likes, setLikes] = useState(0);
+  const names = ['Ada Lovelace', 'Grace Hopper', 'Margaret Hamilton', 'Katherine Johnson', 'Mae Jemison', 'Annie Easley', 'Barbara McClintock', 'Sally Ride', 'Dorothy Vaughan', 'Caroline Herschel', 'Henrietta Leavitt', 'Chien-Shiung Wu', 'Lise Meitner', 'Rosalind Franklin', 'Jocelyn Bell Burnell', 'Cheryl Hayashi', 'May-Britt Moser', 'Emmanuelle Charpentier', 'Jennifer Doudna', 'Marie Curie'];
+  const [likes, setLikes] = useState(0);  //()の中は初期値
 
   function handleClick() {
-    setLikes(likes + 1);
+    setLikes(likes +1);
   }
 
   return (

@@ -24,7 +24,7 @@ export default function FirstPost() {
       <h2>
         <Link href="/">← Back to home</Link>
         <p></p>
-        <Link href="/practice2">← Practice2</Link>
+        <Link href="/random_name_app">← random_name_app</Link>
       </h2>
     </Layout>
   );

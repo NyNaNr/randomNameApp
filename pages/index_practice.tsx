@@ -1,4 +1,6 @@
 import { useState } from 'react';
+import Link from 'next/link';
+import styles from './components/random_name_app.module.css'
 
 function Header({ title }: { title: string }) {
   return <h1>{title ? title : 'Default title'}</h1>;
@@ -13,7 +15,7 @@ export default function HomePage() {
   }
 
   return (
-    <div>
+    <>
       <Header title="Develop. Preview. Ship. 🚀" />
       <ul>
         {names.map((name) => (
@@ -22,6 +24,11 @@ export default function HomePage() {
       </ul>
 
       <button onClick={handleClick}>Like ({likes})</button>
-    </div>
+      <h2>
+        <Link href="/">← Back to home</Link>
+        <br />
+        <Link href="/random_name_app">← random_name_app</Link>
+      </h2>
+    </>
   );
 }

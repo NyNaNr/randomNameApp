@@ -28,6 +28,8 @@ export default function HomePage() {
   const nameDisplay = document.querySelector('.name');
 
   
+
+
   function showRandomName() {
     const randomName = cleanedNamesList[Math.floor(Math.random() * cleanedNamesList.length)];
     nameDisplay.textContent = randomName;

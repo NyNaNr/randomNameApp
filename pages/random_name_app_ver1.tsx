@@ -92,18 +92,21 @@ const Bingo: React.FC = () => {
     };
   }, [showRandomName, remainingNames]);
   // おそらく始まり
-  const startNameDisplay = useCallback((event: KeyboardEvent) => {
-    if (event.key === "Enter") {
-      event.preventDefault();
-      if (!nameConfirmed) {
-        setShowRandomName(!showRandomName);
-      } else {
-        setNameConfirmed(false);
-        setSelectedName(null);
-        setShowRandomName(false);
+  const startNameDisplay = useCallback(
+    (event: KeyboardEvent) => {
+      if (event.key === "Enter") {
+        event.preventDefault();
+        if (!nameConfirmed) {
+          setShowRandomName(!showRandomName);
+        } else {
+          setNameConfirmed(false);
+          setSelectedName(null);
+          setShowRandomName(false);
+        }
       }
-    }
-  }, []);
+    },
+    [nameConfirmed]
+  );
 
   // 止まる
   const stopNameDisplay = useCallback(
@@ -131,22 +134,23 @@ const Bingo: React.FC = () => {
 
   // グローバルなイベントリスナーを設定
   useEffect(() => {
-    window.addEventListener("keydown", (event) => {
+    const handleKeyDown = (event: KeyboardEvent) => {
       if (event.key === "Enter") {
-        if (IsShowingName) {
-          stopNameDisplay();
+        if (showRandomName) {
+          stopNameDisplay(event);
         } else {
-          startNameDisplay();
+          startNameDisplay(event);
         }
       }
-    });
-    window.addEventListener("keyup", stopNameDisplay);
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
 
     return () => {
-      window.removeEventListener("keydown", startNameDisplay);
-      window.removeEventListener("keyup", stopNameDisplay);
+      window.removeEventListener("keydown", handleKeyDown);
     };
-  }, [startNameDisplay, stopNameDisplay]);
+  }, [showRandomName, startNameDisplay, stopNameDisplay]);
+
   // useEffect(() => {
   //   window.addEventListener("keydown", startNameDisplay);
   //   window.addEventListener("keyup", stopNameDisplay);

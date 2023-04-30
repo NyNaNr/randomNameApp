@@ -1,17 +1,17 @@
 import React, { useState, useEffect, useRef, useCallback } from "react";
 import styles from "@/styles/random_name_app.module.css";
 
-// TODO: なぜかフォーカスが当たり、エンターキーを押すための範囲が狭い。
-// TODO 確定した名前がすぐ消える
-// TODO 名前を大きくする。
-// TODO 名前を追加するか選択できるように
+// TODO 内容理解＆整理
+// TODO　リストが空になったときの挙動修正
+// TODO　名前が一定数以上になったとき、表示を省略する
+// TODO CSSをあたっていない修正
 
 // cssのための関数
 function Layout({ children }) {
   return <div className={styles.container}>{children}</div>;
 }
 
-let names = [
+const NAMES = [
   "山田　太郎",
   "田中 次郎",
   "佐藤 三郎",
@@ -32,114 +32,82 @@ let names = [
   "河野 十八郎",
   "野村　 十九郎",
   "村田　　二十郎\n",
-];
-names = names.map((name) => name.replace(/[\s　]/g, ""));
+].map((name) => name.replace(/[\s　]/g, ""));
 
-const Bingo: React.FC = () => {
+const RandomNameApp: React.FC = () => {
+  /*
+  コンポーネント内変数
+  */
   const [selectedName, setSelectedName] = useState<string | null>(null); //確定した名前
-  const [IsShowingName, setIsShowingName] = useState<boolean>(false);
-  const [nameConfirmed, setNameConfirmed] = useState<boolean>(false);
-  const [showRandomName, setShowRandomName] = useState<boolean>(false);
+  const isShowingName = useRef<boolean>(false);
+  const intervalId = useRef<number | null>(null);
+  let [remainingNames, setRemainingNames] = useState<string[]>(NAMES); //まだ選択されていない名前のリスト
   const [selectedNameList, setSelectedNameList] = useState<string[]>([]); //選択済みのリスト
-  const [remainingNames, setRemainingNames] = useState<string[]>(names); //まだ選択されていない名前のリスト
-  const bingoRef = useRef<HTMLDivElement>(null);
-  const nameDisplay = useRef<HTMLDivElement>(null);
+  const nameDisplay = document.querySelector(".name")! as HTMLElement; //querySelectorの結果をHTMLElement型に明示的に型変換することで、styleプロパティにアクセスできるようになる
 
-  const handleResize = useCallback(() => {
+  /*
+  イベントハンドラ
+  */
+
+  //関数に書き換える
+
+  function showRandomNameFunction() {
+    const randomName =
+      remainingNames[Math.floor(Math.random() * remainingNames.length)];
+    nameDisplay.textContent = randomName;
+    nameDisplay.classList.add("show");
     const longestName = remainingNames.reduce((longest, name) =>
       name.length > longest.length ? name : longest
     );
     const fontSize = Math.floor((window.innerWidth * 0.8) / longestName.length);
-    if (nameDisplay.current) {
-      nameDisplay.current.style.fontSize = `${fontSize}px`;
-    }
-  }, [remainingNames]);
+    nameDisplay.style.fontSize = `${fontSize}px`;
+  }
 
-  useEffect(() => {
-    if (bingoRef.current) {
-      bingoRef.current.focus();
+  //スタート
+  const startNameDisplay = useCallback(() => {
+    if (!isShowingName.current) {
+      isShowingName.current = true;
+      intervalId.current = window.setInterval(() => {
+        showRandomNameFunction();
+      }, 16); //16ミリ秒ごとに更新
     }
   }, []);
 
-  useEffect(() => {
-    handleResize();
-    window.addEventListener("resize", handleResize);
-
-    return () => {
-      window.removeEventListener("resize", handleResize);
-    };
-  }, [handleResize]);
-
-  useEffect(() => {
-    let intervalId: NodeJS.Timeout;
-    // ランダムに名前を表示する担当
-    if (showRandomName) {
-      //showRandomName ステートが true に設定されたときに発動
-      intervalId = setInterval(() => {
-        const remainingNamesCount = remainingNames.length;
-        if (remainingNamesCount === 0) {
-          //まだ選択されていない名前のリストが空になったら
-          setShowRandomName(false);
-        } else {
-          const randomIndex = Math.floor(Math.random() * remainingNamesCount);
-          const selectedName = remainingNames[randomIndex];
-          setSelectedName(selectedName);
-        }
-      }, 60);
-    }
-    return () => {
-      clearInterval(intervalId);
-    };
-  }, [showRandomName, remainingNames]);
-  // おそらく始まり
-  const startNameDisplay = useCallback(
-    (event: KeyboardEvent) => {
-      if (event.key === "Enter") {
-        event.preventDefault();
-        if (!nameConfirmed) {
-          setShowRandomName(!showRandomName);
-        } else {
-          setNameConfirmed(false);
-          setSelectedName(null);
-          setShowRandomName(false);
-        }
-      }
-    },
-    [nameConfirmed]
-  );
-
   // 止まる
-  const stopNameDisplay = useCallback(
-    (event: KeyboardEvent) => {
-      if (event.key === "Enter" && selectedName) {
-        event.preventDefault();
-        setNameConfirmed(true);
-        const shouldRemove = confirm(
-          `${selectedName}をリストから削除しますか？`
-        );
-        if (shouldRemove) {
-          setSelectedNameList([...selectedNameList, selectedName]); //ここで選択済みリストに追加
-          setRemainingNames(
-            remainingNames.filter((name) => name !== selectedName)
-          );
-          handleResize();
-        }
-      }
-      if (remainingNames.length === 0) {
-        setShowRandomName(false);
-      }
-    },
-    [selectedName, remainingNames]
-  );
 
-  // グローバルなイベントリスナーを設定
+  const stopNameDisplay = useCallback(() => {
+    if (isShowingName.current) {
+      if (intervalId.current !== null) {
+        clearInterval(intervalId.current);
+      }
+      isShowingName.current = false;
+    }
+    const nameElements = document.getElementsByClassName("name show");
+    const lastNameElement = nameElements[nameElements.length - 1];
+    const lastName = lastNameElement.textContent;
+    console.log(lastName);
+    const shouldRemove = confirm(`${lastName}をリストから削除しますか？`);
+    if (shouldRemove) {
+      selectedNameList.push(lastName);
+      // 削除された名前のリストからランダムに名前を選択する前に、削除された名前をリストから削除する
+      remainingNames = remainingNames.filter(
+        (name) => !remainingNames.includes(name)
+      );
+      console.log(remainingNames);
+      console.log(selectedNameList);
+    }
+  }, []);
+
+  /*
+  イベントリスナー
+  */
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
       if (event.key === "Enter") {
-        if (showRandomName) {
-          stopNameDisplay(event);
+        if (isShowingName.current) {
+          stopNameDisplay();
         } else {
-          startNameDisplay(event);
+          startNameDisplay();
         }
       }
     };
@@ -149,62 +117,37 @@ const Bingo: React.FC = () => {
     return () => {
       window.removeEventListener("keydown", handleKeyDown);
     };
-  }, [showRandomName, startNameDisplay, stopNameDisplay]);
+  }, [startNameDisplay, stopNameDisplay]);
 
-  // useEffect(() => {
-  //   window.addEventListener("keydown", startNameDisplay);
-  //   window.addEventListener("keyup", stopNameDisplay);
-
-  //   return () => {
-  //     window.removeEventListener("keydown", startNameDisplay);
-  //     window.removeEventListener("keyup", stopNameDisplay);
-  //   };
-  // }, [startNameDisplay, stopNameDisplay]);
+  /*
+  ユーザー定義関数
+  */
 
   return (
     <Layout>
-      <div>
-        <div>
-          <h2>Names List:</h2>
-
-          {remainingNames.map((name) => (
-            <span key={name}>{name} </span>
+      <div className="lists">
+        {/* <div className="cleaned-names"></div> */}
+        <div className="cleaned-names">
+          {/* 未選択の名前を表示 */}
+          {remainingNames.map((name, index) => (
+            <div key={index}>{name}</div>
           ))}
         </div>
-        <div>
-          <h2>Selected Name:</h2>
-          {
-            selectedName && (
-              <div className="nameDisplay" ref={nameDisplay}>
-                {selectedName}
-              </div>
-            ) /* selectedNameがある場合のみ表示 */
-          }
-          <br></br>
-          {!nameConfirmed && (
-            <p>Press Enter to start/stop the name selection</p>
-          )}
-        </div>
+      </div>
 
-        {selectedNameList.length > 0 && (
-          <div>
-            <h2>Selected Name List:</h2>
-            <p>{selectedNameList.join(" ")}</p>
-          </div>
-        )}
-        {selectedName && !nameConfirmed && (
-          <div>
-            <p>Press Enter to confirm the selected name</p>
-          </div>
-        )}
-        {remainingNames.length === 0 && (
-          <div>
-            <p>All names have been selected</p>
-          </div>
-        )}
+      <div className="name"></div>
+
+      <div className="lists">
+        {/* <div className="removed-names"></div> */}
+        <div className="removed-names">
+          {/* 選択済みの名前を表示 */}
+          {selectedNameList.map((name, index) => (
+            <div key={index}>{name}</div>
+          ))}
+        </div>
       </div>
     </Layout>
   );
 };
 
-export default Bingo;
+export default RandomNameApp;

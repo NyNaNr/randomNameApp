@@ -35,19 +35,18 @@
   font-size: 20px;
 } */
 
+.display {
+  height: 50%;
+}
+
 .nameDisplay {
   align-items: center;
   transition: all 1s ease-out;
   white-space: nowrap;
   margin-top: auto;
-}
-
-.nameDisplay {
-  font-size: 5em;
   text-align: center;
-  margin-bottom: 2em;
+  /* margin-bottom: 2em;  下に謎の空白を作る */
 }
 
 .name.show {
-  opacity: 1;
 }

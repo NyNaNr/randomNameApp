@@ -7,6 +7,7 @@ import styles from "@/styles/random_name_app.module.css";
 // TODO　名前が一定数以上になったとき、表示を省略する  解決！リストを縦書きにして、並列に配置すれば名前が何行あってもOK
 // TODO エンターキー待ちの時間に「Enterキーでスタート」と表示する。　解決！
 // TODO CSSをあたっていない修正
+// TODO 配置を変えた場合のfontサイズの計算を見直す
 // TODO 内容理解＆整理
 function Layout({ children }) {
   return <div className={styles.container}>{children}</div>;
@@ -97,6 +98,7 @@ const RandomNameApp: React.FC = () => {
     }
   }, [remainingNames, selectedNameList]);
 
+  //useEffectでコンポーネントマウント時に設定する
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
       if (event.key === "Enter") {
@@ -126,29 +128,33 @@ const RandomNameApp: React.FC = () => {
       <Head>
         <title>RandomNameApp</title>
       </Head>
+      <div className={styles.upper}>
+        <div className={styles.lists}>
+          <div className={styles.cleanedNames}>
+            {/* 未選択の名前を表示 */}
+            <p>未選択リスト</p>
+            <br />
+            {remainingNames.map((name, index) => (
+              <div key={index}>{name}</div>
+            ))}
+          </div>
+        </div>
+        <div className={styles.display}>
+          <div className={styles.nameDisplay} ref={nameDisplay}></div>
+          <div className={styles.startNotifier} ref={startNotifier}></div>
+        </div>
 
-      <div className="lists">
-        <div className="cleaned-names">
-          {/* 未選択の名前を表示 */}
-          {remainingNames.map((name, index) => (
-            <div key={index}>{name}</div>
-          ))}
+        <div className={styles.lists}>
+          <div className={styles.removedNames}>
+            {/* 選択済みの名前を表示 */}
+            <p>選択済リスト</p>
+            <br />
+            {selectedNameList.map((name, index) => (
+              <div key={index}>{name}</div>
+            ))}
+          </div>
         </div>
       </div>
-      <div className="display">
-        <div className="name" ref={nameDisplay}></div>
-        <div className="StartNotifier" ref={startNotifier}></div>
-      </div>
-
-      <div className="lists">
-        <div className="removed-names">
-          {/* 選択済みの名前を表示 */}
-          {selectedNameList.map((name, index) => (
-            <div key={index}>{name}</div>
-          ))}
-        </div>
-      </div>
-
       <h2>
         <Link href="/">← Back to home</Link>
         <p></p>

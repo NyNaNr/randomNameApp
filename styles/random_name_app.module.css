@@ -1,47 +1,47 @@
-.body {
-  background-color: #b02f2f;
-  margin: 0;
-  font-family: sans-serif;
-}
-
 .container {
-  display: flex;
-  flex-direction: column;
+  /* display: flex; */
+  flex: auto;
   justify-content: center;
-  align-items: center;
-  height: 100vh;
+
+  height: 100vh; /*ページの高さは、ウィンドウの高さと同じ*/
+}
+.upper {
+  display: flex;
+  justify-content: space-between;
 }
 
-.lists {
+/* .lists {
   display: flex;
+  flex: auto;
   flex-direction: row;
   justify-content: center;
   align-items: flex-start;
-}
+} */
 
-.cleaned-names,
+/* .cleaned-names,
 .removed-names {
   margin: 0 1em;
-}
+} */
 
-.cleaned-names {
+/* .cleaned-names {
   font-size: 1.2em;
   font-size: 20px;
   text-align: center;
   margin-bottom: 20px;
-}
+} */
 
-.removed-names {
+/* .removed-names {
   font-size: 1.2em;
   font-size: 20px;
-}
+} */
 
 .nameDisplay {
-  opacity: 0;
+  align-items: center;
   transition: all 1s ease-out;
   white-space: nowrap;
   margin-top: auto;
 }
+
 .nameDisplay {
   font-size: 5em;
   text-align: center;

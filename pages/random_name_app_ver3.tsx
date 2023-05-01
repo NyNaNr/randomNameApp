@@ -52,11 +52,10 @@ const RandomNameApp: React.FC = () => {
     const randomName =
       remainingNames[Math.floor(Math.random() * remainingNames.length)];
     nameDisplay.current.textContent = randomName;
-    nameDisplay.current.classList.add("show");
     const longestName = remainingNames.reduce((longest, name) =>
       name.length > longest.length ? name : longest
     );
-    const fontSize = Math.floor((window.innerWidth * 0.8) / longestName.length);
+    const fontSize = Math.floor((window.innerWidth * 0.9) / longestName.length);
     nameDisplay.current.style.fontSize = `${fontSize}px`;
   }, [remainingNames]);
 
@@ -128,33 +127,29 @@ const RandomNameApp: React.FC = () => {
       <Head>
         <title>RandomNameApp</title>
       </Head>
-      <div className={styles.upper}>
-        <div className={styles.lists}>
-          <div className={styles.cleanedNames}>
-            {/* 未選択の名前を表示 */}
-            <p>未選択リスト</p>
-            <br />
-            {remainingNames.map((name, index) => (
-              <div key={index}>{name}</div>
-            ))}
-          </div>
-        </div>
-        <div className={styles.display}>
-          <div className={styles.nameDisplay} ref={nameDisplay}></div>
-          <div className={styles.startNotifier} ref={startNotifier}></div>
-        </div>
 
-        <div className={styles.lists}>
-          <div className={styles.removedNames}>
-            {/* 選択済みの名前を表示 */}
-            <p>選択済リスト</p>
-            <br />
-            {selectedNameList.map((name, index) => (
-              <div key={index}>{name}</div>
-            ))}
-          </div>
+      <div className={styles.lists}>
+        <div className={styles.cleanedNames}>
+          {/* 未選択の名前を表示 */}
+          <h2>未選択リスト</h2>
+          <br />
+          <p>{remainingNames.join(" ")}</p>
         </div>
       </div>
+      <div className={styles.display}>
+        <div className={styles.nameDisplay} ref={nameDisplay}></div>
+        <div className={styles.startNotifier} ref={startNotifier}></div>
+      </div>
+
+      <div className={styles.lists}>
+        <div className={styles.removedNames}>
+          {/* 選択済みの名前を表示 */}
+          <h2>選択済リスト</h2>
+          <br />
+          <p>{selectedNameList.join(" ")}</p>
+        </div>
+      </div>
+
       <h2>
         <Link href="/">← Back to home</Link>
         <p></p>

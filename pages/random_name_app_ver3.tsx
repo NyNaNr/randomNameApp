@@ -5,10 +5,9 @@ import styles from "@/styles/random_name_app.module.css";
 
 // TODO　リストが空になったときの挙動修正  解決！
 // TODO　名前が一定数以上になったとき、表示を省略する  解決！リストを縦書きにして、並列に配置すれば名前が何行あってもOK
+// TODO エンターキー待ちの時間に「Enterキーでスタート」と表示する。　解決！
 // TODO CSSをあたっていない修正
 // TODO 内容理解＆整理
-// TODO エンターキー待ちの時間に「Enterキーでスタート」と表示する。
-
 function Layout({ children }) {
   return <div className={styles.container}>{children}</div>;
 }
@@ -65,6 +64,9 @@ const RandomNameApp: React.FC = () => {
       isShowingName.current = true;
       intervalId.current = window.setInterval(showRandomName, 16);
     }
+    if (startNotifier.current) {
+      startNotifier.current.textContent = ""; // メッセージを非表示にする
+    }
   }, [showRandomName]);
 
   const stopNameDisplay = useCallback(() => {
@@ -90,9 +92,8 @@ const RandomNameApp: React.FC = () => {
         setRemainingNames(remainingNames.filter((name) => name !== lastName));
       }
       //ここにユーザーにエンターキーでスタートを知らせる関数を作成
-      if (isShowingName.current) {
-        startNotifier.current.textContent = "Enterキーでスタート！";
-      }
+
+      startNotifier.current.textContent = "Enterキーでスタート！";
     }
   }, [remainingNames, selectedNameList]);
 
@@ -113,6 +114,12 @@ const RandomNameApp: React.FC = () => {
       window.removeEventListener("keydown", handleKeyDown);
     };
   }, [startNameDisplay, stopNameDisplay]);
+
+  useEffect(() => {
+    if (startNotifier.current) {
+      startNotifier.current.textContent = "Enterキーでスタート！"; // ページロード時にメッセージを表示する
+    }
+  }, []);
 
   return (
     <Layout>

@@ -1,33 +1,40 @@
 import React, { useState, useEffect, useRef, useCallback } from "react";
+import Head from "next/head";
+import Link from "next/link";
 import styles from "@/styles/random_name_app.module.css";
 
-// Layout関数は変更なし
+// TODO　リストが空になったときの挙動修正  解決！
+// TODO　名前が一定数以上になったとき、表示を省略する  解決！リストを縦書きにして、並列に配置すれば名前が何行あってもOK
+// TODO CSSをあたっていない修正
+// TODO 内容理解＆整理
+// TODO エンターキー待ちの時間に「Enterキーでスタート」と表示する。
+
 function Layout({ children }) {
   return <div className={styles.container}>{children}</div>;
 }
 
 // namesを定数として定義
 const NAMES = [
-  "山田　太郎",
-  "田中 次郎",
-  "佐藤 三郎",
-  "伊藤 四郎",
-  "渡辺 五郎",
-  "鈴木 六郎",
-  "高橋　七郎",
-  "田村 八郎",
-  "加藤九郎",
-  "吉田 十郎",
-  "松本 十一郎",
-  "山口 十二郎",
-  "中村 十三郎",
-  "小林 十四郎",
-  "斎藤　十五郎",
-  "岡田 十六郎",
-  "森田 十七郎",
-  "河野 十八郎",
-  "野村　 十九郎",
-  "村田　　二十郎\n",
+  "坂本 龍馬",
+  "西郷隆盛",
+  "明智光秀",
+  "織田信長",
+  "豊臣秀吉",
+  "徳川 家康",
+  "源義経",
+  "源頼朝",
+  "足利尊氏",
+  "足利義政",
+  "上杉謙信",
+  "武田信玄",
+  "北条氏康",
+  "北条時宗",
+  "真田　　幸村",
+  "伊達政宗",
+  "宮本武蔵",
+  "直江兼続",
+  "井伊直政",
+  "前田利家",
 ].map((name) => name.replace(/[\s　]/g, ""));
 
 const RandomNameApp: React.FC = () => {
@@ -37,6 +44,7 @@ const RandomNameApp: React.FC = () => {
   const [selectedNameList, setSelectedNameList] = useState<string[]>([]);
 
   const nameDisplay = useRef<HTMLElement | null>(null);
+  const startNotifier = useRef<HTMLElement | null>(null);
 
   const showRandomName = useCallback(() => {
     if (!nameDisplay.current) return;
@@ -66,15 +74,25 @@ const RandomNameApp: React.FC = () => {
       }
       isShowingName.current = false;
     }
-
     if (!nameDisplay.current) return;
+    if (remainingNames.length === 1) {
+      const message = "最後の一人になりました。はじめからにしますか？";
+      const shouldReload = confirm(message);
+      if (shouldReload) {
+        window.location.reload();
+      }
+    } else {
+      const lastName = nameDisplay.current.textContent;
+      const shouldRemove = confirm(`${lastName}をリストから削除しますか？`);
 
-    const lastName = nameDisplay.current.textContent;
-    const shouldRemove = confirm(`${lastName}をリストから削除しますか？`);
-
-    if (shouldRemove) {
-      setSelectedNameList([...selectedNameList, lastName]);
-      setRemainingNames(remainingNames.filter((name) => name !== lastName));
+      if (shouldRemove) {
+        setSelectedNameList([...selectedNameList, lastName]);
+        setRemainingNames(remainingNames.filter((name) => name !== lastName));
+      }
+      //ここにユーザーにエンターキーでスタートを知らせる関数を作成
+      if (isShowingName.current) {
+        startNotifier.current.textContent = "Enterキーでスタート！";
+      }
     }
   }, [remainingNames, selectedNameList]);
 
@@ -98,6 +116,10 @@ const RandomNameApp: React.FC = () => {
 
   return (
     <Layout>
+      <Head>
+        <title>RandomNameApp</title>
+      </Head>
+
       <div className="lists">
         <div className="cleaned-names">
           {/* 未選択の名前を表示 */}
@@ -106,8 +128,10 @@ const RandomNameApp: React.FC = () => {
           ))}
         </div>
       </div>
-
-      <div className="name" ref={nameDisplay}></div>
+      <div className="display">
+        <div className="name" ref={nameDisplay}></div>
+        <div className="StartNotifier" ref={startNotifier}></div>
+      </div>
 
       <div className="lists">
         <div className="removed-names">
@@ -117,6 +141,12 @@ const RandomNameApp: React.FC = () => {
           ))}
         </div>
       </div>
+
+      <h2>
+        <Link href="/">← Back to home</Link>
+        <p></p>
+        <Link href="/practice2">← Practice2</Link>
+      </h2>
     </Layout>
   );
 };

@@ -36,7 +36,7 @@
 } */
 
 .display {
-  height: 50%;
+  height: 50%; /*nameDisplayが現れる前の下地*/
 }
 
 .nameDisplay {
@@ -46,7 +46,4 @@
   margin-top: auto;
   text-align: center;
   /* margin-bottom: 2em;  下に謎の空白を作る */
-}
-
-.name.show {
 }

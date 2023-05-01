@@ -6,8 +6,8 @@ import styles from "@/styles/random_name_app.module.css";
 // TODO　リストが空になったときの挙動修正  解決！
 // TODO　名前が一定数以上になったとき、表示を省略する  解決！リストを縦書きにして、並列に配置すれば名前が何行あってもOK
 // TODO エンターキー待ちの時間に「Enterキーでスタート」と表示する。　解決！
-// TODO CSSをあたっていない修正
-// TODO 配置を変えた場合のfontサイズの計算を見直す
+// TODO エンターキー待ちの時間に「Enterキーでストップ！」と表示する。
+// TODO 「エンターキーでスタートを名前の上に持ってくる 解決！
 // TODO 内容理解＆整理
 function Layout({ children }) {
   return <div className={styles.container}>{children}</div>;
@@ -46,6 +46,8 @@ const RandomNameApp: React.FC = () => {
   const nameDisplay = useRef<HTMLElement | null>(null);
   const startNotifier = useRef<HTMLElement | null>(null);
 
+  const fontSize = useRef(0); //fontSizeをuseRefで保持;
+
   const showRandomName = useCallback(() => {
     if (!nameDisplay.current) return;
 
@@ -55,8 +57,10 @@ const RandomNameApp: React.FC = () => {
     const longestName = remainingNames.reduce((longest, name) =>
       name.length > longest.length ? name : longest
     );
-    const fontSize = Math.floor((window.innerWidth * 0.9) / longestName.length);
-    nameDisplay.current.style.fontSize = `${fontSize}px`;
+    fontSize.current = Math.floor(
+      (window.innerWidth * 0.9) / longestName.length
+    );
+    nameDisplay.current.style.fontSize = `${fontSize.current}px`;
   }, [remainingNames]);
 
   const startNameDisplay = useCallback(() => {
@@ -66,6 +70,13 @@ const RandomNameApp: React.FC = () => {
     }
     if (startNotifier.current) {
       startNotifier.current.textContent = ""; // メッセージを非表示にする
+    }
+    if (remainingNames.length === 1) {
+      const message = "最後の一人になりました。はじめからにしますか？";
+      const shouldReload = confirm(message);
+      if (shouldReload) {
+        window.location.reload();
+      }
     }
   }, [showRandomName]);
 
@@ -77,24 +88,17 @@ const RandomNameApp: React.FC = () => {
       isShowingName.current = false;
     }
     if (!nameDisplay.current) return;
-    if (remainingNames.length === 1) {
-      const message = "最後の一人になりました。はじめからにしますか？";
-      const shouldReload = confirm(message);
-      if (shouldReload) {
-        window.location.reload();
-      }
-    } else {
-      const lastName = nameDisplay.current.textContent;
-      const shouldRemove = confirm(`${lastName}をリストから削除しますか？`);
 
-      if (shouldRemove) {
-        setSelectedNameList([...selectedNameList, lastName]);
-        setRemainingNames(remainingNames.filter((name) => name !== lastName));
-      }
-      //ここにユーザーにエンターキーでスタートを知らせる関数を作成
+    const lastName = nameDisplay.current.textContent;
+    const shouldRemove = confirm(`${lastName}を選択済みリストに移動しますか？`);
 
-      startNotifier.current.textContent = "Enterキーでスタート！";
+    if (shouldRemove) {
+      setSelectedNameList([...selectedNameList, lastName]);
+      setRemainingNames(remainingNames.filter((name) => name !== lastName));
     }
+    //ここにユーザーにエンターキーでスタートを知らせる関数を作成
+    startNotifier.current.style.fontSize = `${fontSize.current * 0.2}px`;
+    startNotifier.current.textContent = "Enterキーでスタート！";
   }, [remainingNames, selectedNameList]);
 
   //useEffectでコンポーネントマウント時に設定する
@@ -132,7 +136,7 @@ const RandomNameApp: React.FC = () => {
         <div className={styles.cleanedNames}>
           {/* 未選択の名前を表示 */}
           <h2>未選択リスト</h2>
-          <br />
+
           <p>{remainingNames.join(" ")}</p>
         </div>
       </div>
@@ -144,8 +148,8 @@ const RandomNameApp: React.FC = () => {
       <div className={styles.lists}>
         <div className={styles.removedNames}>
           {/* 選択済みの名前を表示 */}
-          <h2>選択済リスト</h2>
-          <br />
+          <h2>選択済みリスト</h2>
+
           <p>{selectedNameList.join(" ")}</p>
         </div>
       </div>

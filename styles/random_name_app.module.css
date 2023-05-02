@@ -18,15 +18,15 @@
   align-items: flex-start;
 } */
 
-/* .cleaned-names,
-.removed-names {
-  margin: 0 1em;
-} */
+.cleanedNames,
+.removedNames {
+  margin: 1em 1em;
+}
 
-/* .cleaned-names {
+/* .cleanedNames {
   font-size: 1.2em;
   font-size: 20px;
-  text-align: center;
+
   margin-bottom: 20px;
 } */
 
@@ -36,7 +36,8 @@
 } */
 
 .display {
-  height: 50%; /*nameDisplayが現れる前の下地*/
+  height: 50vh; /*nameDisplayが現れる前の下地*/
+  position: relative;
 }
 
 .nameDisplay {
@@ -45,5 +46,42 @@
   white-space: nowrap;
   margin-top: auto;
   text-align: center;
+  z-index: 1;
+
   /* margin-bottom: 2em;  下に謎の空白を作る */
+}
+
+.startNotifier {
+  animation: flash 1.5s linear infinite;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 2;
+  color: rgb(42, 95, 141);
+  background-color: ivory;
+  font-size: 50px;
+}
+
+.stopNotifier {
+  animation: flash 1.5s linear infinite;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -30%);
+  z-index: 2;
+  color: rgb(42, 95, 141);
+  background-color: ivory;
+  font-size: 50px;
+}
+
+@keyframes flash {
+  0%,
+  100% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0.4;
+  }
 }

@@ -8,7 +8,9 @@ import styles from "@/styles/random_name_app.module.css";
 // TODO エンターキー待ちの時間に「Enterキーでスタート」と表示する。　解決！
 // TODO エンターキー待ちの時間に「Enterキーでストップ！」と表示する。
 // TODO 「エンターキーでスタートを名前の上に持ってくる 解決！
+// TODO レイアウトが崩れないようにする。人数が何人入力されても表示の上限を決めておく。
 // TODO 内容理解＆整理
+
 function Layout({ children }) {
   return <div className={styles.container}>{children}</div>;
 }
@@ -45,6 +47,7 @@ const RandomNameApp: React.FC = () => {
 
   const nameDisplay = useRef<HTMLElement | null>(null);
   const startNotifier = useRef<HTMLElement | null>(null);
+  const stopNotifier = useRef<HTMLElement | null>(null);
 
   const fontSize = useRef(0); //fontSizeをuseRefで保持;
 
@@ -71,6 +74,13 @@ const RandomNameApp: React.FC = () => {
     if (startNotifier.current) {
       startNotifier.current.textContent = ""; // メッセージを非表示にする
     }
+
+    //ここにユーザーにエンターキーでスタートを知らせる関数を作成
+    if (stopNotifier.current) {
+      stopNotifier.current.style.fontSize = `${fontSize.current * 0.2}px`;
+      stopNotifier.current.textContent = "Enterキーでストップ！";
+    }
+
     if (remainingNames.length === 1) {
       const message = "最後の一人になりました。はじめからにしますか？";
       const shouldReload = confirm(message);
@@ -86,6 +96,10 @@ const RandomNameApp: React.FC = () => {
         clearInterval(intervalId.current);
       }
       isShowingName.current = false;
+    }
+
+    if (stopNotifier.current) {
+      stopNotifier.current.textContent = ""; // メッセージを非表示にする
     }
     if (!nameDisplay.current) return;
 
@@ -129,7 +143,7 @@ const RandomNameApp: React.FC = () => {
   return (
     <Layout>
       <Head>
-        <title>RandomNameApp</title>
+        <title>とにかく大きい ランダムネーム アプリ</title>
       </Head>
 
       <div className={styles.lists}>
@@ -143,6 +157,9 @@ const RandomNameApp: React.FC = () => {
       <div className={styles.display}>
         <div className={styles.nameDisplay} ref={nameDisplay}></div>
         <div className={styles.startNotifier} ref={startNotifier}></div>
+      </div>
+      <div className="underDisplay">
+        <div className={styles.stopNotifier} ref={stopNotifier}></div>
       </div>
 
       <div className={styles.lists}>

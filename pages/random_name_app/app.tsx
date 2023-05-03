@@ -6,7 +6,7 @@ import styles from "@/styles/random_name_app.module.css";
 // TODO　リストが空になったときの挙動修正  解決！
 // TODO　名前が一定数以上になったとき、表示を省略する  解決！リストを縦書きにして、並列に配置すれば名前が何行あってもOK
 // TODO エンターキー待ちの時間に「Enterキーでスタート」と表示する。　解決！
-// TODO エンターキー待ちの時間に「Enterキーでストップ！」と表示する。
+// TODO エンターキー待ちの時間に「Enterキーでストップ！」と表示する。1地番最初から出す。エンターキー押下後すぐに削除
 // TODO 「エンターキーでスタートを名前の上に持ってくる 解決！
 // TODO レイアウトが崩れないようにする。人数が何人入力されても表示の上限を決めておく。
 // TODO 内容理解＆整理
@@ -101,6 +101,7 @@ const RandomNameApp: React.FC = () => {
     if (stopNotifier.current) {
       stopNotifier.current.textContent = ""; // メッセージを非表示にする
     }
+
     if (!nameDisplay.current) return;
 
     const lastName = nameDisplay.current.textContent;

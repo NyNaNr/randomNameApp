@@ -1,10 +1,10 @@
-import Link from 'next/link';
-import Head from 'next/head';
-import Script from 'next/script';
-import styles from '@/styles/random_name_app.module.css'
+import Link from "next/link";
+import Head from "next/head";
+import Script from "next/script";
+import styles from "@/styles/random_name_app.module.css";
 
 function Layout({ children }) {
-    return <div className={styles.container}>{children}</div>;
+  return <div className={styles.container}>{children}</div>;
 }
 
 export default function FirstPost() {

@@ -5,7 +5,9 @@ export default function Home() {
   const [lists, setLists] = useState([]);
   const [deleteConfirmMode, setDeleteConfirmMode] = useState(null);
   const [editMode, setEditMode] = useState(null);
+  const [editedTitle, setEditedTitle] = useState("");
 
+  //新規リスト作成
   function handleCreateItem() {
     const newList = {
       id: uuidv4(),
@@ -13,7 +15,9 @@ export default function Home() {
     };
     setLists((prevLists) => [...prevLists, newList]);
   }
+  //新規リスト作成
 
+  //ゴミ箱モード
   function handleDeleteList(id) {
     setLists((prevLists) => prevLists.filter((list) => list.id !== id));
     setDeleteConfirmMode(null);
@@ -26,6 +30,23 @@ export default function Home() {
       setDeleteConfirmMode(id);
     }
   }
+  //ゴミ箱モード
+
+  //ペンシルアイコン編集モード
+  const handleToggleEditMode = () => {
+    setEditMode(!editMode);
+  };
+
+  const handleSaveEdit = () => {
+    // ここで名前の変更を確定し、APIなどを呼び出してデータベースを更新します。
+    // 例: updateListTitle(list.id, editedTitle);
+    setEditMode(false);
+  };
+
+  const handleCancelEdit = () => {
+    setEditMode(false);
+  };
+  //ペンシルアイコン編集モード
 
   return (
     <div className="flex h-screen">
@@ -144,7 +165,10 @@ export default function Home() {
                   ) : (
                     <div className="absolute right-1 z-10 flex text-gray-300 opacity-0 group-hover:opacity-100">
                       {/* Pencil button */}
-                      <button className="min-w-[20px] p-1 text-neutral-400 hover:text-neutral-100">
+                      <button
+                        className="min-w-[20px] p-1 text-neutral-400 hover:text-neutral-100"
+                        onClick={handleToggleEditMode}
+                      >
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
                           width="18"

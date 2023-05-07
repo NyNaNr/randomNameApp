@@ -25,7 +25,7 @@ export default function Home() {
             新規リスト
           </button>
         </div>
-
+        {/*サイドバー */}
         <div className="flex-grow overflow-auto">
           {/*境界線 */}
           <div className="flex border-b border-white/20 pb-2">

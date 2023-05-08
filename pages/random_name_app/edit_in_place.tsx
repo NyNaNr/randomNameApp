@@ -24,8 +24,11 @@ export default function EditInPlace() {
   };
 
   const save = () => {
-    setOrigText(newText);
-    setIsEditing(false);
+    if (newText !== "") {
+      setOrigText(newText);
+      setIsEditing(false);
+    } else {
+    }
   };
 
   const cancel = () => {
@@ -119,15 +122,14 @@ export default function EditInPlace() {
                     stroke-linejoin="round"
                     className="tabler-icon tabler-icon-x"
                   >
-                    {" "}
-                    <path d="M18 6l-12 12"></path> <path d="M6 6l12 12"></path>{" "}
-                  </svg>{" "}
-                </button>{" "}
-              </div>{" "}
+                    <path d="M18 6l-12 12"></path> <path d="M6 6l12 12"></path>
+                  </svg>
+                </button>
+              </div>
             </div>
-          )}{" "}
-        </div>{" "}
-      </section>{" "}
+          )}
+        </div>
+      </section>
     </main>
   );
 }

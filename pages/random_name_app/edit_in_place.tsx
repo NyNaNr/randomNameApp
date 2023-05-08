@@ -20,7 +20,6 @@ export default function EditInPlace() {
     const textInput = textInputRef.current;
     if (textInput) {
       textInput.focus();
-      textInput.select();
     }
   };
 

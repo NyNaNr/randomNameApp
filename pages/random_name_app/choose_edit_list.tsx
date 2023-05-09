@@ -2,35 +2,38 @@ import { useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 
 export default function Home() {
-  const [lists, setLists] = useState([]);
+  type List = {
+    id: string;
+    title: string;
+  };
+
+  const [lists, setLists] = useState<List[]>([]);
   const [deleteConfirmMode, setDeleteConfirmMode] = useState(null);
   const [editMode, setEditMode] = useState(null);
-  const [editedTitle, setEditedTitle] = useState("");
 
   //新規リスト作成
-  function handleCreateItem() {
+  const handleCreateItem = () => {
     const newList = {
       id: uuidv4(),
       title: "New List",
     };
+    //updater 関数
     setLists((prevLists) => [...prevLists, newList]);
-  }
+  };
   //新規リスト作成
-
-  //ゴミ箱モード
-  function handleDeleteList(id) {
-    setLists((prevLists) => prevLists.filter((list) => list.id !== id));
-    setDeleteConfirmMode(null);
-  }
-
-  function handleToggleDeleteConfirmMode(id) {
+  //ゴミ箱モードを呼ぶと発動
+  const handleToggleDeleteConfirmMode = (id: string) => {
     if (deleteConfirmMode === id) {
       setDeleteConfirmMode(null);
     } else {
       setDeleteConfirmMode(id);
     }
-  }
-  //ゴミ箱モード
+  };
+  //ゴミ箱モードでチェックマークを押すと発動
+  const handleDeleteList = (id: string) => {
+    setLists((prevLists) => prevLists.filter((list) => list.id !== id));
+    setDeleteConfirmMode(null);
+  };
 
   //ペンシルアイコン編集モード
   const handleToggleEditMode = () => {
@@ -42,11 +45,6 @@ export default function Home() {
     // 例: updateListTitle(list.id, editedTitle);
     setEditMode(false);
   };
-
-  const handleCancelEdit = () => {
-    setEditMode(false);
-  };
-  //ペンシルアイコン編集モード
 
   return (
     <div className="flex h-screen">
@@ -115,6 +113,8 @@ export default function Home() {
                     </div>
                   </button>
                   <div className="absolute right-1 z-10 flex text-gray-300 opacity-0 group-hover:opacity-100"></div>
+
+                  {/*表示アイコンの分岐処理 */}
                   {deleteConfirmMode === list.id ? (
                     <div className="absolute right-1 z-10 flex text-gray-300">
                       {/* Checkmark button */}
@@ -247,6 +247,7 @@ export default function Home() {
           </div>
         </div>
 
+        {/*リストが空の場合ノーデータを表示 */}
         <div className="flex-grow overflow-auto">
           <div className="mt-8 select-none text-center text-white opacity-50">
             <svg

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import ItemCreateButton from "../../components/Chatbar/ItemCreateButton.";
+import ItemCreateButton from "../../components/Chatbar/ItemCreateButton";
 import NewListCreator from "../../components/Chatbar/NewListCreator";
 
 export default function Home() {

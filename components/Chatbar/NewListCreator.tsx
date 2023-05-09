@@ -1,7 +1,10 @@
 import DeleteListFunction from "./ButtonFunction/DeleteListFunction";
+import RenameListFunction from "./ButtonFunction/RenameListFunction";
 
 //新規リスト作成
 const NewListCreator = ({ lists, setLists, handleToggleEditMode }) => {
+  //edit_in_place移植
+
   return (
     <div className="flex w-full flex-col gap-1">
       {lists.map((list) => (
@@ -39,6 +42,7 @@ const NewListCreator = ({ lists, setLists, handleToggleEditMode }) => {
             handleToggleEditMode={handleToggleEditMode}
             setLists={setLists}
           />
+          {/* <RenameListFunction /> */}
         </div>
       ))}
     </div>

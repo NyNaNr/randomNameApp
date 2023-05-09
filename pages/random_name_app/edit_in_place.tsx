@@ -7,8 +7,8 @@ import React, {
 } from "react";
 
 export default function EditInPlace() {
-  const [origText, setOrigText] = useState("click the text to edit it");
-  const [newText, setNewText] = useState(origText);
+  const [origListName, setOrigListName] = useState("New List");
+  const [newListName, setNewListName] = useState(origListName);
   const [isEditing, setIsEditing] = useState(false);
   const textInputRef = useRef<HTMLInputElement>(null);
 
@@ -23,16 +23,17 @@ export default function EditInPlace() {
     }
   };
 
+  //ここでcookieに保存の処理を追加？　名前を変更したとき、新規作成したとき、捨てた時に保存する必要がある
   const save = () => {
-    if (newText !== "") {
-      setOrigText(newText);
+    if (newListName !== "") {
+      setOrigListName(newListName);
       setIsEditing(false);
     } else {
     }
   };
 
   const cancel = () => {
-    setNewText(origText);
+    setNewListName(origListName);
     setIsEditing(false);
   };
 
@@ -56,7 +57,8 @@ export default function EditInPlace() {
           {!isEditing && (
             <div className="p-2 border border-gray-200 inline-flex items-center">
               <div className="p-1 border outline-none bg-transparent inline-flex items-center py-0 lh-[1] leading-[1]">
-                <span>{newText}</span>
+                {/*ここが表示される */}
+                <span>{newListName}</span>
               </div>
             </div>
           )}
@@ -72,9 +74,9 @@ export default function EditInPlace() {
                   ref={textInputRef}
                   type="text"
                   className="p-1 pl-3 border outline-none bg-transparent inline-flex items-center py-0 lh-[1] leading-[1]"
-                  value={newText}
+                  value={newListName}
                   onChange={(e: ChangeEvent<HTMLInputElement>) =>
-                    setNewText(e.target.value)
+                    setNewListName(e.target.value)
                   }
                   onKeyDown={(e: KeyboardEvent<HTMLInputElement>) => {
                     if (e.key === "Enter") save();

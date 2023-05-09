@@ -1,14 +1,21 @@
-import { v4 as uuidv4 } from "uuid";
-
+import { useState } from "react";
 //新規リスト作成
-const NewListCreator = ({
-  lists,
-  setLists,
-  deleteConfirmMode,
-  handleDeleteList,
-  handleToggleDeleteConfirmMode,
-  handleToggleEditMode,
-}) => {
+const NewListCreator = ({ lists, setLists, handleToggleEditMode }) => {
+  const [deleteConfirmMode, setDeleteConfirmMode] = useState(null);
+  //ゴミ箱モードを呼ぶと発動
+  const handleToggleDeleteConfirmMode = (id) => {
+    if (deleteConfirmMode === id) {
+      setDeleteConfirmMode(null);
+    } else {
+      setDeleteConfirmMode(id);
+    }
+  };
+
+  //ゴミ箱モードでチェックマークを押すと発動
+  const handleDeleteList = (id) => {
+    setLists((prevLists) => prevLists.filter((list) => list.id !== id));
+    setDeleteConfirmMode(null);
+  };
   return (
     <div className="flex w-full flex-col gap-1">
       {lists.map((list) => (

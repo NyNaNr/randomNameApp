@@ -3,23 +3,8 @@ import ItemCreateButton from "../../components/Chatbar/ItemCreateButton.";
 import NewListCreator from "../../components/Chatbar/NewListCreator";
 
 export default function Home() {
-  const [deleteConfirmMode, setDeleteConfirmMode] = useState(null);
   const [editMode, setEditMode] = useState(null);
   const [lists, setLists] = useState<List[]>([]);
-
-  //ゴミ箱モードを呼ぶと発動
-  const handleToggleDeleteConfirmMode = (id: string) => {
-    if (deleteConfirmMode === id) {
-      setDeleteConfirmMode(null);
-    } else {
-      setDeleteConfirmMode(id);
-    }
-  };
-  //ゴミ箱モードでチェックマークを押すと発動
-  const handleDeleteList = (id: string) => {
-    setLists((prevLists) => prevLists.filter((list) => list.id !== id));
-    setDeleteConfirmMode(null);
-  };
 
   //ペンシルアイコン編集モード
   const handleToggleEditMode = () => {
@@ -35,7 +20,7 @@ export default function Home() {
   return (
     <div className="flex h-screen">
       <div className="fixed top-0 left-0 z-40 flex h-screen w-[260px] flex-none flex-col space-y-2 bg-[#202123] p-2 text-[14px] transition-all sm:relative sm:top-0 ">
-        {/*以下新規リスト */}
+        {/*新規リストを作成するボタン */}
         <ItemCreateButton lists={lists} setLists={setLists} />
 
         {/*サイドバー */}
@@ -47,13 +32,10 @@ export default function Home() {
           {/*以下新規リスト押したあとにできる要素 */}
           <div className="pt-2">
             <div className="flex w-full flex-col gap-1">
-              {/*一番初めのnewConversation */}
+              {/*newListの要素を作成する */}
               <NewListCreator
                 lists={lists}
                 setLists={setLists}
-                deleteConfirmMode={deleteConfirmMode}
-                handleDeleteList={handleDeleteList}
-                handleToggleDeleteConfirmMode={handleToggleDeleteConfirmMode}
                 handleToggleEditMode={handleToggleEditMode}
               />
             </div>

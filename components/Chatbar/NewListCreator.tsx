@@ -1,4 +1,4 @@
-import {
+import React, {
   useState,
   useRef,
   useEffect,
@@ -6,15 +6,21 @@ import {
   MouseEvent,
   KeyboardEvent,
 } from "react";
+//今から機能追加
 //新規リスト作成
 const NewListCreator = ({ lists, setLists }) => {
   //ゴミ箱
   const [deleteConfirmMode, setDeleteConfirmMode] = useState(null);
   //その場編集
   const [handleEditMode, setHandleEditMode] = useState(null);
-  const [origListName, setOrigListName] = useState("New List");
-  const [newListName, setNewListName] = useState(origListName);
-  const textInputRef = useRef<HTMLInputElement>(null);
+  const [origListNames, setOrigListNames] = useState(
+    lists.reduce((names, list) => {
+      names[list.id] = list.title;
+      return names;
+    }, {})
+  );
+  const [newListNames, setNewListNames] = useState({ ...origListNames });
+  const textInputRefs = useRef(new Map());
 
   //ペンシルアイコンを呼ぶと発動
   const handleToggleEditMode = (id) => {
@@ -22,29 +28,30 @@ const NewListCreator = ({ lists, setLists }) => {
       setHandleEditMode(null);
     } else {
       setHandleEditMode(id);
-      focus(id);
+      setTimeout(() => {
+        focus(id);
+      }, 0);
     }
   };
 
   //その場編集関数
   const focus = (id) => {
-    const textInput = textInputRef.current;
-    if (textInput) {
-      textInput.focus();
+    const textInput = textInputRefs.current[id];
+    if (textInput && textInput.current) {
+      textInput.current.focus();
     }
   };
 
   //idを引数に取っているが、どうしようか
   const save = (id) => {
-    if (newListName !== "") {
-      setOrigListName(newListName);
+    if (newListNames[id] !== "") {
+      setOrigListNames({ ...origListNames, [id]: newListNames[id] });
       setHandleEditMode(null);
-    } else {
     }
   };
 
   const cancel = () => {
-    setNewListName(origListName);
+    setNewListNames(origListNames);
     setHandleEditMode(null);
   };
   //その場編集関数
@@ -66,9 +73,19 @@ const NewListCreator = ({ lists, setLists }) => {
 
   useEffect(() => {
     if (handleEditMode !== null) {
-      focus();
+      setTimeout(() => {
+        focus(handleEditMode);
+      }, 0);
     }
   }, [handleEditMode]);
+
+  useEffect(() => {
+    const newRefs = lists.reduce((refs, list) => {
+      refs[list.id] = React.createRef();
+      return refs;
+    }, {});
+    textInputRefs.current = newRefs;
+  }, [lists]);
 
   return (
     <div className="flex w-full flex-col gap-1">
@@ -95,15 +112,18 @@ const NewListCreator = ({ lists, setLists }) => {
                     />
                   </svg>
                   <input
-                    ref={textInputRef}
+                    ref={textInputRefs.current[list.id]}
                     type="text"
                     className="text-white  outline-none bg-transparent inline-flex items-center py-0 lh-[1] leading-[1]"
-                    value={newListName}
+                    value={newListNames[list.id]}
                     onChange={(e: ChangeEvent<HTMLInputElement>) =>
-                      setNewListName(e.target.value)
+                      setNewListNames({
+                        ...newListNames,
+                        [list.id]: e.target.value,
+                      })
                     }
                     onKeyDown={(e: KeyboardEvent<HTMLInputElement>) => {
-                      if (e.key === "Enter") save();
+                      if (e.key === "Enter") save(list.id);
                       if (e.key === "Escape") cancel();
                     }}
                   />
@@ -130,7 +150,7 @@ const NewListCreator = ({ lists, setLists }) => {
                     />
                   </svg>
                   <div className="text-white relative max-h-5 flex-1 overflow-hidden text-ellipsis whitespace-nowrap break-all text-left text-[12.5px] leading-3 pr-12">
-                    {list.title}
+                    {newListNames[list.id]}
                   </div>
                 </button>
               );

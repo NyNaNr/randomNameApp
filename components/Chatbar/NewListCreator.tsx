@@ -1,6 +1,7 @@
 import {
   useState,
   useRef,
+  useEffect,
   ChangeEvent,
   MouseEvent,
   KeyboardEvent,
@@ -21,18 +22,20 @@ const NewListCreator = ({ lists, setLists }) => {
       setHandleEditMode(null);
     } else {
       setHandleEditMode(id);
+      focus(id);
     }
   };
 
   //その場編集関数
-  const focus = () => {
+  const focus = (id) => {
     const textInput = textInputRef.current;
     if (textInput) {
       textInput.focus();
     }
   };
 
-  const save = () => {
+  //idを引数に取っているが、どうしようか
+  const save = (id) => {
     if (newListName !== "") {
       setOrigListName(newListName);
       setHandleEditMode(null);
@@ -60,32 +63,80 @@ const NewListCreator = ({ lists, setLists }) => {
     setLists((prevLists) => prevLists.filter((list) => list.id !== id));
     setDeleteConfirmMode(null);
   };
+
+  useEffect(() => {
+    if (handleEditMode !== null) {
+      focus();
+    }
+  }, [handleEditMode]);
+
   return (
     <div className="flex w-full flex-col gap-1">
       {lists.map((list) => (
         <div className="relative flex items-center group" key={list.id}>
-          <button className="flex w-full cursor-pointer items-center gap-3 rounded-lg p-3 text-sm transition-colors duration-200 hover:bg-[#343541]/90">
-            {/*リストアイコン */}
-            <svg
-              fill="none"
-              stroke="white"
-              strokeWidth={1.5}
-              viewBox="0 0 24 24"
-              xmlns="http://www.w3.org/2000/svg"
-              width="18"
-              height="18"
-              aria-hidden="true"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M3.75 5.25h16.5m-16.5 4.5h16.5m-16.5 4.5h16.5m-16.5 4.5h16.5"
-              />
-            </svg>
-            <div className="text-white relative max-h-5 flex-1 overflow-hidden text-ellipsis whitespace-nowrap break-all text-left text-[12.5px] leading-3 pr-12">
-              {list.title}
-            </div>
-          </button>
+          {(() => {
+            if (handleEditMode === list.id) {
+              return (
+                <div className="flex w-full cursor-pointer items-center gap-3 rounded-lg p-3 text-[12.5px] transition-colors duration-200 hover:bg-[#343541]/90">
+                  <svg
+                    fill="none"
+                    stroke="white"
+                    strokeWidth={1.5}
+                    viewBox="0 0 24 24"
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="18"
+                    height="18"
+                    aria-hidden="true"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M3.75 5.25h16.5m-16.5 4.5h16.5m-16.5 4.5h16.5m-16.5 4.5h16.5"
+                    />
+                  </svg>
+                  <input
+                    ref={textInputRef}
+                    type="text"
+                    className="text-white  outline-none bg-transparent inline-flex items-center py-0 lh-[1] leading-[1]"
+                    value={newListName}
+                    onChange={(e: ChangeEvent<HTMLInputElement>) =>
+                      setNewListName(e.target.value)
+                    }
+                    onKeyDown={(e: KeyboardEvent<HTMLInputElement>) => {
+                      if (e.key === "Enter") save();
+                      if (e.key === "Escape") cancel();
+                    }}
+                  />
+                </div>
+              );
+            } else {
+              return (
+                <button className="flex w-full cursor-pointer items-center gap-3 rounded-lg p-3 text-sm transition-colors duration-200 hover:bg-[#343541]/90">
+                  {/*リストアイコン */}
+                  <svg
+                    fill="none"
+                    stroke="white"
+                    strokeWidth={1.5}
+                    viewBox="0 0 24 24"
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="18"
+                    height="18"
+                    aria-hidden="true"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M3.75 5.25h16.5m-16.5 4.5h16.5m-16.5 4.5h16.5m-16.5 4.5h16.5"
+                    />
+                  </svg>
+                  <div className="text-white relative max-h-5 flex-1 overflow-hidden text-ellipsis whitespace-nowrap break-all text-left text-[12.5px] leading-3 pr-12">
+                    {list.title}
+                  </div>
+                </button>
+              );
+            }
+          })()}
+
           <div className="absolute right-1 z-10 flex text-gray-300 opacity-0 group-hover:opacity-100"></div>
 
           {/*表示アイコンの分岐処理 */}
@@ -140,13 +191,64 @@ const NewListCreator = ({ lists, setLists }) => {
                   </button>
                 </div>
               );
+            } else if (handleEditMode === list.id) {
+              return (
+                <div className="absolute right-1 z-10 flex text-gray-300">
+                  {/* Checkmark button */}
+                  <button
+                    className="min-w-[20px] p-1 text-neutral-400 hover:text-neutral-100"
+                    onClick={() => save(list.id)}
+                  >
+                    {/* Checkmark icon */}
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="18"
+                      height="18"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      className="tabler-icon tabler-icon-check"
+                    >
+                      <path d="M5 12l5 5l10 -10"></path>
+                    </svg>
+                  </button>
+
+                  {/* Cross button */}
+                  <button
+                    className="min-w-[20px] p-1 text-neutral-400 hover:text-neutral-100"
+                    onClick={() => cancel()}
+                  >
+                    {/* Cross icon */}
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="18"
+                      height="18"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      className="tabler-icon tabler-icon-x"
+                    >
+                      <path d="M18 6l-12 12"></path>
+                      <path d="M6 6l12 12"></path>
+                    </svg>
+                  </button>
+                </div>
+              );
             } else {
               return (
                 <div className="absolute right-1 z-10 flex text-gray-300 opacity-0 group-hover:opacity-100">
                   {/* Pencil button */}
                   <button
                     className="min-w-[20px] p-1 text-neutral-400 hover:text-neutral-100"
-                    onClick={() => handleToggleEditMode(list.id)}
+                    onClick={() => {
+                      handleToggleEditMode(list.id);
+                    }}
                   >
                     <svg
                       xmlns="http://www.w3.org/2000/svg"

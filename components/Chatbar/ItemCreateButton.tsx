@@ -3,6 +3,7 @@ import { v4 as uuidv4 } from "uuid";
 //新規リスト作成
 const ItemCreateButton = ({ lists, setLists }) => {
   //新規リスト作成
+
   const handleCreateItem = () => {
     const newList = {
       id: uuidv4(),

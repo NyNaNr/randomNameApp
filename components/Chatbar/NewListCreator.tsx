@@ -1,11 +1,4 @@
-import React, {
-  useState,
-  useRef,
-  useEffect,
-  ChangeEvent,
-  MouseEvent,
-  KeyboardEvent,
-} from "react";
+import React, { useState, useRef, useEffect, ChangeEvent } from "react";
 //今から機能追加
 //新規リスト作成
 const NewListCreator = ({ lists, setLists }) => {
@@ -16,6 +9,7 @@ const NewListCreator = ({ lists, setLists }) => {
   const [origListNames, setOrigListNames] = useState(
     lists.reduce((names, list) => {
       names[list.id] = list.title;
+
       return names;
     }, {})
   );
@@ -42,10 +36,11 @@ const NewListCreator = ({ lists, setLists }) => {
     }
   };
 
-  //idを引数に取っているが、どうしようか
   const save = (id) => {
     if (newListNames[id] !== "") {
       setOrigListNames({ ...origListNames, [id]: newListNames[id] });
+      console.log({ ...origListNames, [id]: newListNames[id] });
+
       setHandleEditMode(null);
     }
   };
@@ -150,7 +145,9 @@ const NewListCreator = ({ lists, setLists }) => {
                     />
                   </svg>
                   <div className="text-white relative max-h-5 flex-1 overflow-hidden text-ellipsis whitespace-nowrap break-all text-left text-[12.5px] leading-3 pr-12">
-                    {newListNames[list.id]}
+                    <div className="text-white relative max-h-5 flex-1 overflow-hidden text-ellipsis whitespace-nowrap break-all text-left text-[12.5px] leading-3 pr-12">
+                      {newListNames[list.id]}
+                    </div>
                   </div>
                 </button>
               );

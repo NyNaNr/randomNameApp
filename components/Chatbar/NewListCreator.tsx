@@ -1,7 +1,13 @@
 import React, { useState, useRef, useEffect, ChangeEvent } from "react";
+import { fetchListsFromLocalStorage } from "../../utils/fetchListsFromLocalStorage";
 //今から機能追加
 //新規リスト作成
 const NewListCreator = ({ lists, setLists }) => {
+  useEffect(() => {
+    const listsFromLocalStorage = fetchListsFromLocalStorage();
+    console.log("listsFromLocalStorage", listsFromLocalStorage);
+    setLists(listsFromLocalStorage);
+  }, []);
   //ゴミ箱
   const [deleteConfirmMode, setDeleteConfirmMode] = useState(null);
   //その場編集
@@ -26,6 +32,7 @@ const NewListCreator = ({ lists, setLists }) => {
     }
     prevListsRef.current = lists;
   }, [lists]);
+
   const [handleEditMode, setHandleEditMode] = useState(null);
   const [origListNames, setOrigListNames] = useState(
     lists.reduce((names, list) => {
@@ -63,7 +70,6 @@ const NewListCreator = ({ lists, setLists }) => {
     if (newListNames[id] !== "") {
       const updatedListNames = { ...origListNames, [id]: newListNames[id] };
       setOrigListNames(updatedListNames);
-      localStorage.setItem("listNames", JSON.stringify(updatedListNames));
 
       setHandleEditMode(null);
     }
@@ -88,20 +94,6 @@ const NewListCreator = ({ lists, setLists }) => {
   const handleDeleteList = (id) => {
     setLists((prevLists) => prevLists.filter((list) => list.id !== id));
     setDeleteConfirmMode(null);
-    // ローカルストレージからリストデータを取得します
-    const listNamesData = localStorage.getItem("listNames");
-
-    // データが存在する場合に処理を行います
-    if (listNamesData) {
-      // データをJSON形式からJavaScriptオブジェクトに変換します
-      const listNames = JSON.parse(listNamesData);
-
-      // 削除したいリストを除きます
-      delete listNames[id];
-
-      // データを再度JSON形式に変換し、ローカルストレージに保存します
-      localStorage.setItem("listNames", JSON.stringify(listNames));
-    }
   };
 
   useEffect(() => {

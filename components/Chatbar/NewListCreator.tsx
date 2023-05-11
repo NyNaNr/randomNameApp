@@ -5,6 +5,27 @@ const NewListCreator = ({ lists, setLists }) => {
   //ゴミ箱
   const [deleteConfirmMode, setDeleteConfirmMode] = useState(null);
   //その場編集
+  const prevListsRef = useRef();
+  //useEffectフックを使用して、listsが更新された時点でorigListNamesおよびnewListNamesを設定する
+  //useEffect内で前回のlistsと現在のlistsを比較して新規に追加されたリストを特定し、それらのリスト名だけを更新するようにする
+  useEffect(() => {
+    if (prevListsRef.current) {
+      const newLists = lists.filter(
+        (list) => !prevListsRef.current.includes(list)
+      );
+      newLists.forEach((newList) => {
+        setOrigListNames((prevNames) => ({
+          ...prevNames,
+          [newList.id]: newList.title,
+        }));
+        setNewListNames((prevNames) => ({
+          ...prevNames,
+          [newList.id]: newList.title,
+        }));
+      });
+    }
+    prevListsRef.current = lists;
+  }, [lists]);
   const [handleEditMode, setHandleEditMode] = useState(null);
   const [origListNames, setOrigListNames] = useState(
     lists.reduce((names, list) => {
@@ -13,7 +34,9 @@ const NewListCreator = ({ lists, setLists }) => {
       return names;
     }, {})
   );
+
   const [newListNames, setNewListNames] = useState({ ...origListNames });
+
   const textInputRefs = useRef(new Map());
 
   //ペンシルアイコンを呼ぶと発動
@@ -38,8 +61,9 @@ const NewListCreator = ({ lists, setLists }) => {
 
   const save = (id) => {
     if (newListNames[id] !== "") {
-      setOrigListNames({ ...origListNames, [id]: newListNames[id] });
-      console.log({ ...origListNames, [id]: newListNames[id] });
+      const updatedListNames = { ...origListNames, [id]: newListNames[id] };
+      setOrigListNames(updatedListNames);
+      localStorage.setItem("listNames", JSON.stringify(updatedListNames));
 
       setHandleEditMode(null);
     }

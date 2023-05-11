@@ -3,19 +3,7 @@ import ItemCreateButton from "../../components/Chatbar/ItemCreateButton";
 import NewListCreator from "../../components/Chatbar/NewListCreator";
 
 export default function Home() {
-  const [editMode, setEditMode] = useState(null);
   const [lists, setLists] = useState<List[]>([]);
-
-  //ペンシルアイコン編集モード
-  const handleToggleEditMode = () => {
-    setEditMode(!editMode);
-  };
-
-  const handleSaveEdit = () => {
-    // ここで名前の変更を確定し、APIなどを呼び出してデータベースを更新します。
-    // 例: updateListTitle(list.id, editedTitle);
-    setEditMode(false);
-  };
 
   return (
     <div className="flex h-screen">
@@ -33,11 +21,7 @@ export default function Home() {
           <div className="pt-2">
             <div className="flex w-full flex-col gap-1">
               {/*newListの要素を作成する */}
-              <NewListCreator
-                lists={lists}
-                setLists={setLists}
-                handleToggleEditMode={handleToggleEditMode}
-              />
+              <NewListCreator lists={lists} setLists={setLists} />
             </div>
           </div>
         </div>

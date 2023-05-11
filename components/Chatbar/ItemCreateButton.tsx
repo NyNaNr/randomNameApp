@@ -13,8 +13,11 @@ const ItemCreateButton = ({ lists, setLists }) => {
     setLists((prevLists) => [...prevLists, newList]);
 
     // Update local storage
-    const existingLists =
-      JSON.parse(window.localStorage.getItem("listNames")) || [];
+    const existingListsItem = window.localStorage.getItem("listNames");
+    const parsedLists = existingListsItem
+      ? JSON.parse(existingListsItem)
+      : null;
+    const existingLists = Array.isArray(parsedLists) ? parsedLists : [];
     const updatedLists = [...existingLists, newList];
     window.localStorage.setItem("listNames", JSON.stringify(updatedLists));
   };

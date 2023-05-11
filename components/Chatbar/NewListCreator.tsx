@@ -88,6 +88,20 @@ const NewListCreator = ({ lists, setLists }) => {
   const handleDeleteList = (id) => {
     setLists((prevLists) => prevLists.filter((list) => list.id !== id));
     setDeleteConfirmMode(null);
+    // ローカルストレージからリストデータを取得します
+    const listNamesData = localStorage.getItem("listNames");
+
+    // データが存在する場合に処理を行います
+    if (listNamesData) {
+      // データをJSON形式からJavaScriptオブジェクトに変換します
+      const listNames = JSON.parse(listNamesData);
+
+      // 削除したいリストを除きます
+      delete listNames[id];
+
+      // データを再度JSON形式に変換し、ローカルストレージに保存します
+      localStorage.setItem("listNames", JSON.stringify(listNames));
+    }
   };
 
   useEffect(() => {

@@ -1,6 +1,8 @@
 import React, { useState, useRef, useEffect, ChangeEvent } from "react";
 import { fetchListsFromLocalStorage } from "../../utils/fetchListsFromLocalStorage";
-//今から機能追加
+
+//TODO:削除したとき、名前を変更したときに、ローカルストレージを書き換える。
+
 //新規リスト作成
 const NewListCreator = ({ lists, setLists }) => {
   useEffect(() => {
@@ -70,7 +72,6 @@ const NewListCreator = ({ lists, setLists }) => {
     if (newListNames[id] !== "") {
       const updatedListNames = { ...origListNames, [id]: newListNames[id] };
       setOrigListNames(updatedListNames);
-
       setHandleEditMode(null);
     }
   };
@@ -94,6 +95,17 @@ const NewListCreator = ({ lists, setLists }) => {
   const handleDeleteList = (id) => {
     setLists((prevLists) => prevLists.filter((list) => list.id !== id));
     setDeleteConfirmMode(null);
+    //ローカルストレージに保存
+
+    const existingListsItem = window.localStorage.getItem("listNames");
+    const parsedLists = existingListsItem
+      ? JSON.parse(existingListsItem)
+      : null;
+    const existingLists = Array.isArray(parsedLists) ? parsedLists : [];
+    const updatedLists = existingLists.filter((existingList) => {
+      return existingList.id !== id;
+    });
+    window.localStorage.setItem("listNames", JSON.stringify(updatedLists));
   };
 
   useEffect(() => {

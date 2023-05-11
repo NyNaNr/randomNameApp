@@ -11,6 +11,12 @@ const ItemCreateButton = ({ lists, setLists }) => {
     };
     //updater 関数
     setLists((prevLists) => [...prevLists, newList]);
+
+    // Update local storage
+    const existingLists =
+      JSON.parse(window.localStorage.getItem("listNames")) || [];
+    const updatedLists = [...existingLists, newList];
+    window.localStorage.setItem("listNames", JSON.stringify(updatedLists));
   };
 
   return (

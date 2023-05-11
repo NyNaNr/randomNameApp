@@ -73,6 +73,19 @@ const NewListCreator = ({ lists, setLists }) => {
       const updatedListNames = { ...origListNames, [id]: newListNames[id] };
       setOrigListNames(updatedListNames);
       setHandleEditMode(null);
+
+      //ローカルストレージに保存
+
+      const existingListsItem = window.localStorage.getItem("listNames");
+      const parsedLists = existingListsItem
+        ? JSON.parse(existingListsItem)
+        : null;
+      const existingLists = Array.isArray(parsedLists) ? parsedLists : [];
+      let updatedLists = existingLists.filter((existingList) => {
+        return existingList.id !== id;
+      });
+      updatedLists.push({ id: id, title: newListNames[id] });
+      window.localStorage.setItem("listNames", JSON.stringify(updatedLists));
     }
   };
 

@@ -1,6 +1,7 @@
 import { useState } from "react";
 import ItemCreateButton from "../../components/Chatbar/ItemCreateButton";
 import NewListCreator from "../../components/Chatbar/NewListCreator";
+import EditListForm from "../../components/EditListForm/EditListForm";
 
 export default function Home() {
   const [lists, setLists] = useState<List[]>([]);
@@ -57,7 +58,7 @@ export default function Home() {
       </div>
 
       <div className="flex-grow">
-        <div className="edit_list"></div>
+        <EditListForm />
       </div>
     </div>
   );

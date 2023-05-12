@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect, ChangeEvent } from "react";
-import { fetchListsFromLocalStorage } from "../../utils/fetchListsFromLocalStorage";
+import { fetchListsFromLocalStorage } from "../../utils/random_name_app";
 
 //TODO:削除したとき、名前を変更したときに、ローカルストレージを書き換える。
 
@@ -144,7 +144,10 @@ const NewListCreator = ({ lists, setLists, onListClick }) => {
           {(() => {
             if (handleEditMode === list.id) {
               return (
-                <div className="flex w-full cursor-pointer items-center gap-3 rounded-lg p-3 text-[12.5px] transition-colors duration-200 hover:bg-[#343541]/90">
+                <div
+                  className="flex w-full cursor-pointer items-center gap-3 rounded-lg p-3 text-[12.5px] transition-colors duration-200 hover:bg-[#343541]/90"
+                  onClick={() => onListClick(list.id)}
+                >
                   <svg
                     fill="none"
                     stroke="white"

@@ -4,7 +4,7 @@ import { fetchListsFromLocalStorage } from "../../utils/fetchListsFromLocalStora
 //TODO:削除したとき、名前を変更したときに、ローカルストレージを書き換える。
 
 //新規リスト作成
-const NewListCreator = ({ lists, setLists }) => {
+const NewListCreator = ({ lists, setLists, onListClick }) => {
   useEffect(() => {
     const listsFromLocalStorage = fetchListsFromLocalStorage();
     console.log("listsFromLocalStorage", listsFromLocalStorage);
@@ -181,7 +181,10 @@ const NewListCreator = ({ lists, setLists }) => {
               );
             } else {
               return (
-                <button className="flex w-full cursor-pointer items-center gap-3 rounded-lg p-3 text-sm transition-colors duration-200 hover:bg-[#343541]/90">
+                <button
+                  className="flex w-full cursor-pointer items-center gap-3 rounded-lg p-3 text-sm transition-colors duration-200 hover:bg-[#343541]/90"
+                  onClick={() => onListClick(list.id)}
+                >
                   {/*リストアイコン */}
                   <svg
                     fill="none"

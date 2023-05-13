@@ -73,10 +73,10 @@ const EditListForm = ({ selectedListId }) => {
         </div>
         <textarea
           value={inputText}
-          className="max-w-screen-lg h-3/6"
+          className=""
           onChange={handleOnChange}
           onBlur={handleInputConfirm} // テキストエリアからフォーカスが外れたとき（入力が確定したとき）にhandleInputConfirmを呼び出す
-          rows="30"
+          rows={lineNumbers}
         />
       </div>
     </React.Fragment>

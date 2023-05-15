@@ -26,8 +26,8 @@ export default function Home() {
           {/*サイドバー */}
           <div className="flex-grow overflow-auto">
             {/*境界線 */}
-            <div className="flex border-b border-white/20 pb-2">
-              <div className="flex w-full flex-col pt-2"></div>
+            <div className="flex border-b border-white/20 ">
+              <div className="flex w-full flex-col "></div>
             </div>
             {/*以下新規リスト押したあとにできる要素 */}
             <div className="pt-2">

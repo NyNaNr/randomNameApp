@@ -57,7 +57,7 @@ const ItemCreateButton = ({ lists, setLists }) => {
             <path d="M12 5l0 14"></path>
             <path d="M5 12l14 0"></path>
           </svg>
-          新規リスト
+          {lists.length >= 40 ? "リスト作成数が上限に達しました" : "新規リスト"}
         </button>
       </div>
       <div className="show-list-count text-white text-right pr-2 ">

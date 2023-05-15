@@ -205,10 +205,9 @@ const NewListCreator = ({ lists, setLists, onListClick }) => {
                       d="M3.75 5.25h16.5m-16.5 4.5h16.5m-16.5 4.5h16.5m-16.5 4.5h16.5"
                     />
                   </svg>
+
                   <div className="text-white relative max-h-5 flex-1 overflow-hidden text-ellipsis whitespace-nowrap break-all text-left text-[12.5px] leading-3 pr-12">
-                    <div className="text-white relative max-h-5 flex-1 overflow-hidden text-ellipsis whitespace-nowrap break-all text-left text-[12.5px] leading-3 pr-12">
-                      {newListNames[list.id]}
-                    </div>
+                    {newListNames[list.id]}
                   </div>
                 </button>
               );

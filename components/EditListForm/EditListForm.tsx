@@ -99,38 +99,51 @@ const EditListForm = ({ selectedListId }) => {
 
   return (
     <React.Fragment>
-      <div className="flex items-center">{selectedListId}</div>
-      <div className="flex items-center">{title}</div>
-      <div className="flex">
-        <div className="flex">
-          <div className="line-number mr-4 text-right">
-            {/* margin-rightを追加してtextareaとの間にスペースを作ります */}
-            {lineNumbersOfUserInput.map((num, index) => (
-              <p key={index}>{num}</p>
-            ))}
+      {selectedListId ? (
+        <div>
+          <div className="flex items-center">{selectedListId}</div>
+          <div className="flex items-center">{title}</div>
+          <div className="flex">
+            <div className="flex">
+              <div className="line-number mr-4 text-right">
+                {/* margin-rightを追加してtextareaとの間にスペースを作ります */}
+                {lineNumbersOfUserInput.map((num, index) => (
+                  <p key={index}>{num}</p>
+                ))}
+              </div>
+              <textarea
+                value={inputText}
+                className="padding: 0.75rem;"
+                onChange={handleOnChange}
+                onBlur={handleInputConfirm} // テキストエリアからフォーカスが外れたとき（入力が確定したとき）にhandleInputConfirmを呼び出す
+                rows={lineNumbersOfUserInput}
+              />
+            </div>
+            <div className="flex">
+              <div className="line-number mr-4 text-right">
+                {lineNumbersOfFormattedUserInput.map((num, index) => (
+                  <p key={index}>{num}</p>
+                ))}
+              </div>
+              <div className="formatted-list">
+                {formattedInput.map((item, index) => (
+                  <p key={index}>{item}</p>
+                ))}
+              </div>
+              <Link href={`/random_name_app/${selectedListId}`}>クリック</Link>
+            </div>
           </div>
-          <textarea
-            value={inputText}
-            className="padding: 0.75rem;"
-            onChange={handleOnChange}
-            onBlur={handleInputConfirm} // テキストエリアからフォーカスが外れたとき（入力が確定したとき）にhandleInputConfirmを呼び出す
-            rows={lineNumbersOfUserInput}
-          />
         </div>
-        <div className="flex">
-          <div className="line-number mr-4 text-right">
-            {lineNumbersOfFormattedUserInput.map((num, index) => (
-              <p key={index}>{num}</p>
-            ))}
-          </div>
-          <div className="formatted-list">
-            {formattedInput.map((item, index) => (
-              <p key={index}>{item}</p>
-            ))}
-          </div>
-          <Link href={`/random_name_app/${selectedListId}`}>クリック</Link>
+      ) : (
+        <div>
+          <h2>Webアプリの使い方:</h2>
+          <p>1. 左の「新規リストを作成」ボタンをクリックします。</p>
+          <p>2. リスト名を入力し、「リストを作成」ボタンをクリックします。</p>
+          <p>3. 作成したリストをクリックして選択します。</p>
+          <p>4. 右側のテキストエリアにリストアイテムを入力します。</p>
+          <p>5. リストアイテムが整形されて下部に表示されます。</p>
         </div>
-      </div>
+      )}
     </React.Fragment>
   );
 };

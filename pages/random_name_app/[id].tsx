@@ -5,41 +5,13 @@ import { useRouter } from "next/router";
 import styles from "@/styles/random_name_app.module.css";
 import Cookies from "js-cookie";
 
-// TODO　リストが空になったときの挙動修正  解決！
-// TODO　名前が一定数以上になったとき、表示を省略する  解決！リストを縦書きにして、並列に配置すれば名前が何行あってもOK
-// TODO エンターキー待ちの時間に「Enterキーでスタート」と表示する。　解決！
 // TODO エンターキー待ちの時間に「Enterキーでストップ！」と表示する。1地番最初から出す。エンターキー押下後すぐに削除
-// TODO 「エンターキーでスタートを名前の上に持ってくる 解決！
 // TODO レイアウトが崩れないようにする。人数が何人入力されても表示の上限を決めておく。
 // TODO 内容理解＆整理
 
 function Layout({ children }) {
   return <div className={styles.container}>{children}</div>;
 }
-
-// // namesを定数として定義
-// const NAMES = [
-//   "坂本 龍馬",
-//   "西郷隆盛",
-//   "明智光秀",
-//   "織田信長",
-//   "豊臣秀吉",
-//   "徳川 家康",
-//   "源義経",
-//   "源頼朝",
-//   "足利尊氏",
-//   "足利義政",
-//   "上杉謙信",
-//   "武田信玄",
-//   "北条氏康",
-//   "北条時宗",
-//   "真田　　幸村",
-//   "伊達政宗",
-//   "宮本武蔵",
-//   "直江兼続",
-//   "井伊直政",
-//   "前田利家",
-// ];
 
 const RandomNameApp: React.FC = () => {
   //ページ遷移について

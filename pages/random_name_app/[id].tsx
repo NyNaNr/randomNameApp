@@ -14,12 +14,20 @@ function Layout({ children }) {
 }
 
 const RandomNameApp: React.FC = () => {
+  const [NAMES, setNAMES] = useState<string[]>([]);
   //ページ遷移について
   const router = useRouter();
-  const { id } = router.query;
-  // クッキーから値を取得し、それをNAMESに代入
-  const cookieValue = Cookies.get(id);
-  const NAMES = cookieValue ? JSON.parse(decodeURIComponent(cookieValue)) : [];
+  useEffect(() => {
+    if (router.isReady) {
+      const { id } = router.query;
+      const cookieValue = Cookies.get(id);
+      const decodedNames = cookieValue
+        ? JSON.parse(decodeURIComponent(cookieValue))
+        : [];
+      setNAMES(decodedNames);
+      setRemainingNames(decodedNames);
+    }
+  }, [router.isReady]);
 
   const isShowingName = useRef<boolean>(false);
   const intervalId = useRef<number | null>(null);
@@ -38,8 +46,9 @@ const RandomNameApp: React.FC = () => {
     const randomName =
       remainingNames[Math.floor(Math.random() * remainingNames.length)];
     nameDisplay.current.textContent = randomName;
-    const longestName = remainingNames.reduce((longest, name) =>
-      name.length > longest.length ? name : longest
+    const longestName = remainingNames.reduce(
+      (longest, name) => (name.length > longest.length ? name : longest),
+      ""
     );
     fontSize.current = Math.floor(
       (window.innerWidth * 0.9) / longestName.length

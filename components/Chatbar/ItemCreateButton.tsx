@@ -1,12 +1,15 @@
 import { v4 as uuidv4 } from "uuid";
-import React, { useCallback } from "react";
-import { strict } from "assert";
+import React from "react";
 
 //新規リスト作成
 const ItemCreateButton = ({ lists, setLists }) => {
   //新規リスト作成
 
   const handleCreateItem = () => {
+    if (lists.length >= 40) {
+      //cookieは１ドメイン当たり上限がある。ブラウザによって異なるが低いもので50だったから、余裕をもって40
+      return;
+    }
     const newList = {
       id: uuidv4(),
       title: "New List",
@@ -31,10 +34,13 @@ const ItemCreateButton = ({ lists, setLists }) => {
     <React.Fragment>
       <div className="flex items-center">
         <button
-          className="text-sidebar flex w-[240px] flex-shrink-0 cursor-pointer select-none items-center gap-3 rounded-md border border-white/20 p-3 text-white transition-colors duration-200 hover:bg-gray-500/10 "
-          onClick={() => {
-            handleCreateItem();
-          }}
+          className={`text-sidebar flex w-[240px] flex-shrink-0 cursor-pointer select-none items-center gap-3 rounded-md border border-white/20 p-3 text-white transition-colors duration-200 ${
+            lists.length >= 40
+              ? "bg-gray-500/50 cursor-not-allowed"
+              : "hover:bg-gray-500/10"
+          }`}
+          onClick={handleCreateItem}
+          disabled={lists.length >= 40}
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"

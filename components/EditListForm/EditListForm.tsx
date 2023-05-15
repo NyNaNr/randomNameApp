@@ -1,8 +1,11 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import Cookies from "js-cookie";
 
 const EditListForm = ({ selectedListId }) => {
-  const [lineNumbers, setLineNumbers] = useState([]);
+  const [lineNumbersOfUserInput, setLineNumbersOfUserInput] = useState([]);
+  const [lineNumbersOfFormattedUserInput, setLineNumbersOfFormattedUserInput] =
+    useState([]);
+  const [formattedInput, setFormattedInput] = useState([]);
 
   //idを使ってtitleを取得
   let listNames = null;
@@ -13,8 +16,8 @@ const EditListForm = ({ selectedListId }) => {
   const item = listNames
     ? listNames.find((list) => list.id === idToSearch)
     : null;
-
   const title = item ? item.title : null; // itemが存在すればそのtitleを、存在しなければnullを返す
+  //
 
   // クッキーからリストアイテムを取得して初期値とする
   const initialListItems = Cookies.get(selectedListId)
@@ -22,13 +25,11 @@ const EditListForm = ({ selectedListId }) => {
     : "";
   const [inputText, setInputText] = useState(initialListItems); // ユーザー入力を管理するためのstate
 
-  // ユーザーが入力を確定する（改行を入力する）たびに呼び出される関数
-  const handleInputConfirm = () => {
-    const listItems = inputText.split("\n"); // 入力文字列を改行で分割してリストアイテムを作成
-
-    // クッキーに保存
-    Cookies.set(selectedListId, JSON.stringify(listItems), { expires: 7 }); // expiresで有効期限を設定（ここでは7日）
-  };
+  // 整形済みの配列をcookieに保存する
+  const handleInputConfirm = useCallback(() => {
+    // 配列をクッキーに保存
+    Cookies.set(selectedListId, JSON.stringify(formattedInput), { expires: 7 }); // expiresで有効期限を設定（ここでは7日）
+  }, [formattedInput, selectedListId]);
 
   // selectedListIdが変わるたびに、クッキーからリストアイテムを取得してstateを更新する
   useEffect(() => {
@@ -38,46 +39,95 @@ const EditListForm = ({ selectedListId }) => {
     setInputText(listItems);
   }, [selectedListId]);
 
-  //行番号生成
-  const getLineNumber = (currentListString) => {
+  //ユーザー入力画面の行番号生成
+  const getLineNumberOfUserInput = (currentListString) => {
     const currentList = currentListString.split("\n");
     const lineNumber = currentList.length;
     const lines = [];
     for (let i = 1; i <= lineNumber; i++) {
       lines.push(i);
     }
-    setLineNumbers(lines);
+    setLineNumbersOfUserInput(lines);
+  };
+
+  //ユーザーの入力を整形して表示する。
+  const formatUserInput = (userInput) => {
+    const userInputList = userInput.split("\n");
+    const rib_space_from_listNames = userInputList.map((name) =>
+      name.replace(/[\s　]/g, "")
+    );
+    const rib_null_from_userInputList =
+      rib_space_from_listNames.filter(Boolean);
+    const formattedUserInput = rib_null_from_userInputList;
+    return formattedUserInput;
+  };
+
+  //ユーザー入力整形後画面の行番号生成
+  const getLineNumberOfFormattedUserInput = (formattedUserInput) => {
+    const lineNumber = formattedUserInput.length;
+    const lines = [];
+    for (let i = 1; i <= lineNumber; i++) {
+      lines.push(i);
+    }
+    return lines;
   };
 
   // onChange handler
   const handleOnChange = (e) => {
     setInputText(e.target.value);
-    getLineNumber(e.target.value);
+    getLineNumberOfUserInput(e.target.value);
   };
 
   useEffect(() => {
-    getLineNumber(inputText);
+    getLineNumberOfUserInput(inputText);
   }, [inputText]);
+
+  useEffect(() => {
+    setFormattedInput(formatUserInput(inputText));
+  }, [inputText]);
+
+  useEffect(() => {
+    setLineNumbersOfFormattedUserInput(
+      getLineNumberOfFormattedUserInput(formattedInput)
+    );
+  }, [formattedInput]);
+
+  useEffect(() => {
+    handleInputConfirm();
+  }, [formattedInput, handleInputConfirm]);
 
   return (
     <React.Fragment>
       <div className="flex items-center">{selectedListId}</div>
       <div className="flex items-center">{title}</div>
       <div className="flex">
-        <div className="line-number mr-4">
-          {" "}
-          {/* margin-rightを追加してtextareaとの間にスペースを作ります */}
-          {lineNumbers.map((num, index) => (
-            <p key={index}>{num}</p>
-          ))}
+        <div className="flex">
+          <div className="line-number mr-4 text-right">
+            {/* margin-rightを追加してtextareaとの間にスペースを作ります */}
+            {lineNumbersOfUserInput.map((num, index) => (
+              <p key={index}>{num}</p>
+            ))}
+          </div>
+          <textarea
+            value={inputText}
+            className="padding: 0.75rem;"
+            onChange={handleOnChange}
+            onBlur={handleInputConfirm} // テキストエリアからフォーカスが外れたとき（入力が確定したとき）にhandleInputConfirmを呼び出す
+            rows={lineNumbersOfUserInput}
+          />
         </div>
-        <textarea
-          value={inputText}
-          className=""
-          onChange={handleOnChange}
-          onBlur={handleInputConfirm} // テキストエリアからフォーカスが外れたとき（入力が確定したとき）にhandleInputConfirmを呼び出す
-          rows={lineNumbers}
-        />
+        <div className="flex">
+          <div className="line-number mr-4 text-right">
+            {lineNumbersOfFormattedUserInput.map((num, index) => (
+              <p key={index}>{num}</p>
+            ))}
+          </div>
+          <div className="formatted-list">
+            {formattedInput.map((item, index) => (
+              <p key={index}>{item}</p>
+            ))}
+          </div>
+        </div>
       </div>
     </React.Fragment>
   );

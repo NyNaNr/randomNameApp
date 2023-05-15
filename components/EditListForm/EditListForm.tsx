@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useCallback } from "react";
+import Link from "next/link";
 import Cookies from "js-cookie";
 
 const EditListForm = ({ selectedListId }) => {
@@ -127,6 +128,7 @@ const EditListForm = ({ selectedListId }) => {
               <p key={index}>{item}</p>
             ))}
           </div>
+          <Link href={`/random_name_app/${selectedListId}`}>クリック</Link>
         </div>
       </div>
     </React.Fragment>

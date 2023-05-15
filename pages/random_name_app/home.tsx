@@ -37,6 +37,7 @@ export default function Home() {
                   lists={lists}
                   setLists={setLists}
                   onListClick={handleListClick}
+                  setSelectedListId={setSelectedListId}
                 />
               </div>
             </div>

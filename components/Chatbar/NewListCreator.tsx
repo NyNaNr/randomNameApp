@@ -1,10 +1,16 @@
 import React, { useState, useRef, useEffect, ChangeEvent } from "react";
 import { fetchListsFromLocalStorage } from "../../utils/random_name_app";
+import Cookies from "js-cookie";
 
 //TODO:削除したとき、名前を変更したときに、ローカルストレージを書き換える。
 
 //新規リスト作成
-const NewListCreator = ({ lists, setLists, onListClick }) => {
+const NewListCreator = ({
+  lists,
+  setLists,
+  onListClick,
+  setSelectedListId,
+}) => {
   useEffect(() => {
     const listsFromLocalStorage = fetchListsFromLocalStorage();
     console.log("listsFromLocalStorage", listsFromLocalStorage);
@@ -109,7 +115,6 @@ const NewListCreator = ({ lists, setLists, onListClick }) => {
     setLists((prevLists) => prevLists.filter((list) => list.id !== id));
     setDeleteConfirmMode(null);
     //ローカルストレージに保存
-
     const existingListsItem = window.localStorage.getItem("listNames");
     const parsedLists = existingListsItem
       ? JSON.parse(existingListsItem)
@@ -119,6 +124,14 @@ const NewListCreator = ({ lists, setLists, onListClick }) => {
       return existingList.id !== id;
     });
     window.localStorage.setItem("listNames", JSON.stringify(updatedLists));
+  };
+  //ゴミ箱モードでチェックマークを押すと発動2
+  const handleDeleteListOfCookie = (id) => {
+    Cookies.remove(id);
+  };
+  //ゴミ箱モードでチェックマークを押すと発動3
+  const selectedListIdToNull = () => {
+    setSelectedListId(null);
   };
 
   useEffect(() => {
@@ -225,7 +238,11 @@ const NewListCreator = ({ lists, setLists, onListClick }) => {
                   {/* Checkmark button */}
                   <button
                     className="min-w-[20px] p-1 text-neutral-400 hover:text-neutral-100"
-                    onClick={() => handleDeleteList(list.id)}
+                    onClick={() => {
+                      handleDeleteList(list.id);
+                      handleDeleteListOfCookie(list.id);
+                      selectedListIdToNull();
+                    }}
                   >
                     {/* Checkmark icon */}
                     <svg

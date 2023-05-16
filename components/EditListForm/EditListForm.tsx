@@ -79,7 +79,7 @@ const EditListForm = ({ selectedListId }) => {
     let totalBytes = 0;
 
     const encodedName = encodeURIComponent(JSON.stringify(formattedInput));
-    console.log(encodedName);
+
     totalBytes += encodedName.length;
 
     // Cookieのキーとなる文字列のバイト数を追加
@@ -134,7 +134,7 @@ const EditListForm = ({ selectedListId }) => {
               </div>
               <textarea
                 value={inputText}
-                className="padding: 0.75rem;"
+                className="pl-2 text-black"
                 onChange={handleOnChange}
                 onBlur={handleInputConfirm} // テキストエリアからフォーカスが外れたとき（入力が確定したとき）にhandleInputConfirmを呼び出す
                 rows={lineNumbersOfUserInput}

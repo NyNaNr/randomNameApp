@@ -1,8 +1,21 @@
 import { v4 as uuidv4 } from "uuid";
-import React from "react";
+import React, { Dispatch, SetStateAction } from "react";
+
+type ListType = {
+  id: string;
+  title: string;
+};
+
+type ItemCreateButtonProps = {
+  lists: ListType[];
+  setLists: Dispatch<SetStateAction<ListType[]>>;
+};
 
 //新規リスト作成
-const ItemCreateButton = ({ lists, setLists }) => {
+const ItemCreateButton: React.FC<ItemCreateButtonProps> = ({
+  lists,
+  setLists,
+}) => {
   //新規リスト作成
 
   const handleCreateItem = () => {

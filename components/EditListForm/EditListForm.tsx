@@ -8,18 +8,21 @@ const EditListForm = ({ selectedListId }) => {
     useState([]);
   const [formattedInput, setFormattedInput] = useState([]);
   const [totalBytes, setTotalBytes] = useState(0);
+  const [title, setTitle] = useState("");
 
   //idを使ってtitleを取得
-  let listNames = null;
-  if (typeof window !== "undefined") {
-    listNames = JSON.parse(localStorage.getItem("listNames"));
-  }
-  const idToSearch = selectedListId; // 特定のidを持つオブジェクトを検索
-  const item = listNames
-    ? listNames.find((list) => list.id === idToSearch)
-    : null;
-  const title = item ? item.title : null; // itemが存在すればそのtitleを、存在しなければnullを返す
-  //
+  const getTitleFromLocalstorage = () => {
+    let listNames = null;
+    if (typeof window !== "undefined") {
+      listNames = JSON.parse(localStorage.getItem("listNames"));
+    }
+    const idToSearch = selectedListId; // 特定のidを持つオブジェクトを検索
+    const item = listNames
+      ? listNames.find((list) => list.id === idToSearch)
+      : null;
+    const title = item ? item.title : null; // itemが存在すればそのtitleを、存在しなければnullを返す
+    return title;
+  };
 
   // クッキーからリストアイテムを取得して初期値とする
   const initialListItems = Cookies.get(selectedListId)
@@ -115,6 +118,9 @@ const EditListForm = ({ selectedListId }) => {
   useEffect(() => {
     setTotalBytes(calculateBytes());
   }, [formattedInput]);
+  useEffect(() => {
+    setTitle(getTitleFromLocalstorage());
+  }, [selectedListId]);
 
   return (
     <React.Fragment>

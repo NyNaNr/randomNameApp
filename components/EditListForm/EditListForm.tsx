@@ -7,6 +7,7 @@ const EditListForm = ({ selectedListId }) => {
   const [lineNumbersOfFormattedUserInput, setLineNumbersOfFormattedUserInput] =
     useState([]);
   const [formattedInput, setFormattedInput] = useState([]);
+  const [totalBytes, setTotalBytes] = useState(0);
 
   //idを使ってtitleを取得
   let listNames = null;
@@ -73,6 +74,20 @@ const EditListForm = ({ selectedListId }) => {
     return lines;
   };
 
+  //ユーザー入力のバイト数を計算
+  const calculateBytes = () => {
+    let totalBytes = 0;
+
+    const encodedName = encodeURIComponent(JSON.stringify(formattedInput));
+    console.log(encodedName);
+    totalBytes += encodedName.length;
+
+    // Cookieのキーとなる文字列のバイト数を追加
+    totalBytes += 38 - 6; //初期値はキーとバリュー[]が計算される[]をエンコードした%5B%5Dの6バイト分引いておく
+
+    return totalBytes;
+  };
+
   // onChange handler
   const handleOnChange = (e) => {
     setInputText(e.target.value);
@@ -97,12 +112,18 @@ const EditListForm = ({ selectedListId }) => {
     handleInputConfirm();
   }, [formattedInput, handleInputConfirm]);
 
+  useEffect(() => {
+    setTotalBytes(calculateBytes());
+  }, [formattedInput]);
+
   return (
     <React.Fragment>
       {selectedListId ? (
         <div>
-          <div className="flex items-center">{selectedListId}</div>
-          <div className="flex items-center">{title}</div>
+          <h1 className="flex items-center">{title}</h1>
+          <div className="flex items-center">
+            <p>合計バイト数: {totalBytes}</p>
+          </div>
           <div className="flex">
             <div className="flex">
               <div className="line-number mr-4 text-right">

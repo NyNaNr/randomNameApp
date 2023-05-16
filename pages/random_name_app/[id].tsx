@@ -27,7 +27,7 @@ const RandomNameApp: React.FC = () => {
       setNAMES(decodedNames);
       setRemainingNames(decodedNames);
     }
-  }, [router.isReady]);
+  }, [router.isReady, router.query]);
 
   const isShowingName = useRef<boolean>(false);
   const intervalId = useRef<number | null>(null);
@@ -78,7 +78,7 @@ const RandomNameApp: React.FC = () => {
         window.location.reload();
       }
     }
-  }, [showRandomName]);
+  }, [showRandomName, remainingNames.length]);
 
   const stopNameDisplay = useCallback(() => {
     if (isShowingName.current) {

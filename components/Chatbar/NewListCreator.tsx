@@ -2,10 +2,21 @@ import React, { useState, useRef, useEffect, ChangeEvent } from "react";
 import { fetchListsFromLocalStorage } from "../../utils/random_name_app";
 import Cookies from "js-cookie";
 
-//TODO:削除したとき、名前を変更したときに、ローカルストレージを書き換える。
+type ListType = {
+  id: string;
+  title: number | string;
+};
+
+type NewListCreatorProps = {
+  lists: ListType[];
+  setLists: React.Dispatch<React.SetStateAction<ListType[]>>;
+  onListClick: (list: ListType) => void;
+  setSelectedListId: React.Dispatch<React.SetStateAction<string | null>>;
+  setListTitle: React.Dispatch<React.SetStateAction<string>>;
+};
 
 //新規リスト作成
-const NewListCreator = ({
+const NewListCreator: React.FC<NewListCreatorProps> = ({
   lists,
   setLists,
   onListClick,
@@ -20,7 +31,7 @@ const NewListCreator = ({
   //ゴミ箱
   const [deleteConfirmMode, setDeleteConfirmMode] = useState(null);
   //その場編集
-  const prevListsRef = useRef();
+  const prevListsRef = useRef<ListType[]>([]);
   //useEffectフックを使用して、listsが更新された時点でorigListNamesおよびnewListNamesを設定する
   //useEffect内で前回のlistsと現在のlistsを比較して新規に追加されたリストを特定し、それらのリスト名だけを更新するようにする
   useEffect(() => {
@@ -43,8 +54,10 @@ const NewListCreator = ({
   }, [lists]);
 
   const [handleEditMode, setHandleEditMode] = useState(null);
-  const [origListNames, setOrigListNames] = useState(
-    lists.reduce((names, list) => {
+  const [origListNames, setOrigListNames] = useState<{
+    [key: string]: string | number;
+  }>(
+    lists.reduce((names: { [key: string]: string | number }, list) => {
       names[list.id] = list.title;
 
       return names;
@@ -344,6 +357,7 @@ const NewListCreator = ({
                     className="min-w-[20px] p-1 text-neutral-400 hover:text-neutral-100"
                     onClick={() => {
                       handleToggleEditMode(list.id);
+                      onListClick(list.id);
                     }}
                   >
                     <svg
@@ -366,7 +380,10 @@ const NewListCreator = ({
                   {/* Trash button */}
                   <button
                     className="min-w-[20px] p-1 text-neutral-400 hover:text-neutral-100"
-                    onClick={() => handleToggleDeleteConfirmMode(list.id)}
+                    onClick={() => {
+                      handleToggleDeleteConfirmMode(list.id);
+                      onListClick(list.id);
+                    }}
                   >
                     <button className="min-w-[20px] p-1 text-neutral-400 hover:text-neutral-100">
                       <svg

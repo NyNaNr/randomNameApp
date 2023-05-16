@@ -150,7 +150,7 @@ const NewListCreator = ({
       return refs;
     }, {});
     textInputRefs.current = newRefs;
-  }, [lists]);
+  }, [lists, setLists]);
 
   return (
     <div className="flex w-full flex-col gap-1">

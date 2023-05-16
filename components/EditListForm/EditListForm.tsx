@@ -122,18 +122,19 @@ const EditListForm = ({ selectedListId, listTitle }) => {
 
   useEffect(() => {
     setTotalBytes(calculateBytes());
-  }, [formattedInput]);
+  }, [formattedInput, calculateBytes]);
   useEffect(() => {
     setTitle(getTitleFromLocalstorage());
-  }, [selectedListId]);
+  }, [selectedListId, getTitleFromLocalstorage]);
 
   return (
     <React.Fragment>
       {selectedListId ? (
         <div>
-          <h1 className="flex items-center">{title}</h1>
-          <div className="flex items-center">
-            <p>合計バイト数: {totalBytes}</p>
+          <h1 className="items-center">{title}</h1>
+          <div className="items-center">
+            <p>合計バイト数: {totalBytes}/4096</p>
+            {/*4064はcookieの上限4096からキーと[]のバイト数を引いたもの */}
           </div>
           <div className="flex">
             <div className="flex">
@@ -145,7 +146,7 @@ const EditListForm = ({ selectedListId, listTitle }) => {
               </div>
               <textarea
                 value={inputText}
-                className="pl-2 text-black"
+                className="pl-2 text-black  border-2 border-black"
                 onChange={handleOnChange}
                 onBlur={handleInputConfirm} // テキストエリアからフォーカスが外れたとき（入力が確定したとき）にhandleInputConfirmを呼び出す
                 rows={lineNumbersOfUserInput}
@@ -162,9 +163,14 @@ const EditListForm = ({ selectedListId, listTitle }) => {
                   <p key={index}>{item}</p>
                 ))}
               </div>
-              <Link href={`/random_name_app/${selectedListId}`}>クリック</Link>
             </div>
           </div>
+          <Link
+            href={`/random_name_app/${selectedListId}`}
+            className="h-15 shadow-lg px-2 py-1 bg-blue-400 text-lg text-white font-semibold rounded hover:bg-blue-500 hover:shadow-sm transform transition duration-500 ease-in-out hover:-translate-y-1"
+          >
+            スタート
+          </Link>
         </div>
       ) : (
         <div>

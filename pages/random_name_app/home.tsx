@@ -5,7 +5,7 @@ import NewListCreator from "../../components/Chatbar/NewListCreator";
 import EditListForm from "../../components/EditListForm/EditListForm";
 
 export default function Home() {
-  const [lists, setLists] = useState<List[]>([]);
+  const [lists, setLists] = useState([]);
   //ユーザーがクリックした要素のidを共有
   const [selectedListId, setSelectedListId] = useState(null);
   const handleListClick = (id) => {

@@ -10,6 +10,7 @@ const NewListCreator = ({
   setLists,
   onListClick,
   setSelectedListId,
+  setListTitle,
 }) => {
   useEffect(() => {
     const listsFromLocalStorage = fetchListsFromLocalStorage();
@@ -74,6 +75,7 @@ const NewListCreator = ({
     }
   };
 
+  //その場編集関数
   const save = (id) => {
     if (newListNames[id] !== "") {
       const updatedListNames = { ...origListNames, [id]: newListNames[id] };
@@ -92,14 +94,14 @@ const NewListCreator = ({
       });
       updatedLists.push({ id: id, title: newListNames[id] });
       window.localStorage.setItem("listNames", JSON.stringify(updatedLists));
+      setListTitle(newListNames[id]);
     }
   };
-
+  //その場編集関数
   const cancel = () => {
     setNewListNames(origListNames);
     setHandleEditMode(null);
   };
-  //その場編集関数
 
   //ゴミ箱モードを呼ぶと発動＆ゴミ箱モード中に×を押しても発動
   const handleToggleDeleteConfirmMode = (id) => {

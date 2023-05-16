@@ -2,7 +2,7 @@ import React, { useState, useEffect, useCallback } from "react";
 import Link from "next/link";
 import Cookies from "js-cookie";
 
-const EditListForm = ({ selectedListId }) => {
+const EditListForm = ({ selectedListId, listTitle }) => {
   const [lineNumbersOfUserInput, setLineNumbersOfUserInput] = useState([]);
   const [lineNumbersOfFormattedUserInput, setLineNumbersOfFormattedUserInput] =
     useState([]);
@@ -23,6 +23,11 @@ const EditListForm = ({ selectedListId }) => {
     const title = item ? item.title : null; // itemが存在すればそのtitleを、存在しなければnullを返す
     return title;
   };
+
+  //リストの名前が変更されたとき表示を上書きする
+  useEffect(() => {
+    setTitle(listTitle);
+  }, [listTitle]);
 
   // クッキーからリストアイテムを取得して初期値とする
   const initialListItems = Cookies.get(selectedListId)

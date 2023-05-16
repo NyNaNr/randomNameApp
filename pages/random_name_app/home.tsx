@@ -11,6 +11,8 @@ export default function Home() {
   const handleListClick = (id) => {
     setSelectedListId(id);
   };
+  //ListTitle
+  const [listTitle, setListTitle] = useState("");
 
   return (
     <React.Fragment>
@@ -38,6 +40,7 @@ export default function Home() {
                   setLists={setLists}
                   onListClick={handleListClick}
                   setSelectedListId={setSelectedListId}
+                  setListTitle={setListTitle}
                 />
               </div>
             </div>
@@ -74,7 +77,7 @@ export default function Home() {
         </div>
 
         <div className="flex-grow">
-          <EditListForm selectedListId={selectedListId} />
+          <EditListForm selectedListId={selectedListId} listTitle={listTitle} />
         </div>
       </div>
     </React.Fragment>

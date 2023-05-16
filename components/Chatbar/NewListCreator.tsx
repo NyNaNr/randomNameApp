@@ -4,7 +4,11 @@ import Cookies from "js-cookie";
 
 type ListType = {
   id: string;
-  title: number | string;
+  title: string;
+};
+
+type TextInputRefsType = {
+  [key: string]: React.RefObject<HTMLInputElement>;
 };
 
 type NewListCreatorProps = {
@@ -12,7 +16,7 @@ type NewListCreatorProps = {
   setLists: React.Dispatch<React.SetStateAction<ListType[]>>;
   onListClick: (list: ListType) => void;
   setSelectedListId: React.Dispatch<React.SetStateAction<string | null>>;
-  setListTitle: React.Dispatch<React.SetStateAction<string>>;
+  setListTitle: React.Dispatch<React.SetStateAction<string | null>>;
 };
 
 //新規リスト作成
@@ -53,7 +57,7 @@ const NewListCreator: React.FC<NewListCreatorProps> = ({
     prevListsRef.current = lists;
   }, [lists]);
 
-  const [handleEditMode, setHandleEditMode] = useState(null);
+  const [handleEditMode, setHandleEditMode] = useState<string | null>(null);
   const [origListNames, setOrigListNames] = useState<{
     [key: string]: string | number;
   }>(
@@ -66,10 +70,10 @@ const NewListCreator: React.FC<NewListCreatorProps> = ({
 
   const [newListNames, setNewListNames] = useState({ ...origListNames });
 
-  const textInputRefs = useRef(new Map());
+  const textInputRefs = useRef<TextInputRefsType>({});
 
   //ペンシルアイコンを呼ぶと発動
-  const handleToggleEditMode = (id) => {
+  const handleToggleEditMode = (id: string) => {
     if (handleEditMode === id) {
       setHandleEditMode(null);
     } else {
@@ -81,7 +85,7 @@ const NewListCreator: React.FC<NewListCreatorProps> = ({
   };
 
   //その場編集関数
-  const focus = (id) => {
+  const focus = (id: string) => {
     const textInput = textInputRefs.current[id];
     if (textInput && textInput.current) {
       textInput.current.focus();
@@ -89,7 +93,7 @@ const NewListCreator: React.FC<NewListCreatorProps> = ({
   };
 
   //その場編集関数
-  const save = (id) => {
+  const save = (id: string) => {
     if (newListNames[id] !== "") {
       const updatedListNames = { ...origListNames, [id]: newListNames[id] };
       setOrigListNames(updatedListNames);
@@ -107,7 +111,7 @@ const NewListCreator: React.FC<NewListCreatorProps> = ({
       });
       updatedLists.push({ id: id, title: newListNames[id] });
       window.localStorage.setItem("listNames", JSON.stringify(updatedLists));
-      setListTitle(newListNames[id]);
+      setListTitle(newListNames[id].toString());
     }
   };
   //その場編集関数
@@ -117,7 +121,7 @@ const NewListCreator: React.FC<NewListCreatorProps> = ({
   };
 
   //ゴミ箱モードを呼ぶと発動＆ゴミ箱モード中に×を押しても発動
-  const handleToggleDeleteConfirmMode = (id) => {
+  const handleToggleDeleteConfirmMode = (id: string) => {
     if (deleteConfirmMode === id) {
       setDeleteConfirmMode(null);
     } else {
@@ -126,7 +130,7 @@ const NewListCreator: React.FC<NewListCreatorProps> = ({
   };
 
   //ゴミ箱モードでチェックマークを押すと発動
-  const handleDeleteList = (id) => {
+  const handleDeleteList = (id: string) => {
     setLists((prevLists) => prevLists.filter((list) => list.id !== id));
     setDeleteConfirmMode(null);
     //ローカルストレージに保存
@@ -141,7 +145,7 @@ const NewListCreator: React.FC<NewListCreatorProps> = ({
     window.localStorage.setItem("listNames", JSON.stringify(updatedLists));
   };
   //ゴミ箱モードでチェックマークを押すと発動2
-  const handleDeleteListOfCookie = (id) => {
+  const handleDeleteListOfCookie = (id: string) => {
     Cookies.remove(id);
   };
   //ゴミ箱モードでチェックマークを押すと発動3

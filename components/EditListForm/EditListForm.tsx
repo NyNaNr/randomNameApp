@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useCallback } from "react";
 import Link from "next/link";
 import Cookies from "js-cookie";
+import HeaderLayout from "./HeaderLayout";
 
 type EditListFormProps = {
   selectedListId: string | null;
@@ -141,60 +142,55 @@ const EditListForm = ({ selectedListId, listTitle }: EditListFormProps) => {
 
   return (
     <React.Fragment>
-      {selectedListId ? (
-        <div>
-          <h1 className="items-center">{title}</h1>
-          <div className="items-center">
-            <p>合計バイト数: {totalBytes}/4096</p>
-            {/*4064はcookieの上限4096からキーと[]のバイト数を引いたもの */}
-          </div>
-          <div className="flex">
+      <HeaderLayout
+        title={title}
+        selectedListId={selectedListId}
+        totalBytes={totalBytes}
+      >
+        {selectedListId ? (
+          <div>
             <div className="flex">
-              <div className="line-number mr-4 text-right">
-                {/* margin-rightを追加してtextareaとの間にスペースを作ります */}
-                {lineNumbersOfUserInput.map((num, index) => (
-                  <p key={index}>{num}</p>
-                ))}
+              <div className="flex">
+                <div className="line-number mr-4 text-right">
+                  {/* margin-rightを追加してtextareaとの間にスペースを作ります */}
+                  {lineNumbersOfUserInput.map((num, index) => (
+                    <p key={index}>{num}</p>
+                  ))}
+                </div>
+                <textarea
+                  value={inputText}
+                  className="pl-2 text-black  border-2 border-black"
+                  onChange={handleOnChange}
+                  onBlur={handleInputConfirm} // テキストエリアからフォーカスが外れたとき（入力が確定したとき）にhandleInputConfirmを呼び出す
+                  rows={lineNumbersOfUserInput.length}
+                  wrap="off"
+                />
               </div>
-              <textarea
-                value={inputText}
-                className="pl-2 text-black  border-2 border-black"
-                onChange={handleOnChange}
-                onBlur={handleInputConfirm} // テキストエリアからフォーカスが外れたとき（入力が確定したとき）にhandleInputConfirmを呼び出す
-                rows={lineNumbersOfUserInput.length}
-                wrap="off"
-              />
-            </div>
-            <div className="flex">
-              <div className="line-number mr-4 text-right">
-                {lineNumbersOfFormattedUserInput.map((num, index) => (
-                  <p key={index}>{num}</p>
-                ))}
-              </div>
-              <div className="formatted-list">
-                {formattedInput.map((item, index) => (
-                  <p key={index}>{item}</p>
-                ))}
+              <div className="flex">
+                <div className="line-number mr-4 text-right">
+                  {lineNumbersOfFormattedUserInput.map((num, index) => (
+                    <p key={index}>{num}</p>
+                  ))}
+                </div>
+                <div className="formatted-list">
+                  {formattedInput.map((item, index) => (
+                    <p key={index}>{item}</p>
+                  ))}
+                </div>
               </div>
             </div>
           </div>
-          <Link
-            href={`/random_name_app/${selectedListId}`}
-            className="h-15 shadow-lg px-2 py-1 bg-blue-400 text-lg text-white font-semibold rounded hover:bg-blue-500 hover:shadow-sm transform transition duration-500 ease-in-out hover:-translate-y-1"
-          >
-            スタート
-          </Link>
-        </div>
-      ) : (
-        <div>
-          <h2>Webアプリの使い方:</h2>
-          <p>1. 左の「新規リストを作成」ボタンをクリックします。</p>
-          <p>2. リスト名を入力し、「リストを作成」ボタンをクリックします。</p>
-          <p>3. 作成したリストをクリックして選択します。</p>
-          <p>4. 右側のテキストエリアにリストアイテムを入力します。</p>
-          <p>5. リストアイテムが整形されて下部に表示されます。</p>
-        </div>
-      )}
+        ) : (
+          <div>
+            <h2>Webアプリの使い方:</h2>
+            <p>1. 左の「新規リストを作成」ボタンをクリックします。</p>
+            <p>2. リスト名を入力し、「リストを作成」ボタンをクリックします。</p>
+            <p>3. 作成したリストをクリックして選択します。</p>
+            <p>4. 右側のテキストエリアにリストアイテムを入力します。</p>
+            <p>5. リストアイテムが整形されて下部に表示されます。</p>
+          </div>
+        )}
+      </HeaderLayout>
     </React.Fragment>
   );
 };

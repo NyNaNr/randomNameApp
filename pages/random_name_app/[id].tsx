@@ -1,4 +1,10 @@
-import React, { useState, useEffect, useRef, useCallback } from "react";
+import React, {
+  useState,
+  useEffect,
+  useRef,
+  useCallback,
+  ReactNode,
+} from "react";
 import Head from "next/head";
 import Link from "next/link";
 import { useRouter } from "next/router";
@@ -9,7 +15,11 @@ import Cookies from "js-cookie";
 // TODO レイアウトが崩れないようにする。人数が何人入力されても表示の上限を決めておく。
 // TODO 内容理解＆整理
 
-function Layout({ children }) {
+type LayoutProps = {
+  children: ReactNode;
+};
+
+function Layout({ children }: LayoutProps) {
   return <div className={styles.container}>{children}</div>;
 }
 
@@ -20,12 +30,14 @@ const RandomNameApp: React.FC = () => {
   useEffect(() => {
     if (router.isReady) {
       const { id } = router.query;
-      const cookieValue = Cookies.get(id);
-      const decodedNames = cookieValue
-        ? JSON.parse(decodeURIComponent(cookieValue))
-        : [];
-      setNAMES(decodedNames);
-      setRemainingNames(decodedNames);
+      if (typeof id === "string") {
+        const cookieValue = Cookies.get(id);
+        const decodedNames = cookieValue
+          ? JSON.parse(decodeURIComponent(cookieValue))
+          : [];
+        setNAMES(decodedNames);
+        setRemainingNames(decodedNames);
+      }
     }
   }, [router.isReady, router.query]);
 
@@ -34,9 +46,9 @@ const RandomNameApp: React.FC = () => {
   const [remainingNames, setRemainingNames] = useState<string[]>(NAMES);
   const [selectedNameList, setSelectedNameList] = useState<string[]>([]);
 
-  const nameDisplay = useRef<HTMLElement | null>(null);
-  const startNotifier = useRef<HTMLElement | null>(null);
-  const stopNotifier = useRef<HTMLElement | null>(null);
+  const nameDisplay = useRef<HTMLDivElement>(null);
+  const startNotifier = useRef<HTMLDivElement>(null);
+  const stopNotifier = useRef<HTMLDivElement>(null);
 
   const fontSize = useRef(0); //fontSizeをuseRefで保持;
 
@@ -97,13 +109,15 @@ const RandomNameApp: React.FC = () => {
     const lastName = nameDisplay.current.textContent;
     const shouldRemove = confirm(`${lastName}を選択済みリストに移動しますか？`);
 
-    if (shouldRemove) {
+    if (shouldRemove && lastName) {
       setSelectedNameList([...selectedNameList, lastName]);
       setRemainingNames(remainingNames.filter((name) => name !== lastName));
     }
     //ここにユーザーにエンターキーでスタートを知らせる関数を作成
-    startNotifier.current.style.fontSize = `${fontSize.current * 0.2}px`;
-    startNotifier.current.textContent = "Enterキーでスタート！";
+    if (startNotifier.current) {
+      startNotifier.current.style.fontSize = `${fontSize.current * 0.2}px`;
+      startNotifier.current.textContent = "Enterキーでスタート！";
+    }
   }, [remainingNames, selectedNameList]);
 
   //useEffectでコンポーネントマウント時に設定する

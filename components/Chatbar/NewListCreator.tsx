@@ -14,7 +14,7 @@ type TextInputRefsType = {
 type NewListCreatorProps = {
   lists: ListType[];
   setLists: React.Dispatch<React.SetStateAction<ListType[]>>;
-  onListClick: (list: ListType) => void;
+  onListClick: (id: string) => void;
   setSelectedListId: React.Dispatch<React.SetStateAction<string | null>>;
   setListTitle: React.Dispatch<React.SetStateAction<string | null>>;
 };
@@ -33,7 +33,9 @@ const NewListCreator: React.FC<NewListCreatorProps> = ({
     setLists(listsFromLocalStorage);
   }, []);
   //ゴミ箱
-  const [deleteConfirmMode, setDeleteConfirmMode] = useState(null);
+  const [deleteConfirmMode, setDeleteConfirmMode] = useState<string | null>(
+    null
+  );
   //その場編集
   const prevListsRef = useRef<ListType[]>([]);
   //useEffectフックを使用して、listsが更新された時点でorigListNamesおよびnewListNamesを設定する
@@ -162,10 +164,13 @@ const NewListCreator: React.FC<NewListCreatorProps> = ({
   }, [handleEditMode]);
 
   useEffect(() => {
-    const newRefs = lists.reduce((refs, list) => {
-      refs[list.id] = React.createRef();
-      return refs;
-    }, {});
+    const newRefs = lists.reduce(
+      (refs: { [key: string]: React.RefObject<HTMLInputElement> }, list) => {
+        refs[list.id] = React.createRef();
+        return refs;
+      },
+      {}
+    );
     textInputRefs.current = newRefs;
   }, [lists, setLists]);
 
@@ -207,7 +212,7 @@ const NewListCreator: React.FC<NewListCreatorProps> = ({
                         [list.id]: e.target.value,
                       })
                     }
-                    onKeyDown={(e: KeyboardEvent<HTMLInputElement>) => {
+                    onKeyDown={(e: React.KeyboardEvent<HTMLInputElement>) => {
                       if (e.key === "Enter") save(list.id);
                       if (e.key === "Escape") cancel();
                     }}

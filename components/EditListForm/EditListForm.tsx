@@ -2,7 +2,12 @@ import React, { useState, useEffect, useCallback } from "react";
 import Link from "next/link";
 import Cookies from "js-cookie";
 
-const EditListForm = ({ selectedListId, listTitle }) => {
+type EditListFormProps = {
+  selectedListId: string;
+  listTitle: string;
+};
+
+const EditListForm = ({ selectedListId, listTitle }: EditListFormProps) => {
   const [lineNumbersOfUserInput, setLineNumbersOfUserInput] = useState([]);
   const [lineNumbersOfFormattedUserInput, setLineNumbersOfFormattedUserInput] =
     useState([]);
@@ -11,7 +16,7 @@ const EditListForm = ({ selectedListId, listTitle }) => {
   const [title, setTitle] = useState("");
 
   //idを使ってtitleを取得
-  const getTitleFromLocalstorage = () => {
+  const getTitleFromLocalstorage = useCallback(() => {
     let listNames = null;
     if (typeof window !== "undefined") {
       listNames = JSON.parse(localStorage.getItem("listNames"));
@@ -22,7 +27,7 @@ const EditListForm = ({ selectedListId, listTitle }) => {
       : null;
     const title = item ? item.title : null; // itemが存在すればそのtitleを、存在しなければnullを返す
     return title;
-  };
+  }, [selectedListId]);
 
   //リストの名前が変更されたとき表示を上書きする
   useEffect(() => {
@@ -83,18 +88,13 @@ const EditListForm = ({ selectedListId, listTitle }) => {
   };
 
   //ユーザー入力のバイト数を計算
-  const calculateBytes = () => {
+  const calculateBytes = useCallback(() => {
     let totalBytes = 0;
-
     const encodedName = encodeURIComponent(JSON.stringify(formattedInput));
-
     totalBytes += encodedName.length;
-
-    // Cookieのキーとなる文字列のバイト数を追加
     totalBytes += 38 - 6; //初期値はキーとバリュー[]が計算される[]をエンコードした%5B%5Dの6バイト分引いておく
-
     return totalBytes;
-  };
+  }, [formattedInput]);
 
   // onChange handler
   const handleOnChange = (e) => {
@@ -123,6 +123,7 @@ const EditListForm = ({ selectedListId, listTitle }) => {
   useEffect(() => {
     setTotalBytes(calculateBytes());
   }, [formattedInput, calculateBytes]);
+
   useEffect(() => {
     setTitle(getTitleFromLocalstorage());
   }, [selectedListId, getTitleFromLocalstorage]);

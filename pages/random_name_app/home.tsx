@@ -4,15 +4,20 @@ import ItemCreateButton from "../../components/Chatbar/ItemCreateButton";
 import NewListCreator from "../../components/Chatbar/NewListCreator";
 import EditListForm from "../../components/EditListForm/EditListForm";
 
+type ListType = {
+  id: string;
+  title: string;
+};
+
 export default function Home() {
-  const [lists, setLists] = useState([]);
+  const [lists, setLists] = useState<ListType[]>([]);
   //ユーザーがクリックした要素のidを共有
-  const [selectedListId, setSelectedListId] = useState(null);
-  const handleListClick = (id) => {
+  const [selectedListId, setSelectedListId] = useState<string | null>(null);
+  const handleListClick = (id: string) => {
     setSelectedListId(id);
   };
   //ListTitle
-  const [listTitle, setListTitle] = useState("");
+  const [listTitle, setListTitle] = useState<string | null>("");
 
   return (
     <React.Fragment>

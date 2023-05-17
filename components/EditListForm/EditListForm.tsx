@@ -3,8 +3,8 @@ import Link from "next/link";
 import Cookies from "js-cookie";
 
 type EditListFormProps = {
-  selectedListId: string;
-  listTitle: string;
+  selectedListId: string | null;
+  listTitle: string | null;
 };
 
 const EditListForm = ({ selectedListId, listTitle }: EditListFormProps) => {

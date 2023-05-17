@@ -162,6 +162,7 @@ const EditListForm = ({ selectedListId, listTitle }: EditListFormProps) => {
                 onChange={handleOnChange}
                 onBlur={handleInputConfirm} // テキストエリアからフォーカスが外れたとき（入力が確定したとき）にhandleInputConfirmを呼び出す
                 rows={lineNumbersOfUserInput.length}
+                wrap="off"
               />
             </div>
             <div className="flex">

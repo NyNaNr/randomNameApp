@@ -15,7 +15,7 @@ const EditListForm = ({ selectedListId, listTitle }: EditListFormProps) => {
     useState<number[]>([]);
   const [formattedInput, setFormattedInput] = useState<string[]>([]);
   const [totalBytes, setTotalBytes] = useState(0);
-  const [title, setTitle] = useState("");
+  const [title, setTitle] = useState<string | null>("");
 
   //idを使ってtitleを取得
   const getTitleFromLocalstorage = useCallback(() => {
@@ -49,7 +49,11 @@ const EditListForm = ({ selectedListId, listTitle }: EditListFormProps) => {
   // 整形済みの配列をcookieに保存する
   const handleInputConfirm = useCallback(() => {
     // 配列をクッキーに保存
-    Cookies.set(selectedListId, JSON.stringify(formattedInput), { expires: 7 }); // expiresで有効期限を設定（ここでは7日）
+    if (selectedListId) {
+      Cookies.set(selectedListId, JSON.stringify(formattedInput), {
+        expires: 7,
+      });
+    } // expiresで有効期限を設定（ここでは7日）
   }, [formattedInput, selectedListId]);
 
   // selectedListIdが変わるたびに、クッキーからリストアイテムを取得してstateを更新する

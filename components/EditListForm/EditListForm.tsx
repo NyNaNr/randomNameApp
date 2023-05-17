@@ -8,10 +8,12 @@ type EditListFormProps = {
 };
 
 const EditListForm = ({ selectedListId, listTitle }: EditListFormProps) => {
-  const [lineNumbersOfUserInput, setLineNumbersOfUserInput] = useState([]);
+  const [lineNumbersOfUserInput, setLineNumbersOfUserInput] = useState<
+    number[]
+  >([]);
   const [lineNumbersOfFormattedUserInput, setLineNumbersOfFormattedUserInput] =
-    useState([]);
-  const [formattedInput, setFormattedInput] = useState([]);
+    useState<number[]>([]);
+  const [formattedInput, setFormattedInput] = useState<string[]>([]);
   const [totalBytes, setTotalBytes] = useState(0);
   const [title, setTitle] = useState("");
 
@@ -19,11 +21,14 @@ const EditListForm = ({ selectedListId, listTitle }: EditListFormProps) => {
   const getTitleFromLocalstorage = useCallback(() => {
     let listNames = null;
     if (typeof window !== "undefined") {
-      listNames = JSON.parse(localStorage.getItem("listNames"));
+      const storedListNames = localStorage.getItem("listNames");
+      listNames = storedListNames ? JSON.parse(storedListNames) : null;
     }
     const idToSearch = selectedListId; // 特定のidを持つオブジェクトを検索
     const item = listNames
-      ? listNames.find((list) => list.id === idToSearch)
+      ? listNames.find(
+          (list: { id: string; title: string }) => list.id === idToSearch
+        )
       : null;
     const title = item ? item.title : null; // itemが存在すればそのtitleを、存在しなければnullを返す
     return title;
@@ -35,9 +40,10 @@ const EditListForm = ({ selectedListId, listTitle }: EditListFormProps) => {
   }, [listTitle]);
 
   // クッキーからリストアイテムを取得して初期値とする
-  const initialListItems = Cookies.get(selectedListId)
-    ? JSON.parse(Cookies.get(selectedListId)).join("\n") //
-    : "";
+  const initialListItems =
+    selectedListId && Cookies.get(selectedListId)
+      ? JSON.parse(Cookies.get(selectedListId) || "").join("\n") //
+      : "";
   const [inputText, setInputText] = useState(initialListItems); // ユーザー入力を管理するためのstate
 
   // 整形済みの配列をcookieに保存する
@@ -48,14 +54,15 @@ const EditListForm = ({ selectedListId, listTitle }: EditListFormProps) => {
 
   // selectedListIdが変わるたびに、クッキーからリストアイテムを取得してstateを更新する
   useEffect(() => {
-    const listItems = Cookies.get(selectedListId)
-      ? JSON.parse(Cookies.get(selectedListId)).join("\n")
-      : "";
+    const listItems =
+      selectedListId && Cookies.get(selectedListId)
+        ? JSON.parse(Cookies.get(selectedListId) || "").join("\n")
+        : "";
     setInputText(listItems);
   }, [selectedListId]);
 
   //ユーザー入力画面の行番号生成
-  const getLineNumberOfUserInput = (currentListString) => {
+  const getLineNumberOfUserInput = (currentListString: string) => {
     const currentList = currentListString.split("\n");
     const lineNumber = currentList.length;
     const lines = [];
@@ -66,7 +73,7 @@ const EditListForm = ({ selectedListId, listTitle }: EditListFormProps) => {
   };
 
   //ユーザーの入力を整形して表示する。
-  const formatUserInput = (userInput) => {
+  const formatUserInput = (userInput: string): string[] => {
     const userInputList = userInput.split("\n");
     const rib_space_from_listNames = userInputList.map((name) =>
       name.replace(/[\s　]/g, "")
@@ -78,7 +85,7 @@ const EditListForm = ({ selectedListId, listTitle }: EditListFormProps) => {
   };
 
   //ユーザー入力整形後画面の行番号生成
-  const getLineNumberOfFormattedUserInput = (formattedUserInput) => {
+  const getLineNumberOfFormattedUserInput = (formattedUserInput: string[]) => {
     const lineNumber = formattedUserInput.length;
     const lines = [];
     for (let i = 1; i <= lineNumber; i++) {
@@ -97,7 +104,7 @@ const EditListForm = ({ selectedListId, listTitle }: EditListFormProps) => {
   }, [formattedInput]);
 
   // onChange handler
-  const handleOnChange = (e) => {
+  const handleOnChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setInputText(e.target.value);
     getLineNumberOfUserInput(e.target.value);
   };
@@ -150,7 +157,7 @@ const EditListForm = ({ selectedListId, listTitle }: EditListFormProps) => {
                 className="pl-2 text-black  border-2 border-black"
                 onChange={handleOnChange}
                 onBlur={handleInputConfirm} // テキストエリアからフォーカスが外れたとき（入力が確定したとき）にhandleInputConfirmを呼び出す
-                rows={lineNumbersOfUserInput}
+                rows={lineNumbersOfUserInput.length}
               />
             </div>
             <div className="flex">

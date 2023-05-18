@@ -1,14 +1,14 @@
 import React, { ReactNode } from "react";
 import Link from "next/link";
 
-type HeaderLayoutProps = {
+type LayoutProps = {
   title: string | null;
   selectedListId: string | null;
   totalBytes: number;
   children: ReactNode;
 };
 
-const HeaderLayout: React.FC<HeaderLayoutProps> = ({
+const Layout: React.FC<LayoutProps> = ({
   title,
   selectedListId,
   totalBytes,
@@ -29,8 +29,12 @@ const HeaderLayout: React.FC<HeaderLayoutProps> = ({
         </Link>
       </header>
     )}
-    <div className="mt-24">{children}</div>
+    {selectedListId ? (
+      <div className="mt-24">{children}</div>
+    ) : (
+      <div className="">{children}</div>
+    )}
   </React.Fragment>
 );
 
-export default HeaderLayout;
+export default Layout;

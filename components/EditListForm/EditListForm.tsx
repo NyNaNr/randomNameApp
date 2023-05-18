@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useCallback } from "react";
 import Link from "next/link";
 import Cookies from "js-cookie";
-import HeaderLayout from "./HeaderLayout";
+import Layout from "./Layout";
 
 type EditListFormProps = {
   selectedListId: string | null;
@@ -142,7 +142,7 @@ const EditListForm = ({ selectedListId, listTitle }: EditListFormProps) => {
 
   return (
     <React.Fragment>
-      <HeaderLayout
+      <Layout
         title={title}
         selectedListId={selectedListId}
         totalBytes={totalBytes}
@@ -190,7 +190,7 @@ const EditListForm = ({ selectedListId, listTitle }: EditListFormProps) => {
             <p>5. リストアイテムが整形されて下部に表示されます。</p>
           </div>
         )}
-      </HeaderLayout>
+      </Layout>
     </React.Fragment>
   );
 };

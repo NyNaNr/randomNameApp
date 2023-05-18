@@ -45,6 +45,7 @@ export default function Home() {
                   setLists={setLists}
                   onListClick={handleListClick}
                   setSelectedListId={setSelectedListId}
+                  selectedListId={selectedListId}
                   setListTitle={setListTitle}
                 />
               </div>

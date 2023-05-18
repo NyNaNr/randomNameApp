@@ -17,6 +17,7 @@ type NewListCreatorProps = {
   onListClick: (id: string) => void;
   setSelectedListId: React.Dispatch<React.SetStateAction<string | null>>;
   setListTitle: React.Dispatch<React.SetStateAction<string | null>>;
+  selectedListId: string | null;
 };
 
 //新規リスト作成
@@ -26,7 +27,9 @@ const NewListCreator: React.FC<NewListCreatorProps> = ({
   onListClick,
   setSelectedListId,
   setListTitle,
+  selectedListId,
 }) => {
+  console.log("selectedListId:", selectedListId);
   useEffect(() => {
     const listsFromLocalStorage = fetchListsFromLocalStorage();
     console.log("listsFromLocalStorage", listsFromLocalStorage);
@@ -178,7 +181,12 @@ const NewListCreator: React.FC<NewListCreatorProps> = ({
   return (
     <div className="flex w-full flex-col gap-1">
       {lists.map((list) => (
-        <div className="relative flex items-center group" key={list.id}>
+        <div
+          className={`relative flex items-center group ${
+            list.id === selectedListId ? "bg-blue-500 rounded-lg" : ""
+          }`}
+          key={list.id}
+        >
           {(() => {
             if (handleEditMode === list.id) {
               return (
@@ -223,7 +231,9 @@ const NewListCreator: React.FC<NewListCreatorProps> = ({
             } else {
               return (
                 <button
-                  className="flex w-full cursor-pointer items-center gap-3 rounded-lg p-3 text-sm transition-colors duration-200 hover:bg-[#343541]/90"
+                  className={`flex w-full cursor-pointer items-center gap-3 rounded-lg p-3 text-sm transition-colors duration-200 ${
+                    list.id === selectedListId ? "" : "hover:bg-[#343541]/90"
+                  } `}
                   onClick={() => onListClick(list.id)}
                 >
                   {/*リストアイコン */}

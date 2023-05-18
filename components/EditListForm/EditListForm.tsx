@@ -104,7 +104,7 @@ const EditListForm = ({ selectedListId, listTitle }: EditListFormProps) => {
     let totalBytes = 0;
     const encodedName = encodeURIComponent(JSON.stringify(formattedInput));
     totalBytes += encodedName.length;
-    totalBytes += 38 - 6; //初期値はキーとバリュー[]が計算される[]をエンコードした%5B%5Dの6バイト分引いておく
+    totalBytes -= 6; //初期値はキーとバリュー[]が計算される[]をエンコードした%5B%5Dの6バイト分引いておく
     return totalBytes;
   }, [formattedInput]);
 
@@ -149,7 +149,7 @@ const EditListForm = ({ selectedListId, listTitle }: EditListFormProps) => {
       >
         {selectedListId ? (
           <div>
-            <div className="flex">
+            <div className="flex mt-28">
               <div className="flex">
                 <div className="line-number mr-4 text-right">
                   {/* margin-rightを追加してtextareaとの間にスペースを作ります */}

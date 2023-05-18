@@ -142,11 +142,7 @@ const EditListForm = ({ selectedListId, listTitle }: EditListFormProps) => {
 
   return (
     <React.Fragment>
-      <Layout
-        title={title}
-        selectedListId={selectedListId}
-        totalBytes={totalBytes}
-      >
+      <Layout selectedListId={selectedListId} totalBytes={totalBytes}>
         {selectedListId ? (
           <div>
             <div className="flex mt-28">

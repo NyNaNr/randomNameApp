@@ -2,14 +2,12 @@ import React, { ReactNode } from "react";
 import Link from "next/link";
 
 type LayoutProps = {
-  title: string | null;
   selectedListId: string | null;
   totalBytes: number;
   children: ReactNode;
 };
 
 const Layout: React.FC<LayoutProps> = ({
-  title,
   selectedListId,
   totalBytes,
   children,
@@ -17,7 +15,6 @@ const Layout: React.FC<LayoutProps> = ({
   <React.Fragment>
     {selectedListId && (
       <header className="fixed top-0 w-full z-50 bg-white">
-        <h1 className="">リスト名: {title}</h1>
         <div className="">
           <p>保存可能な文字容量: {totalBytes}/4058 bytes</p>
         </div>

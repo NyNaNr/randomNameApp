@@ -20,7 +20,7 @@ const Layout: React.FC<LayoutProps> = ({
         </div>
         {totalBytes > 4058 ? (
           <div>
-            <p>文字数が保存容量を超えています。減らしてください</p>
+            <p>文字数が保存容量を超えています。減らしてください。</p>
           </div>
         ) : (
           <div>
@@ -36,7 +36,7 @@ const Layout: React.FC<LayoutProps> = ({
 
           <Link
             href={`/random_name_app/${selectedListId}`}
-            className={`absolute h-15 z-10 shadow-lg px-2 py-1 bg-blue-400 text-lg text-white font-semibold rounded  hover:shadow-sm transform transition duration-500 ease-in-out hover:-translate-y-1 ${
+            className={`absolute h-15 z-10 shadow-lg px-2 py-1 bg-blue-400 text-lg text-white font-semibold rounded  hover:shadow-sm  ${
               totalBytes > 4058 ? " bg-gray-500/50" : "hover:bg-blue-500"
             }`}
           >

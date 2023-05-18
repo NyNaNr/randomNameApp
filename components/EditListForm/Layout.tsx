@@ -27,12 +27,22 @@ const Layout: React.FC<LayoutProps> = ({
             <br />
           </div>
         )}
-        <Link
-          href={`/random_name_app/${selectedListId}`}
-          className="h-15 shadow-lg px-2 py-1 bg-blue-400 text-lg text-white font-semibold rounded hover:bg-blue-500 hover:shadow-sm transform transition duration-500 ease-in-out hover:-translate-y-1"
-        >
-          スタート
-        </Link>
+        <div className="start-links relative">
+          {totalBytes > 4058 ? (
+            <div className="link-blocker absolute h-15 px-2 py-1 text-lg text-white font-semibold rounded z-20 cursor-not-allowed">
+              スタート
+            </div>
+          ) : null}
+
+          <Link
+            href={`/random_name_app/${selectedListId}`}
+            className={`absolute h-15 z-10 shadow-lg px-2 py-1 bg-blue-400 text-lg text-white font-semibold rounded  hover:shadow-sm transform transition duration-500 ease-in-out hover:-translate-y-1 ${
+              totalBytes > 4058 ? " bg-gray-500/50" : "hover:bg-blue-500"
+            }`}
+          >
+            スタート
+          </Link>
+        </div>
       </header>
     )}
     {selectedListId ? (

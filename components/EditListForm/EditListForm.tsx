@@ -36,15 +36,37 @@ const EditListForm = ({ selectedListId, listTitle }: EditListFormProps) => {
       Cookies.set(selectedListId, JSON.stringify(formattedInput), {
         expires: 365,
       });
+    }
 
-      // document.cookie =
-      //   selectedListId +
-      //   "=" +
-      //   JSON.stringify(formattedInput) +
-      //   ";max-age=" +
-      //   31536000;
+    //cookieの有効期限をローカルストレージに保存
+    const now = new Date();
+    const oneYearLater = new Date(now.setFullYear(now.getFullYear() + 1));
+    if (selectedListId) {
+      const newItem = { key: selectedListId, expires: oneYearLater.toString() };
+
+      const existingItems = JSON.parse(
+        window.localStorage.getItem("cookieExpires") || "[]"
+      );
+      const existingItemIndex = existingItems.findIndex(
+        (item: { key: string }) => item.key === selectedListId
+      );
+
+      if (existingItemIndex >= 0) {
+        // 配列にすでに同じキーのアイテムがある場合、それを新しいアイテムで更新する
+        existingItems[existingItemIndex] = newItem;
+      } else {
+        // 同じキーのアイテムがない場合、新しいアイテムを配列に追加する
+        existingItems.push(newItem);
+      }
+
+      window.localStorage.setItem(
+        "cookieExpires",
+        JSON.stringify(existingItems)
+      );
     }
   }, [formattedInput, selectedListId]);
+
+  //現在時刻からcookieの有効期限までの残り時間計算
 
   // selectedListIdが変わるたびに、クッキーからリストアイテムを取得してstateを更新する
   useEffect(() => {

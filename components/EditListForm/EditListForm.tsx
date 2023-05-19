@@ -16,6 +16,9 @@ const EditListForm = ({ selectedListId, listTitle }: EditListFormProps) => {
   const [formattedInput, setFormattedInput] = useState<string[]>([]);
   const [totalBytes, setTotalBytes] = useState(0);
   const [title, setTitle] = useState<string | null>("");
+  const [cookieExpires, setCookieExpires] = useState(0);
+
+  //cookieの有効期限と現在時刻から残りの
 
   //リストの名前が変更されたとき表示を上書きする
   useEffect(() => {
@@ -196,13 +199,31 @@ const EditListForm = ({ selectedListId, listTitle }: EditListFormProps) => {
             </div>
           </div>
         ) : (
-          <div>
-            <h2>Webアプリの使い方:</h2>
-            <p>1. 左の「新規リストを作成」ボタンをクリックします。</p>
-            <p>2. リスト名を入力し、「リストを作成」ボタンをクリックします。</p>
-            <p>3. 作成したリストをクリックして選択します。</p>
-            <p>4. 右側のテキストエリアにリストアイテムを入力します。</p>
-            <p>5. リストアイテムが整形されて下部に表示されます。</p>
+          <div className="m-10">
+            <h1>とにかく大きいランダムネームアップ</h1>
+            <br />
+            <p>
+              当Webアプリは、名前をビンゴのようにランダムに大きく表示するアプリです。
+            </p>
+            <p>
+              授業や講義の指名や結婚式の余興など、さまざまなシーンでご利用いただけます。
+            </p>
+            <p>
+              特徴は、とにかく大きく名前を表示できることで、見やすさを追求しています。
+            </p>
+            <br />
+            <h2>入力された個人情報について</h2>
+
+            <p>
+              利用の際に入力される情報は、当Webアプリが外部サーバーに送信することはありません。すべての情報はローカルに保存され、第三者と共有されることはありません。
+            </p>
+            <p>
+              すべての入力された情報はユーザーのパソコン（ブラウザ）にファーストパーティーcookieの技術を用いて保存されます。これはブラウザを閉じても情報が保持され、再度開いた時に同じ情報が表示されることを可能にします。もちろん、ユーザーがリストを削除することで、個人情報もブラウザから削除されます。
+            </p>
+            <p>
+              cookieの性質上、ユーザーがリストを編集・保存してから1年後、入力した名前が自動的に削除されます。ただし、Safariブラウザではcookieの保存期限が1週間となる等、ブラウザの仕様変更などで保存できる期限が変わる可能性があります。
+            </p>
+            <p></p>
           </div>
         )}
       </Layout>

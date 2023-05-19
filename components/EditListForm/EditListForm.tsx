@@ -17,23 +17,6 @@ const EditListForm = ({ selectedListId, listTitle }: EditListFormProps) => {
   const [totalBytes, setTotalBytes] = useState(0);
   const [title, setTitle] = useState<string | null>("");
 
-  //idを使ってtitleを取得
-  const getTitleFromLocalstorage = useCallback(() => {
-    let listNames = null;
-    if (typeof window !== "undefined") {
-      const storedListNames = localStorage.getItem("listNames");
-      listNames = storedListNames ? JSON.parse(storedListNames) : null;
-    }
-    const idToSearch = selectedListId; // 特定のidを持つオブジェクトを検索
-    const item = listNames
-      ? listNames.find(
-          (list: { id: string; title: string }) => list.id === idToSearch
-        )
-      : null;
-    const title = item ? item.title : null; // itemが存在すればそのtitleを、存在しなければnullを返す
-    return title;
-  }, [selectedListId]);
-
   //リストの名前が変更されたとき表示を上書きする
   useEffect(() => {
     setTitle(listTitle);
@@ -142,10 +125,6 @@ const EditListForm = ({ selectedListId, listTitle }: EditListFormProps) => {
     setTotalBytes(calculateBytes());
   }, [formattedInput, calculateBytes]);
 
-  useEffect(() => {
-    setTitle(getTitleFromLocalstorage());
-  }, [selectedListId, getTitleFromLocalstorage]);
-
   return (
     <React.Fragment>
       <Layout selectedListId={selectedListId} totalBytes={totalBytes}>
@@ -175,9 +154,9 @@ const EditListForm = ({ selectedListId, listTitle }: EditListFormProps) => {
                 </div>
               </div>
               <div className="formatted flex flex-col">
-                <div className="info">
-                  <br />
-                  <p>実際に使われる名前はここに表示されている部分です</p>
+                <div className="info text-right">
+                  <p>実際に使われる名前は</p>
+                  <p>ここに表示されている部分です</p>
                 </div>
                 <div className="flex">
                   <div className="line-number mr-4 text-right">

@@ -29,13 +29,6 @@ const NewListCreator: React.FC<NewListCreatorProps> = ({
   setListTitle,
   selectedListId,
 }) => {
-  console.log("selectedListId:", selectedListId);
-  useEffect(() => {
-    const listsFromLocalStorage = fetchListsFromLocalStorage();
-    console.log("listsFromLocalStorage", listsFromLocalStorage);
-    setLists(listsFromLocalStorage);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
   //ゴミ箱
   const [deleteConfirmMode, setDeleteConfirmMode] = useState<string | null>(
     null

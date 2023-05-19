@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useCallback } from "react";
-import Link from "next/link";
 import Cookies from "js-cookie";
 import Layout from "./Layout";
 
@@ -52,9 +51,16 @@ const EditListForm = ({ selectedListId, listTitle }: EditListFormProps) => {
     // 配列をクッキーに保存
     if (selectedListId) {
       Cookies.set(selectedListId, JSON.stringify(formattedInput), {
-        expires: 7,
+        expires: 365,
       });
-    } // expiresで有効期限を設定（ここでは7日）
+
+      // document.cookie =
+      //   selectedListId +
+      //   "=" +
+      //   JSON.stringify(formattedInput) +
+      //   ";max-age=" +
+      //   31536000;
+    }
   }, [formattedInput, selectedListId]);
 
   // selectedListIdが変わるたびに、クッキーからリストアイテムを取得してstateを更新する

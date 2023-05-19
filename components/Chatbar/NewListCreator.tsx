@@ -255,7 +255,7 @@ const NewListCreator: React.FC<NewListCreatorProps> = ({
                   </svg>
 
                   <div
-                    className={`text-white relative max-h-5 flex-1 overflow-hidden text-ellipsis whitespace-nowrap break-all text-left  leading-3 pr-12 ${
+                    className={`text-white relative max-h-5 flex-1 overflow-hidden text-ellipsis whitespace-nowrap break-all text-left  leading-5 pr-12 ${
                       list.id === selectedListId
                         ? "text-[14.5px] font-semibold"
                         : "text-[12.5px]"

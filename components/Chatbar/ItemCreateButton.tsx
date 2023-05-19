@@ -1,5 +1,6 @@
 import { v4 as uuidv4 } from "uuid";
-import React, { Dispatch, SetStateAction } from "react";
+import React, { Dispatch, SetStateAction, useEffect } from "react";
+import Cookies from "js-cookie";
 
 type ListType = {
   id: string;
@@ -39,6 +40,47 @@ const ItemCreateButton: React.FC<ItemCreateButtonProps> = ({
     const updatedLists = [...existingLists, newList];
     window.localStorage.setItem("listNames", JSON.stringify(updatedLists));
   };
+
+  //初回アクセス時のみSampleを追加する
+  useEffect(() => {
+    const existingListsItem = window.localStorage.getItem("listNames");
+
+    if (existingListsItem === null) {
+      const newList = {
+        id: "Sample01-0825-42e8-b928-cbd8",
+        title: "Sample_偉人",
+      };
+      //updater 関数
+      setLists((prevLists) => [...prevLists, newList]);
+
+      const updatedLists = [newList];
+      window.localStorage.setItem("listNames", JSON.stringify(updatedLists));
+
+      //cookieもセット
+      const izin = [
+        "聖徳　太子",
+        "源 義経",
+        "源頼朝",
+        "",
+        "北条　時宗",
+        "後醍醐天皇",
+        "足利　尊氏",
+        "織田　信長",
+        "豊臣秀吉",
+        "",
+        "徳川 家康",
+        "伊達政宗",
+        "上杉謙信",
+        "坂本龍馬",
+        "西郷隆盛",
+        "伊藤博文",
+        "野口英世",
+      ];
+      Cookies.set("Sample01-0825-42e8-b928-cbd8", JSON.stringify(izin), {
+        expires: 365,
+      });
+    }
+  }, [setLists]);
 
   //リストカウント
   const listCount = "リストの数: " + String(lists.length) + "/40";

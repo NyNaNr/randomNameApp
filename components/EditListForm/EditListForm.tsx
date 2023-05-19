@@ -151,33 +151,45 @@ const EditListForm = ({ selectedListId, listTitle }: EditListFormProps) => {
       <Layout selectedListId={selectedListId} totalBytes={totalBytes}>
         {selectedListId ? (
           <div>
-            <div className="flex mt-28">
-              <div className="flex">
-                <div className="line-number mr-4 text-right">
-                  {/* margin-rightを追加してtextareaとの間にスペースを作ります */}
-                  {lineNumbersOfUserInput.map((num, index) => (
-                    <p key={index}>{num}</p>
-                  ))}
+            <div className="flex justify-around mt-28">
+              <div className="userInput flex flex-col">
+                <div className="info text-right">
+                  <p>ここに名前を入力してください</p>
+                  <p>改行で名前を区切ってください</p>
                 </div>
-                <textarea
-                  value={inputText}
-                  className="pl-2 text-black  border-2 border-black"
-                  onChange={handleOnChange}
-                  onBlur={handleInputConfirm} // テキストエリアからフォーカスが外れたとき（入力が確定したとき）にhandleInputConfirmを呼び出す
-                  rows={lineNumbersOfUserInput.length}
-                  wrap="off"
-                />
+                <div className="flex">
+                  <div className="line-number mr-4 text-right">
+                    {/* margin-rightを追加してtextareaとの間にスペースを作ります */}
+                    {lineNumbersOfUserInput.map((num, index) => (
+                      <p key={index}>{num}</p>
+                    ))}
+                  </div>
+                  <textarea
+                    value={inputText}
+                    className="pl-2 text-black  border-2 border-black"
+                    onChange={handleOnChange}
+                    onBlur={handleInputConfirm} // テキストエリアからフォーカスが外れたとき（入力が確定したとき）にhandleInputConfirmを呼び出す
+                    rows={lineNumbersOfUserInput.length}
+                    wrap="off"
+                  />
+                </div>
               </div>
-              <div className="flex">
-                <div className="line-number mr-4 text-right">
-                  {lineNumbersOfFormattedUserInput.map((num, index) => (
-                    <p key={index}>{num}</p>
-                  ))}
+              <div className="formatted flex flex-col">
+                <div className="info">
+                  <br />
+                  <p>実際に使われる名前はここに表示されている部分です</p>
                 </div>
-                <div className="formatted-list">
-                  {formattedInput.map((item, index) => (
-                    <p key={index}>{item}</p>
-                  ))}
+                <div className="flex">
+                  <div className="line-number mr-4 text-right">
+                    {lineNumbersOfFormattedUserInput.map((num, index) => (
+                      <p key={index}>{num}</p>
+                    ))}
+                  </div>
+                  <div className="formatted-list">
+                    {formattedInput.map((item, index) => (
+                      <p key={index}>{item}</p>
+                    ))}
+                  </div>
                 </div>
               </div>
             </div>

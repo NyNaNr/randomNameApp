@@ -15,11 +15,11 @@ const Layout: React.FC<LayoutProps> = ({
   <React.Fragment>
     {selectedListId && (
       <header className="fixed top-0 w-full z-50 bg-white">
-        <div className="">
+        <div className="text-black">
           <p>保存可能な文字容量: {totalBytes}/4058 bytes</p>
         </div>
         {totalBytes > 4058 ? (
-          <div>
+          <div className="text-black">
             <p>文字数が保存容量を超えています。減らしてください。</p>
           </div>
         ) : (

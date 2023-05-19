@@ -25,8 +25,8 @@ export default function Home() {
         <title>とにかく大きい ランダムネーム アプリ</title>
       </Head>
 
-      <div className="flex h-screen">
-        <div className="fixed top-0 left-0 z-40 flex h-screen w-[260px] flex-none flex-col space-y-2 bg-[#202123] p-2 text-[14px] transition-all sm:relative sm:top-0 ">
+      <div className="flex min-h-screen">
+        <div className="fixed top-0 left-0 z-40 flex h-auto w-[260px] flex-none flex-col space-y-2 bg-[#202123] p-2 text-[14px] transition-all sm:relative sm:top-0 ">
           {/*新規リストを作成するボタン */}
           <ItemCreateButton lists={lists} setLists={setLists} />
 

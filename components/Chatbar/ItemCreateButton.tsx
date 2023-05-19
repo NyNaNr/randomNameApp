@@ -10,12 +10,14 @@ type ListType = {
 type ItemCreateButtonProps = {
   lists: ListType[];
   setLists: Dispatch<SetStateAction<ListType[]>>;
+  setSelectedListId: React.Dispatch<React.SetStateAction<string | null>>;
 };
 
 //新規リスト作成
 const ItemCreateButton: React.FC<ItemCreateButtonProps> = ({
   lists,
   setLists,
+  setSelectedListId,
 }) => {
   //新規リスト作成
 
@@ -28,6 +30,7 @@ const ItemCreateButton: React.FC<ItemCreateButtonProps> = ({
       id: uuidv4(),
       title: "New List",
     };
+    setSelectedListId(newList.id);
     //updater 関数
     setLists((prevLists) => [...prevLists, newList]);
 

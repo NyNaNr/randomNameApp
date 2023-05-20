@@ -156,13 +156,26 @@ const EditListForm = ({ selectedListId, listTitle }: EditListFormProps) => {
 
   //selectedListIdが変わるにつれて、テキストエリアの末尾にカーソルを移動させる。スマホでは邪魔な機能かも？
   useEffect(() => {
-    const t = document.getElementById("textarea") as HTMLTextAreaElement;
-    // 適切なnullチェックを行う
-    if (t !== null) {
-      const len = t.value.length;
-      t.selectionStart = len;
-      t.selectionEnd = len;
-      t.focus();
+    function isSmartPhone() {
+      if (
+        window.matchMedia &&
+        window.matchMedia("(max-device-width: 640px)").matches
+      ) {
+        return true;
+      } else {
+        return false;
+      }
+    }
+    if (isSmartPhone()) {
+    } else {
+      const t = document.getElementById("textarea") as HTMLTextAreaElement;
+      // 適切なnullチェックを行う
+      if (t !== null) {
+        const len = t.value.length;
+        t.selectionStart = len;
+        t.selectionEnd = len;
+        t.focus();
+      }
     }
   }, [selectedListId]);
 

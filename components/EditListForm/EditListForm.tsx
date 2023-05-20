@@ -113,6 +113,9 @@ const EditListForm = ({ selectedListId, listTitle }: EditListFormProps) => {
     return lines;
   };
 
+  //子コンポーネントに合計人数を渡すための処理
+  const lineNumber = formattedInput.length;
+
   //ユーザー入力のバイト数を計算
   const calculateBytes = useCallback(() => {
     let totalBytes = 0;
@@ -150,9 +153,25 @@ const EditListForm = ({ selectedListId, listTitle }: EditListFormProps) => {
     setTotalBytes(calculateBytes());
   }, [formattedInput, calculateBytes]);
 
+  //selectedListIdが変わるにつれて、テキストエリアの末尾にカーソルを移動させる。スマホでは邪魔な機能かも？
+  useEffect(() => {
+    const t = document.getElementById("textarea") as HTMLTextAreaElement;
+    // 適切なnullチェックを行う
+    if (t !== null) {
+      const len = t.value.length;
+      t.selectionStart = len;
+      t.selectionEnd = len;
+      t.focus();
+    }
+  }, [selectedListId]);
+
   return (
     <React.Fragment>
-      <Layout selectedListId={selectedListId} totalBytes={totalBytes}>
+      <Layout
+        selectedListId={selectedListId}
+        totalBytes={totalBytes}
+        lineNumber={lineNumber}
+      >
         {selectedListId ? (
           <div>
             <div className="flex justify-around mt-28">
@@ -169,6 +188,7 @@ const EditListForm = ({ selectedListId, listTitle }: EditListFormProps) => {
                     ))}
                   </div>
                   <textarea
+                    id="textarea"
                     value={inputText}
                     className="pl-2 text-black  border-2 border-black"
                     onChange={handleOnChange}
@@ -213,15 +233,14 @@ const EditListForm = ({ selectedListId, listTitle }: EditListFormProps) => {
             </p>
             <br />
             <h2>入力された個人情報について</h2>
-
             <p>
               利用の際に入力される情報は、当Webアプリが外部サーバーに送信することはありません。すべての情報はローカルに保存され、第三者と共有されることはありません。
             </p>
             <p>
-              すべての入力された情報はユーザーのパソコン（ブラウザ）にファーストパーティーcookieの技術を用いて保存されます。これはブラウザを閉じても情報が保持され、再度開いた時に同じ情報が表示されることを可能にします。もちろん、ユーザーがリストを削除することで、個人情報もブラウザから削除されます。
+              すべての入力された情報はユーザーのパソコン（ブラウザ）にファーストパーティーcookieの技術を用いて保存されます。これはブラウザを閉じても情報が保持され、再度開いた時に同じ情報が表示されることを可能にします。
             </p>
             <p>
-              cookieの性質上、ユーザーがリストを編集・保存してから1年後、入力した名前が自動的に削除されます。ただし、Safariブラウザではcookieの保存期限が1週間となる等、ブラウザの仕様変更などで保存できる期限が変わる可能性があります。
+              cookieの性質上、ユーザーがリストを編集・保存してから1年後、入力した名前が自動的に削除されます。ただし、Safariブラウザではcookieの保存期限が1週間となる等、ブラウザの仕様変更などで保存できる期限が変わる可能性があります。ユーザーがリストを削除することで、個人情報もブラウザから削除されます。
             </p>
             <p></p>
           </div>

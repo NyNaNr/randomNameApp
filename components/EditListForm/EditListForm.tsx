@@ -18,8 +18,6 @@ const EditListForm = ({ selectedListId, listTitle }: EditListFormProps) => {
   const [title, setTitle] = useState<string | null>("");
   const [cookieExpires, setCookieExpires] = useState(0);
 
-  //cookieの有効期限と現在時刻から残りの
-
   //リストの名前が変更されたとき表示を上書きする
   useEffect(() => {
     setTitle(listTitle);
@@ -70,6 +68,9 @@ const EditListForm = ({ selectedListId, listTitle }: EditListFormProps) => {
   }, [formattedInput, selectedListId]);
 
   //現在時刻からcookieの有効期限までの残り時間計算
+  //
+  //
+  //
 
   // selectedListIdが変わるたびに、クッキーからリストアイテムを取得してstateを更新する
   useEffect(() => {

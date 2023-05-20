@@ -41,7 +41,7 @@ const RandomNameApp: React.FC = () => {
     }
   }, [router.isReady, router.query]);
 
-  const isShowingName = useRef<boolean>(false);
+  const [isShowingName, setIsShowingName] = useState<boolean>(false);
   const intervalId = useRef<number | null>(null);
   const [remainingNames, setRemainingNames] = useState<string[]>(NAMES);
   const [selectedNameList, setSelectedNameList] = useState<string[]>([]);
@@ -52,27 +52,32 @@ const RandomNameApp: React.FC = () => {
 
   const fontSize = useRef(0); //fontSizeをuseRefで保持;
 
-  const showRandomName = useCallback(() => {
-    if (!nameDisplay.current) return;
-
-    const randomName =
-      remainingNames[Math.floor(Math.random() * remainingNames.length)];
-    nameDisplay.current.textContent = randomName;
-    const longestName = remainingNames.reduce(
+  const calcFontSize = (list: string[]) => {
+    const longestName = list.reduce(
       (longest, name) => (name.length > longest.length ? name : longest),
       ""
     );
     fontSize.current = Math.floor(
       (window.innerWidth * 0.9) / longestName.length
     );
+    if (!nameDisplay.current) return;
     nameDisplay.current.style.fontSize = `${fontSize.current}px`;
+  };
+
+  const showRandomName = useCallback(() => {
+    if (!nameDisplay.current) return;
+    const randomName =
+      remainingNames[Math.floor(Math.random() * remainingNames.length)];
+    nameDisplay.current.textContent = randomName;
+    calcFontSize(remainingNames);
   }, [remainingNames]);
 
   const startNameDisplay = useCallback(() => {
-    if (!isShowingName.current) {
-      isShowingName.current = true;
+    if (!isShowingName) {
+      setIsShowingName(true);
       intervalId.current = window.setInterval(showRandomName, 16);
     }
+    console.log(isShowingName);
     if (startNotifier.current) {
       startNotifier.current.textContent = ""; // メッセージを非表示にする
     }
@@ -90,15 +95,16 @@ const RandomNameApp: React.FC = () => {
         window.location.reload();
       }
     }
-  }, [showRandomName, remainingNames.length]);
+  }, [showRandomName, remainingNames.length, isShowingName]);
 
   const stopNameDisplay = useCallback(() => {
-    if (isShowingName.current) {
+    if (isShowingName) {
       if (intervalId.current !== null) {
         clearInterval(intervalId.current);
       }
-      isShowingName.current = false;
+      setIsShowingName(false);
     }
+    console.log(isShowingName);
 
     if (stopNotifier.current) {
       stopNotifier.current.textContent = ""; // メッセージを非表示にする
@@ -118,13 +124,13 @@ const RandomNameApp: React.FC = () => {
       startNotifier.current.style.fontSize = `${fontSize.current * 0.2}px`;
       startNotifier.current.textContent = "Enterキーでスタート！";
     }
-  }, [remainingNames, selectedNameList]);
+  }, [remainingNames, selectedNameList, isShowingName]);
 
   //useEffectでコンポーネントマウント時に設定する
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
       if (event.key === "Enter") {
-        if (isShowingName.current) {
+        if (isShowingName) {
           stopNameDisplay();
         } else {
           startNameDisplay();
@@ -137,13 +143,7 @@ const RandomNameApp: React.FC = () => {
     return () => {
       window.removeEventListener("keydown", handleKeyDown);
     };
-  }, [startNameDisplay, stopNameDisplay]);
-
-  useEffect(() => {
-    if (startNotifier.current) {
-      startNotifier.current.textContent = "Enterキーでスタート！"; // ページロード時にメッセージを表示する
-    }
-  }, []);
+  }, [startNameDisplay, stopNameDisplay, isShowingName]);
 
   return (
     <Layout>
@@ -161,10 +161,18 @@ const RandomNameApp: React.FC = () => {
       </div>
       <div className={styles.display}>
         <div className={styles.nameDisplay} ref={nameDisplay}></div>
-        <div className={styles.startNotifier} ref={startNotifier}></div>
+        {!isShowingName ? (
+          <div className="startNotifier">Enterキーでスタート！</div>
+        ) : (
+          ""
+        )}
       </div>
       <div className="underDisplay">
-        <div className={styles.stopNotifier} ref={stopNotifier}></div>
+        {isShowingName ? (
+          <div className="startNotifier">Enterキーでストップ！</div>
+        ) : (
+          ""
+        )}
       </div>
 
       <div className={styles.lists}>
@@ -177,9 +185,7 @@ const RandomNameApp: React.FC = () => {
       </div>
 
       <h2>
-        <Link href="/">← Back to home</Link>
-        <p></p>
-        <Link href="/practice2">← Practice2</Link>
+        <Link href="/random_name_app/home">← Back to home</Link>
       </h2>
     </Layout>
   );

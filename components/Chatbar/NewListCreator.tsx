@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect, ChangeEvent } from "react";
 import { fetchListsFromLocalStorage } from "../../utils/random_name_app";
+
 import Cookies from "js-cookie";
 
 type ListType = {
@@ -29,6 +30,12 @@ const NewListCreator: React.FC<NewListCreatorProps> = ({
   setListTitle,
   selectedListId,
 }) => {
+  useEffect(() => {
+    const listsFromLocalStorage = fetchListsFromLocalStorage();
+    console.log("listsFromLocalStorage", listsFromLocalStorage);
+    setLists(listsFromLocalStorage);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
   //ゴミ箱
   const [deleteConfirmMode, setDeleteConfirmMode] = useState<string | null>(
     null

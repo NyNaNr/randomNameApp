@@ -29,7 +29,7 @@ const Layout: React.FC<LayoutProps> = ({
             <br />
           </div>
         )}
-        <div>合計 : {lineNumber}人</div>
+        <div className="text-black">合計 : {lineNumber}人</div>
         <div className="start-links relative">
           {totalBytes > 4058 ? (
             <div className="link-blocker absolute h-15 px-2 py-1 text-lg text-white font-semibold rounded z-20 cursor-not-allowed">

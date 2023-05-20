@@ -30,8 +30,18 @@ const Layout: React.FC<LayoutProps> = ({
           </div>
         )}
         <div className="text-black">合計 : {lineNumber}人</div>
+        {lineNumber < 2 ? (
+          <div className="text-black">
+            <p>2人以上入力してください</p>
+          </div>
+        ) : (
+          <div>
+            <br />
+          </div>
+        )}
+
         <div className="start-links relative">
-          {totalBytes > 4058 ? (
+          {totalBytes > 4058 || lineNumber < 2 ? (
             <div className="link-blocker absolute h-15 px-2 py-1 text-lg text-white font-semibold rounded z-20 cursor-not-allowed">
               スタート
             </div>
@@ -40,7 +50,9 @@ const Layout: React.FC<LayoutProps> = ({
           <Link
             href={`/random_name_app/${selectedListId}`}
             className={`absolute h-15 z-10 shadow-lg px-2 py-1 bg-blue-400 text-lg text-white font-semibold rounded  hover:shadow-sm  ${
-              totalBytes > 4058 ? " bg-gray-500/50" : "hover:bg-blue-500"
+              totalBytes > 4058 || lineNumber < 2
+                ? " bg-gray-500/50"
+                : "hover:bg-blue-500"
             }`}
           >
             スタート

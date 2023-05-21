@@ -64,11 +64,10 @@ const RandomNameApp: React.FC = () => {
     if (!nameDisplay.current) return;
     nameDisplay.current.style.fontSize = `${fontSize.current}px`;
 
-    setTimeout(() => {
-      if (startNotifier.current) {
-        startNotifier.current.style.fontSize = `${fontSize.current * 0.2}px`;
-      }
-    }, 50);
+    if (startNotifier.current) {
+      startNotifier.current.style.fontSize = `${fontSize.current * 0.2}px`;
+    }
+
     if (stopNotifier.current) {
       stopNotifier.current.style.fontSize = `${fontSize.current * 0.2}px`;
     }

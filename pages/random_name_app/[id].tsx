@@ -4,6 +4,7 @@ import React, {
   useRef,
   useCallback,
   ReactNode,
+  useLayoutEffect,
 } from "react";
 import Head from "next/head";
 import Link from "next/link";
@@ -62,6 +63,15 @@ const RandomNameApp: React.FC = () => {
     );
     if (!nameDisplay.current) return;
     nameDisplay.current.style.fontSize = `${fontSize.current}px`;
+
+    setTimeout(() => {
+      if (startNotifier.current) {
+        startNotifier.current.style.fontSize = `${fontSize.current * 0.2}px`;
+      }
+    }, 50);
+    if (stopNotifier.current) {
+      stopNotifier.current.style.fontSize = `${fontSize.current * 0.2}px`;
+    }
   };
 
   const showRandomName = useCallback(() => {
@@ -76,16 +86,6 @@ const RandomNameApp: React.FC = () => {
     if (!isShowingName) {
       setIsShowingName(true);
       intervalId.current = window.setInterval(showRandomName, 16);
-    }
-    console.log(isShowingName);
-    if (startNotifier.current) {
-      startNotifier.current.textContent = ""; // メッセージを非表示にする
-    }
-
-    //ここにユーザーにエンターキーでスタートを知らせる関数を作成
-    if (stopNotifier.current) {
-      stopNotifier.current.style.fontSize = `${fontSize.current * 0.2}px`;
-      stopNotifier.current.textContent = "Enterキーでストップ！";
     }
 
     if (remainingNames.length === 1) {
@@ -104,11 +104,6 @@ const RandomNameApp: React.FC = () => {
       }
       setIsShowingName(false);
     }
-    console.log(isShowingName);
-
-    if (stopNotifier.current) {
-      stopNotifier.current.textContent = ""; // メッセージを非表示にする
-    }
 
     if (!nameDisplay.current) return;
 
@@ -119,14 +114,8 @@ const RandomNameApp: React.FC = () => {
       setSelectedNameList([...selectedNameList, lastName]);
       setRemainingNames(remainingNames.filter((name) => name !== lastName));
     }
-    //ここにユーザーにエンターキーでスタートを知らせる関数を作成
-    if (startNotifier.current) {
-      startNotifier.current.style.fontSize = `${fontSize.current * 0.2}px`;
-      startNotifier.current.textContent = "Enterキーでスタート！";
-    }
   }, [remainingNames, selectedNameList, isShowingName]);
 
-  //useEffectでコンポーネントマウント時に設定する
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
       if (event.key === "Enter") {
@@ -145,6 +134,10 @@ const RandomNameApp: React.FC = () => {
     };
   }, [startNameDisplay, stopNameDisplay, isShowingName]);
 
+  useLayoutEffect(() => {
+    calcFontSize(remainingNames);
+  }, [remainingNames]);
+
   return (
     <Layout>
       <Head>
@@ -162,8 +155,8 @@ const RandomNameApp: React.FC = () => {
       <div className={styles.display}>
         <div className={styles.nameDisplay} ref={nameDisplay}></div>
         {!isShowingName ? (
-          <div className="startNotifier animate-flash absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-10 text-[rgb(42,95,141)] bg-white text-6xl">
-            Enterキーでスタート！
+          <div className={styles.startNotifier} ref={startNotifier}>
+            Enterキーでスタート!!
           </div>
         ) : (
           ""
@@ -171,8 +164,8 @@ const RandomNameApp: React.FC = () => {
       </div>
       <div className="underDisplay">
         {isShowingName ? (
-          <div className="startNotifier animate-flash absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/3 z-10 text-[rgb(42,95,141)] bg-white text-6xl">
-            Enterキーでストップ！
+          <div className={styles.stopNotifier} ref={stopNotifier}>
+            Enterキーでストップ!!
           </div>
         ) : (
           ""

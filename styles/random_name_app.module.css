@@ -57,10 +57,10 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+  white-space: nowrap;
   z-index: 2;
   color: rgb(42, 95, 141);
   background-color: ivory;
-  font-size: 50px;
 }
 
 .stopNotifier {
@@ -69,10 +69,10 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -30%);
+  white-space: nowrap;
   z-index: 2;
   color: rgb(42, 95, 141);
   background-color: ivory;
-  font-size: 50px;
 }
 
 @keyframes flash {

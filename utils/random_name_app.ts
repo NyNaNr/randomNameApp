@@ -20,7 +20,8 @@ export const isMobile = () => {
         (navigator.userAgent.indexOf("Android") > 0 &&
           navigator.userAgent.indexOf("Mobile") > 0) ||
         navigator.userAgent.indexOf("iPad") > 0 ||
-        navigator.userAgent.indexOf("Android") > 0
+        navigator.userAgent.indexOf("Android") > 0 ||
+        (navigator.userAgent.indexOf("macintosh") && "ontouchend" in document)
       ) {
         return true;
       } else {

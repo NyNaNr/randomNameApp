@@ -21,7 +21,7 @@ const Layout: React.FC<LayoutProps> = ({
           <p>保存可能な文字容量: {totalBytes}/4058 bytes</p>
         </div>
         {totalBytes > 4058 ? (
-          <div className="text-black">
+          <div className="text-black animate-flash">
             <p>文字数が保存容量を超えています。減らしてください。</p>
           </div>
         ) : (
@@ -31,7 +31,7 @@ const Layout: React.FC<LayoutProps> = ({
         )}
         <div className="text-black">合計 : {lineNumber}人</div>
         {lineNumber < 2 ? (
-          <div className="text-black">
+          <div className="text-black animate-flash">
             <p>2人以上入力してください</p>
           </div>
         ) : (

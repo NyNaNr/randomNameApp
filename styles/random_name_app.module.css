@@ -36,17 +36,18 @@
 } */
 
 .display {
-  height: 50vh; /*nameDisplayが現れる前の下地*/
+  /*nameDisplayが現れる前の下地*/
   position: relative;
 }
 
 .nameDisplay {
   align-items: center;
-  transition: all 1s ease-out;
+
   white-space: nowrap;
   margin-top: auto;
   text-align: center;
   z-index: 1;
+  /* animation: fadeIn 2s linear; */
 
   /* margin-bottom: 2em;  下に謎の空白を作る */
 }
@@ -83,5 +84,14 @@
 
   50% {
     opacity: 0.4;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    color: transparent;
+  }
+  to {
+    color: black;
   }
 }

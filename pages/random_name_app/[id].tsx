@@ -12,9 +12,7 @@ import { useRouter } from "next/router";
 import styles from "@/styles/random_name_app.module.css";
 import Cookies from "js-cookie";
 
-// TODO エンターキー待ちの時間に「Enterキーでストップ！」と表示する。1地番最初から出す。エンターキー押下後すぐに削除
 // TODO レイアウトが崩れないようにする。人数が何人入力されても表示の上限を決めておく。
-// TODO 内容理解＆整理
 
 type LayoutProps = {
   children: ReactNode;
@@ -63,7 +61,7 @@ const RandomNameApp: React.FC = () => {
     );
     if (!nameDisplay.current) return;
     nameDisplay.current.style.fontSize = `${fontSize.current}px`;
-
+    nameDisplay.current.style.opacity = `${1}`;
     if (startNotifier.current) {
       startNotifier.current.style.fontSize = `${fontSize.current * 0.2}px`;
     }
@@ -135,7 +133,11 @@ const RandomNameApp: React.FC = () => {
 
   useLayoutEffect(() => {
     calcFontSize(remainingNames);
-  }, [remainingNames]);
+    showRandomName();
+    if (nameDisplay.current !== null) {
+      nameDisplay.current.style.opacity = `${0}`;
+    }
+  }, [remainingNames, showRandomName]);
 
   return (
     <Layout>
@@ -154,16 +156,24 @@ const RandomNameApp: React.FC = () => {
       <div className={styles.display}>
         <div className={styles.nameDisplay} ref={nameDisplay}></div>
         {!isShowingName ? (
-          <div className={styles.startNotifier} ref={startNotifier}>
+          <div
+            className={styles.startNotifier}
+            ref={startNotifier}
+            onClick={startNameDisplay}
+          >
             Enterキーでスタート!!
           </div>
         ) : (
           ""
         )}
       </div>
-      <div className="underDisplay">
+      <div className="underDisplay relative">
         {isShowingName ? (
-          <div className={styles.stopNotifier} ref={stopNotifier}>
+          <div
+            className={styles.stopNotifier}
+            ref={stopNotifier}
+            onClick={stopNameDisplay}
+          >
             Enterキーでストップ!!
           </div>
         ) : (

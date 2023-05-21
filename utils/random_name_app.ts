@@ -5,9 +5,14 @@ export const fetchListsFromLocalStorage = () => {
 };
 
 export const isSmartPhone = () => {
-  if (matchMedia && matchMedia("(max-device-width: 640px)").matches) {
-    return true;
-  } else {
-    return false;
+  if (typeof window !== "undefined") {
+    if (
+      window.matchMedia &&
+      window.matchMedia("(max-device-width: 640px)").matches
+    ) {
+      return true;
+    } else {
+      return false;
+    }
   }
 };

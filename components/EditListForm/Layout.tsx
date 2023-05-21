@@ -16,7 +16,7 @@ const Layout: React.FC<LayoutProps> = ({
 }) => (
   <React.Fragment>
     {selectedListId && (
-      <header className="fixed top-0 w-full z-50 bg-white">
+      <header className="header fixed top-0 w-full z-50 bg-white">
         <div className="text-black">
           <p>保存可能な文字容量: {totalBytes}/4058 bytes</p>
         </div>

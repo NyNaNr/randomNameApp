@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useCallback } from "react";
 import Cookies from "js-cookie";
 import Layout from "./Layout";
-import { isSmartPhone } from "../../utils/random_name_app";
+import { isMobile } from "../../utils/random_name_app";
 
 type EditListFormProps = {
   selectedListId: string | null;
@@ -157,7 +157,7 @@ const EditListForm = ({ selectedListId, listTitle }: EditListFormProps) => {
 
   //selectedListIdが変わるにつれて、テキストエリアの末尾にカーソルを移動させる。スマホでは邪魔な機能かも？
   useEffect(() => {
-    if (isSmartPhone()) {
+    if (isMobile()) {
     } else {
       const t = document.getElementById("textarea") as HTMLTextAreaElement;
       // 適切なnullチェックを行う

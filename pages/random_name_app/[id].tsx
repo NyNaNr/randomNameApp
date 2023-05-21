@@ -11,7 +11,7 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import styles from "@/styles/random_name_app.module.css";
 import Cookies from "js-cookie";
-import { isSmartPhone } from "../../utils/random_name_app";
+import { isMobile } from "../../utils/random_name_app";
 
 // TODO レイアウトが崩れないようにする。人数が何人入力されても表示の上限を決めておく。
 
@@ -162,9 +162,7 @@ const RandomNameApp: React.FC = () => {
             ref={startNotifier}
             onClick={startNameDisplay}
           >
-            {isSmartPhone()
-              ? "ここをタッチでスタート!!"
-              : "Enterキーでスタート!!"}
+            {isMobile() ? "ここをタッチでスタート!!" : "Enterキーでスタート!!"}
           </div>
         ) : (
           ""
@@ -177,9 +175,7 @@ const RandomNameApp: React.FC = () => {
             ref={stopNotifier}
             onClick={stopNameDisplay}
           >
-            {isSmartPhone()
-              ? "ここをタッチでストップ!!"
-              : "Enterキーでストップ!!"}
+            {isMobile() ? "ここをタッチでストップ!!" : "Enterキーでストップ!!"}
           </div>
         ) : (
           ""

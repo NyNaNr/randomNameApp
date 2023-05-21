@@ -5,10 +5,7 @@ export const fetchListsFromLocalStorage = () => {
 };
 
 export const isSmartPhone = () => {
-  if (
-    window.matchMedia &&
-    window.matchMedia("(max-device-width: 640px)").matches
-  ) {
+  if (matchMedia && matchMedia("(max-device-width: 640px)").matches) {
     return true;
   } else {
     return false;

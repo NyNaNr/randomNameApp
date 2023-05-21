@@ -12,6 +12,7 @@ import { useRouter } from "next/router";
 import styles from "@/styles/random_name_app.module.css";
 import Cookies from "js-cookie";
 import { isMobile } from "../../utils/random_name_app";
+import { useLeavePageConfirmation } from "../../hooks";
 
 // TODO レイアウトが崩れないようにする。人数が何人入力されても表示の上限を決めておく。
 
@@ -40,6 +41,10 @@ const RandomNameApp: React.FC = () => {
       }
     }
   }, [router.isReady, router.query]);
+
+  //ブラウザバックのアラート
+  const [showLeavingAlert, setShowLeavingAlert] = useState(true);
+  useLeavePageConfirmation(showLeavingAlert);
 
   const [isShowingName, setIsShowingName] = useState<boolean>(false);
   const intervalId = useRef<number | null>(null);
@@ -162,7 +167,7 @@ const RandomNameApp: React.FC = () => {
             ref={startNotifier}
             onClick={startNameDisplay}
           >
-            {isMobile() ? "ここをタッチでスタート!!" : "Enterキーでスタート!!"}
+            {isMobile() ? "タッチでスタート!!" : "Enterキーでスタート!!"}
           </div>
         ) : (
           ""
@@ -175,7 +180,7 @@ const RandomNameApp: React.FC = () => {
             ref={stopNotifier}
             onClick={stopNameDisplay}
           >
-            {isMobile() ? "ここをタッチでストップ!!" : "Enterキーでストップ!!"}
+            {isMobile() ? "タッチでストップ!!" : "Enterキーでストップ!!"}
           </div>
         ) : (
           ""

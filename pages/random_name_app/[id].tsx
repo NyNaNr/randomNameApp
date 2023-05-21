@@ -162,14 +162,18 @@ const RandomNameApp: React.FC = () => {
       <div className={styles.display}>
         <div className={styles.nameDisplay} ref={nameDisplay}></div>
         {!isShowingName ? (
-          <div className="startNotifier">Enterキーでスタート！</div>
+          <div className="startNotifier animate-flash absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-10 text-[rgb(42,95,141)] bg-white text-6xl">
+            Enterキーでスタート！
+          </div>
         ) : (
           ""
         )}
       </div>
       <div className="underDisplay">
         {isShowingName ? (
-          <div className="startNotifier">Enterキーでストップ！</div>
+          <div className="startNotifier animate-flash absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/3 z-10 text-[rgb(42,95,141)] bg-white text-6xl">
+            Enterキーでストップ！
+          </div>
         ) : (
           ""
         )}

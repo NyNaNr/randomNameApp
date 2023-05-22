@@ -13,9 +13,14 @@ module.exports = {
           "50%": { opacity: "0" },
           "100%": { opacity: "1" },
         },
+        spinOnce: {
+          "0%": { transform: "rotate(0deg)" },
+          "100%": { transform: "rotate(360deg)" },
+        },
       },
       animation: {
         flash: "flash 1.5s linear infinite",
+        spinOnce: "spin 1s ease-in-out",
       },
       backgroundImage: {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
@@ -26,4 +31,5 @@ module.exports = {
   },
   plugins: [],
   variants: {},
+  animation: ["responsive"],
 };

@@ -26,6 +26,7 @@ const EditListForm = ({
   const [totalBytes, setTotalBytes] = useState(0);
   const [title, setTitle] = useState<string | null>("");
   const [cookieExpires, setCookieExpires] = useState(0);
+  const [isHexagonClicked, setIsHexagonClicked] = useState(false);
 
   //リストの名前が変更されたとき表示を上書きする
   useEffect(() => {
@@ -134,6 +135,12 @@ const EditListForm = ({
     totalBytes -= 6; //初期値はキーとバリュー[]が計算される[]をエンコードした%5B%5Dの6バイト分引いておく
     return totalBytes;
   }, [formattedInput]);
+
+  //アイコン触った判定
+  const handleHexagonClick = () => {
+    setIsHexagonClicked(true);
+    setTimeout(() => setIsHexagonClicked(false), 1000); // アニメーションの時間に合わせて設定
+  };
 
   // onChange handler
   const handleOnChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
@@ -251,11 +258,16 @@ const EditListForm = ({
                 </span>
               </div>
 
-              <div className="flex justify-center text-black dark:text-white">
+              <div
+                className={`flex justify-center text-black dark:text-white ${
+                  isHexagonClicked ? "animate-spinOnce" : ""
+                }`}
+                onClick={handleHexagonClick}
+              >
                 <HexagonLetterR
                   size={isMobile() ? 150 : 200}
-                  strokeWidth={0.7}
-                  color={"black"}
+                  strokeWidth={0.5}
+                  color={"currentColor"}
                 />
               </div>
               <div className="text-center text-gray-500 dark:text-gray-400">
@@ -266,8 +278,8 @@ const EditListForm = ({
                   リスト名をクリックすると、そのリストのcookieの保存期間が更新・延長されます。
                 </div>
                 <div className="mb-2">
-                  もしご自身でリストの保存期間を確認されたい場合は、<br></br>
-                  「cookie 確認方法」などと検索してください。
+                  もしご自身でリストの保存期間を確認されたい場合は、「cookie
+                  確認方法」などと検索してください。
                 </div>
               </div>
             </div>

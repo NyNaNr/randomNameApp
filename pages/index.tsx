@@ -10,8 +10,13 @@ export default function Home() {
         <section>
           <h1>yur Appへようこそ</h1>
           <p>とにかく大きいランダムネームアプリ</p>
-          <Link href={`/random_name_app/home`} className={"hover:bg-blue-200"}>
-            クリック
+          <Link
+            href={`/random_name_app/features`}
+            className={
+              "text-blue-500 hover:text-blue-700 underline font-semibold"
+            }
+          >
+            とにかく大きいランダムネームアプリ
           </Link>
         </section>
       </div>

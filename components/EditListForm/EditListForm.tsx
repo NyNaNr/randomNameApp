@@ -2,6 +2,7 @@ import React, { useState, useEffect, useCallback } from "react";
 import Cookies from "js-cookie";
 import Layout from "./Layout";
 import { isMobile } from "../../utils/random_name_app";
+import { HexagonLetterR } from "tabler-icons-react";
 
 type EditListFormProps = {
   selectedListId: string | null;
@@ -241,7 +242,29 @@ const EditListForm = ({
             </div>
           </div>
         ) : (
-          <div className="m-10"></div>
+          <div className="flex items-center justify-center h-screen">
+            <div className="mx-auto flex w-[300px] flex-col justify-center space-y-6 lg:w-[600px]">
+              <div className="text-center text-4xl font-bold text-black dark:text-white">
+                Welcome to <span className="text-3xl">Random Name App</span>
+              </div>
+
+              <div className="flex justify-center text-black dark:text-white">
+                <HexagonLetterR size={150} strokeWidth={0.7} color={"black"} />
+              </div>
+              <div className="text-center text-gray-500 dark:text-gray-400">
+                <div className="mb-2">
+                  入力された名前データの保存期間は、基本的に365日、一部ブラウザで7日間です。
+                </div>
+                <div className="mb-2">
+                  リスト名をクリックすると、そのリストのcookieの保存期間が更新・延長されます。
+                </div>
+                <div className="mb-2">
+                  もしご自身で確認されたい場合は、　「cookie
+                  確認方法」などで調べると方法が分かります。
+                </div>
+              </div>
+            </div>
+          </div>
         )}
       </Layout>
     </React.Fragment>

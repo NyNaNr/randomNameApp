@@ -37,7 +37,11 @@ export default function Home() {
 
       <div className="flex min-h-screen">
         {isOpen ? (
-          <div className="fixed top-0 left-0 z-60 flex min-h-screen h-auto w-[260px] flex-none flex-col space-y-2 bg-[#202123] p-2 text-[14px] transition-all sm:relative sm:top-0">
+          <div
+            className={`${
+              isOpen ? "z-10" : ""
+            } sidebar fixed top-0 left-0 z-60 flex min-h-screen h-auto w-[260px] flex-none flex-col space-y-2 bg-[#202123] p-2 text-[14px] transition-all sm:relative sm:top-0`}
+          >
             {/*新規リストを作成するボタン */}
             <ItemCreateButton
               lists={lists}
@@ -101,8 +105,13 @@ export default function Home() {
           <OpenSidebarButton onClick={toggleOpen} />
         )}
 
-        <div className="flex-grow">
-          <EditListForm selectedListId={selectedListId} listTitle={listTitle} />
+        <div className={`${isOpen ? "z-0" : ""}  main-contents flex-grow`}>
+          <EditListForm
+            selectedListId={selectedListId}
+            listTitle={listTitle}
+            isOpen={isOpen}
+            toggleOpen={toggleOpen}
+          />
         </div>
       </div>
     </React.Fragment>

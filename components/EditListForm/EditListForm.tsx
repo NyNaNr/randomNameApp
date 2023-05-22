@@ -6,9 +6,16 @@ import { isMobile } from "../../utils/random_name_app";
 type EditListFormProps = {
   selectedListId: string | null;
   listTitle: string | null;
+  isOpen: boolean;
+  toggleOpen: () => void;
 };
 
-const EditListForm = ({ selectedListId, listTitle }: EditListFormProps) => {
+const EditListForm = ({
+  selectedListId,
+  listTitle,
+  isOpen,
+  toggleOpen,
+}: EditListFormProps) => {
   const [lineNumbersOfUserInput, setLineNumbersOfUserInput] = useState<
     number[]
   >([]);
@@ -172,10 +179,20 @@ const EditListForm = ({ selectedListId, listTitle }: EditListFormProps) => {
 
   return (
     <React.Fragment>
+      {isOpen ? (
+        <div
+          onClick={toggleOpen}
+          className="absolute top-0 left-0 z-10 h-full w-full bg-black opacity-70 sm:hidden"
+        ></div>
+      ) : (
+        ""
+      )}
       <Layout
         selectedListId={selectedListId}
         totalBytes={totalBytes}
         lineNumber={lineNumber}
+        isOpen={isOpen}
+        toggleOpen={toggleOpen}
       >
         {selectedListId ? (
           <div>

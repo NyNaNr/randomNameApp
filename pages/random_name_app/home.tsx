@@ -24,7 +24,7 @@ export default function Home() {
   const [listTitle, setListTitle] = useState<string | null>("");
 
   //サイドバー
-  const [isOpen, setIsOpen] = useState<boolean>(false);
+  const [isOpen, setIsOpen] = useState<boolean>(true);
   const toggleOpen = () => {
     setIsOpen(!isOpen);
   };

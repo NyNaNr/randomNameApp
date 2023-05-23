@@ -1,14 +1,16 @@
 import { Fragment, useRef, useState, Dispatch, SetStateAction } from "react";
 import { Dialog, Transition } from "@headlessui/react";
+import { Content } from "next/font/google";
 // import { ExclamationTriangleIcon } from "@heroicons/react/24/outline";
 
 type ModalsProps = {
   open: boolean;
   setOpen: Dispatch<SetStateAction<boolean>>;
   title: string;
+  cotent: string;
 };
 
-export default function Modals({ open, setOpen, title }: ModalsProps) {
+export default function Modals({ open, setOpen, title, content }: ModalsProps) {
   const cancelButtonRef = useRef(null);
 
   return (
@@ -59,11 +61,7 @@ export default function Modals({ open, setOpen, title }: ModalsProps) {
                         {title}
                       </Dialog.Title>
                       <div className="mt-2">
-                        <p className="text-sm text-gray-500">
-                          Are you sure you want to deactivate your account? All
-                          of your data will be permanently removed. This action
-                          cannot be undone.
-                        </p>
+                        <p className="text-sm text-gray-500">{content}</p>
                       </div>
                     </div>
                   </div>

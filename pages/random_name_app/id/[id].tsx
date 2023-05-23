@@ -51,6 +51,7 @@ const RandomNameApp: React.FC = () => {
   const startNotifier = useRef<HTMLDivElement>(null);
   const stopNotifier = useRef<HTMLDivElement>(null);
   const [modalsOpen, setModalsOpen] = useState(false);
+  const [lastName, setLastName] = useState<string | null>(null);
 
   const fontSize = useRef(0); //fontSizeをuseRefで保持;
 
@@ -108,6 +109,7 @@ const RandomNameApp: React.FC = () => {
     if (!nameDisplay.current) return;
 
     const lastName = nameDisplay.current.textContent;
+    setLastName(lastName);
     const shouldRemove = confirm(`${lastName}を選択済みリストに移動しますか？`);
 
     if (shouldRemove && lastName) {
@@ -150,7 +152,12 @@ const RandomNameApp: React.FC = () => {
 
       <button onClick={() => setModalsOpen(true)}>ダイアログを開く</button>
 
-      <Modals open={modalsOpen} setOpen={setModalsOpen} title={"おはよう"} />
+      <Modals
+        open={modalsOpen}
+        setOpen={setModalsOpen}
+        title={"おはよう"}
+        content={`${lastName}を選択済みリストに移動しますか？`}
+      />
 
       <div className={styles.lists}>
         <div className={styles.cleanedNames}>

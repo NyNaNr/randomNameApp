@@ -51,6 +51,7 @@ const RandomNameApp: React.FC = () => {
   const startNotifier = useRef<HTMLDivElement>(null);
   const stopNotifier = useRef<HTMLDivElement>(null);
   const [modalsOpen, setModalsOpen] = useState(false);
+  const [modalContent, setModalContent] = useState("");
   const [lastName, setLastName] = useState<string | null>(null);
 
   const fontSize = useRef(0); //fontSizeをuseRefで保持;
@@ -110,13 +111,26 @@ const RandomNameApp: React.FC = () => {
 
     const lastName = nameDisplay.current.textContent;
     setLastName(lastName);
-    const shouldRemove = confirm(`${lastName}を選択済みリストに移動しますか？`);
 
-    if (shouldRemove && lastName) {
+    if (isMobile()) {
+      lastName && setModalsOpen(true);
+    } else {
+      const shouldRemove = confirm(
+        `${lastName}を選択済みリストに移動しますか？`
+      );
+      if (shouldRemove && lastName) {
+        setSelectedNameList([...selectedNameList, lastName]);
+        setRemainingNames(remainingNames.filter((name) => name !== lastName));
+      }
+    }
+  }, [remainingNames, selectedNameList, isShowingName]);
+
+  const forModalsDeleteLastName = () => {
+    if (lastName) {
       setSelectedNameList([...selectedNameList, lastName]);
       setRemainingNames(remainingNames.filter((name) => name !== lastName));
     }
-  }, [remainingNames, selectedNameList, isShowingName]);
+  };
 
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
@@ -135,6 +149,13 @@ const RandomNameApp: React.FC = () => {
       window.removeEventListener("keydown", handleKeyDown);
     };
   }, [startNameDisplay, stopNameDisplay, isShowingName]);
+
+  //モーダル
+  useEffect(() => {
+    if (lastName) {
+      setModalContent(`[${lastName}]を選択済みリストに移動しますか？`);
+    }
+  }, [lastName]);
 
   useLayoutEffect(() => {
     calcFontSize(remainingNames);
@@ -155,8 +176,9 @@ const RandomNameApp: React.FC = () => {
       <Modals
         open={modalsOpen}
         setOpen={setModalsOpen}
-        title={"おはよう"}
-        content={`${lastName}を選択済みリストに移動しますか？`}
+        title={"確認"}
+        content={modalContent}
+        onClick={forModalsDeleteLastName}
       />
 
       <div className={styles.lists}>

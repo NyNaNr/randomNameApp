@@ -1,16 +1,21 @@
 import { Fragment, useRef, useState, Dispatch, SetStateAction } from "react";
 import { Dialog, Transition } from "@headlessui/react";
-import { Content } from "next/font/google";
-// import { ExclamationTriangleIcon } from "@heroicons/react/24/outline";
 
 type ModalsProps = {
   open: boolean;
   setOpen: Dispatch<SetStateAction<boolean>>;
   title: string;
   content: string;
+  onClick: any;
 };
 
-export default function Modals({ open, setOpen, title, content }: ModalsProps) {
+export default function Modals({
+  open,
+  setOpen,
+  title,
+  content,
+  onClick,
+}: ModalsProps) {
   const cancelButtonRef = useRef(null);
 
   return (
@@ -47,12 +52,6 @@ export default function Modals({ open, setOpen, title, content }: ModalsProps) {
               <Dialog.Panel className="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg">
                 <div className="bg-white px-4 pb-4 pt-5 sm:p-6 sm:pb-4">
                   <div className="sm:flex sm:items-start">
-                    <div className="mx-auto flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full bg-red-100 sm:mx-0 sm:h-10 sm:w-10">
-                      {/* <ExclamationTriangleIcon
-                        className="h-6 w-6 text-red-600"
-                        aria-hidden="true"
-                      /> */}
-                    </div>
                     <div className="mt-3 text-center sm:ml-4 sm:mt-0 sm:text-left">
                       <Dialog.Title
                         as="h3"
@@ -61,7 +60,7 @@ export default function Modals({ open, setOpen, title, content }: ModalsProps) {
                         {title}
                       </Dialog.Title>
                       <div className="mt-2">
-                        <p className="text-sm text-gray-500">{content}</p>
+                        <p className="text-sm ">{content}</p>
                       </div>
                     </div>
                   </div>
@@ -70,9 +69,13 @@ export default function Modals({ open, setOpen, title, content }: ModalsProps) {
                   <button
                     type="button"
                     className="inline-flex w-full justify-center rounded-md bg-red-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-500 sm:ml-3 sm:w-auto"
-                    onClick={() => setOpen(false)}
+                    onClick={() => {
+                      setOpen(false);
+
+                      onClick();
+                    }}
                   >
-                    Deactivate
+                    はい
                   </button>
                   <button
                     type="button"
@@ -80,7 +83,7 @@ export default function Modals({ open, setOpen, title, content }: ModalsProps) {
                     onClick={() => setOpen(false)}
                     ref={cancelButtonRef}
                   >
-                    Cancel
+                    いいえ
                   </button>
                 </div>
               </Dialog.Panel>

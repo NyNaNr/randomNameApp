@@ -7,7 +7,7 @@ type ModalsProps = {
   open: boolean;
   setOpen: Dispatch<SetStateAction<boolean>>;
   title: string;
-  cotent: string;
+  content: string;
 };
 
 export default function Modals({ open, setOpen, title, content }: ModalsProps) {

@@ -12,6 +12,7 @@ import { useRouter } from "next/router";
 import styles from "@/styles/random_name_app.module.css";
 import Cookies from "js-cookie";
 import { isMobile } from "../../../utils/random_name_app";
+import Modals from "../../../components/Modals";
 
 // TODO レイアウトが崩れないようにする。人数が何人入力されても表示の上限を決めておく。
 
@@ -49,6 +50,7 @@ const RandomNameApp: React.FC = () => {
   const nameDisplay = useRef<HTMLDivElement>(null);
   const startNotifier = useRef<HTMLDivElement>(null);
   const stopNotifier = useRef<HTMLDivElement>(null);
+  const [modalsOpen, setModalsOpen] = useState(false);
 
   const fontSize = useRef(0); //fontSizeをuseRefで保持;
 
@@ -145,6 +147,10 @@ const RandomNameApp: React.FC = () => {
       <Head>
         <title>とにかく大きい ランダムネーム アプリ</title>
       </Head>
+
+      <button onClick={() => setModalsOpen(true)}>ダイアログを開く</button>
+
+      <Modals open={modalsOpen} setOpen={setModalsOpen} title={"おはよう"} />
 
       <div className={styles.lists}>
         <div className={styles.cleanedNames}>

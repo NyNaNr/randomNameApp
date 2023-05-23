@@ -262,7 +262,7 @@ const EditListForm = ({
             </div>
           </div>
         ) : (
-          <div className="flex items-center justify-center h-screen">
+          <div className="flex items-center justify-center min-h-screen">
             <div className="mx-auto flex w-[300px] flex-col justify-center space-y-6 lg:w-[600px]">
               <div className="text-center text-4xl lg:text-5xl font-bold text-black dark:text-white">
                 Welcome to{" "}

@@ -27,6 +27,9 @@ const EditListForm = ({
   const [title, setTitle] = useState<string | null>("");
   const [cookieExpires, setCookieExpires] = useState(0);
   const [isHexagonClicked, setIsHexagonClicked] = useState(false);
+  const [is640Over, setIs640Over] = useState<boolean>(
+    typeof window !== "undefined" ? window.innerWidth > 639 : false
+  );
 
   //リストの名前が変更されたとき表示を上書きする
   useEffect(() => {
@@ -147,6 +150,16 @@ const EditListForm = ({
     setInputText(e.target.value);
     getLineNumberOfUserInput(e.target.value);
   };
+
+  useEffect(() => {
+    if (is640Over) {
+      !selectedListId && handleHexagonClick();
+    } else {
+      if (!selectedListId && !isOpen) {
+        handleHexagonClick();
+      }
+    }
+  }, [selectedListId, is640Over, isOpen]);
 
   useEffect(() => {
     getLineNumberOfUserInput(inputText);

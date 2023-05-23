@@ -112,10 +112,17 @@ const NewListCreator: React.FC<NewListCreatorProps> = ({
         ? JSON.parse(existingListsItem)
         : null;
       const existingLists = Array.isArray(parsedLists) ? parsedLists : [];
-      let updatedLists = existingLists.filter((existingList) => {
-        return existingList.id !== id;
+
+      let updatedLists = existingLists.map((existingList) => {
+        if (existingList.id === id) {
+          // if the list id matches, update the title
+          return { id: id, title: newListNames[id] };
+        } else {
+          // otherwise, return the list as is
+          return existingList;
+        }
       });
-      updatedLists.push({ id: id, title: newListNames[id] });
+
       window.localStorage.setItem("listNames", JSON.stringify(updatedLists));
       setListTitle(newListNames[id].toString());
     }

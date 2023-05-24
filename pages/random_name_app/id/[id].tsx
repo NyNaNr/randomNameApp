@@ -50,8 +50,13 @@ const RandomNameApp: React.FC = () => {
   const nameDisplay = useRef<HTMLDivElement>(null);
   const startNotifier = useRef<HTMLDivElement>(null);
   const stopNotifier = useRef<HTMLDivElement>(null);
-  const [modalsOpen, setModalsOpen] = useState(false);
-  const [modalContent, setModalContent] = useState("");
+  const [modalsOpen1, setModalsOpen1] = useState(false);
+  const [modalsOpen2, setModalsOpen2] = useState(false);
+  const [modalContent1, setModalContent1] = useState("");
+  const [modalContent2] = useState(
+    "最後の1人になりました。はじめからにしますか？"
+  );
+
   const [lastName, setLastName] = useState<string | null>(null);
 
   const fontSize = useRef(0); //fontSizeをuseRefで保持;
@@ -91,13 +96,21 @@ const RandomNameApp: React.FC = () => {
     }
 
     if (remainingNames.length === 1) {
-      const message = "最後の一人になりました。はじめからにしますか？";
-      const shouldReload = confirm(message);
-      if (shouldReload) {
-        window.location.reload();
+      if (isMobile()) {
+        setModalsOpen2(true);
+      } else {
+        const message = "最後の1人になりました。はじめからにしますか？";
+        const shouldReload = confirm(message);
+        if (shouldReload) {
+          window.location.reload();
+        }
       }
     }
   }, [showRandomName, remainingNames.length, isShowingName]);
+
+  const forModalsConfirmRestart = () => {
+    window.location.reload();
+  };
 
   const stopNameDisplay = useCallback(() => {
     if (isShowingName) {
@@ -113,7 +126,7 @@ const RandomNameApp: React.FC = () => {
     setLastName(lastName);
 
     if (isMobile()) {
-      lastName && setModalsOpen(true);
+      lastName && setModalsOpen1(true);
     } else {
       const shouldRemove = confirm(
         `${lastName}を選択済みリストに移動しますか？`
@@ -153,7 +166,7 @@ const RandomNameApp: React.FC = () => {
   //モーダル
   useEffect(() => {
     if (lastName) {
-      setModalContent(`[${lastName}]を選択済みリストに移動しますか？`);
+      setModalContent1(`[${lastName}]を選択済みリストに移動しますか？`);
     }
   }, [lastName]);
 
@@ -171,14 +184,19 @@ const RandomNameApp: React.FC = () => {
         <title>とにかく大きい ランダムネーム アプリ</title>
       </Head>
 
-      <button onClick={() => setModalsOpen(true)}>ダイアログを開く</button>
-
       <Modals
-        open={modalsOpen}
-        setOpen={setModalsOpen}
+        open={modalsOpen1}
+        setOpen={setModalsOpen1}
         title={"確認"}
-        content={modalContent}
+        content={modalContent1}
         onClick={forModalsDeleteLastName}
+      />
+      <Modals
+        open={modalsOpen2}
+        setOpen={setModalsOpen2}
+        title={"確認"}
+        content={modalContent2}
+        onClick={forModalsConfirmRestart}
       />
 
       <div className={styles.lists}>

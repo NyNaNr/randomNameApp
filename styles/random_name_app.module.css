@@ -47,7 +47,7 @@
   margin-top: auto;
   text-align: center;
   z-index: 1;
-  /* animation: fadeIn 2s linear; */
+  transition: all 1s ease-out;
 
   /* margin-bottom: 2em;  下に謎の空白を作る */
 }

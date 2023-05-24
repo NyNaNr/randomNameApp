@@ -13,6 +13,7 @@ import styles from "@/styles/random_name_app.module.css";
 import Cookies from "js-cookie";
 import { isMobile } from "../../../utils/random_name_app";
 import Modals from "../../../components/Modals";
+import { useLeavePageConfirmation } from "../../../hooks";
 
 // TODO レイアウトが崩れないようにする。人数が何人入力されても表示の上限を決めておく。
 
@@ -25,7 +26,6 @@ function Layout({ children }: LayoutProps) {
 }
 
 const RandomNameApp: React.FC = () => {
-  const [NAMES, setNAMES] = useState<string[]>([]);
   //ページ遷移について
   const router = useRouter();
   useEffect(() => {
@@ -36,7 +36,7 @@ const RandomNameApp: React.FC = () => {
         const decodedNames = cookieValue
           ? JSON.parse(decodeURIComponent(cookieValue))
           : [];
-        setNAMES(decodedNames);
+        setOriginalNames(decodedNames);
         setRemainingNames(decodedNames);
       }
     }
@@ -44,7 +44,8 @@ const RandomNameApp: React.FC = () => {
 
   const [isShowingName, setIsShowingName] = useState<boolean>(false);
   const intervalId = useRef<number | null>(null);
-  const [remainingNames, setRemainingNames] = useState<string[]>(NAMES);
+  const [originalNames, setOriginalNames] = useState<string[]>([]);
+  const [remainingNames, setRemainingNames] = useState<string[]>([]);
   const [selectedNameList, setSelectedNameList] = useState<string[]>([]);
 
   const nameDisplay = useRef<HTMLDivElement>(null);
@@ -55,6 +56,9 @@ const RandomNameApp: React.FC = () => {
   const [modalContent1, setModalContent1] = useState("");
   const [modalContent2] = useState("最後の1人になりました。初めからしますか？");
   const [mobileDevice, setMobileDevice] = useState(false);
+  const [showLeavingAlert, setShowLeavingAlert] = useState(true);
+  useLeavePageConfirmation(showLeavingAlert);
+
   useEffect(() => {
     const mobile = isMobile();
     setMobileDevice(mobile !== undefined ? mobile : false);
@@ -105,15 +109,21 @@ const RandomNameApp: React.FC = () => {
         const message = "最後の1人になりました。はじめからにしますか？";
         const shouldReload = confirm(message);
         if (shouldReload) {
-          setRemainingNames(NAMES);
+          setRemainingNames(originalNames);
           setSelectedNameList([]);
+          //stop
+
+          if (intervalId.current !== null) {
+            clearInterval(intervalId.current);
+          }
+          setIsShowingName(false);
         }
       }
     }
-  }, [showRandomName, remainingNames.length, isShowingName, NAMES]);
+  }, [showRandomName, remainingNames.length, isShowingName, originalNames]);
 
   const forModalsConfirmRestart = () => {
-    setRemainingNames(NAMES);
+    setRemainingNames(originalNames);
     setSelectedNameList([]);
   };
 

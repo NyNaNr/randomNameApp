@@ -152,13 +152,23 @@ const EditListForm = ({
   };
 
   useEffect(() => {
+    let timeoutId: NodeJS.Timeout;
+
+    const delayedHexagonClick = () => {
+      timeoutId = setTimeout(() => {
+        handleHexagonClick();
+      }, 1500); // 1000ms (1秒)後に実行
+    };
+
     if (is640Over) {
-      !selectedListId && handleHexagonClick();
+      !selectedListId && delayedHexagonClick();
     } else {
       if (!selectedListId && !isOpen) {
-        handleHexagonClick();
+        delayedHexagonClick();
       }
     }
+
+    return () => clearTimeout(timeoutId); // cleanup関数でtimeoutをクリア
   }, [selectedListId, is640Over, isOpen]);
 
   useEffect(() => {

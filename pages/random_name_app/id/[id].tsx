@@ -53,9 +53,12 @@ const RandomNameApp: React.FC = () => {
   const [modalsOpen1, setModalsOpen1] = useState(false);
   const [modalsOpen2, setModalsOpen2] = useState(false);
   const [modalContent1, setModalContent1] = useState("");
-  const [modalContent2] = useState(
-    "最後の1人になりました。はじめからにしますか？"
-  );
+  const [modalContent2] = useState("最後の1人になりました。初めからしますか？");
+  const [mobileDevice, setMobileDevice] = useState(false);
+  useEffect(() => {
+    const mobile = isMobile();
+    setMobileDevice(mobile !== undefined ? mobile : false);
+  }, []);
 
   const [lastName, setLastName] = useState<string | null>(null);
 
@@ -102,14 +105,16 @@ const RandomNameApp: React.FC = () => {
         const message = "最後の1人になりました。はじめからにしますか？";
         const shouldReload = confirm(message);
         if (shouldReload) {
-          window.location.reload();
+          setRemainingNames(NAMES);
+          setSelectedNameList([]);
         }
       }
     }
-  }, [showRandomName, remainingNames.length, isShowingName]);
+  }, [showRandomName, remainingNames.length, isShowingName, NAMES]);
 
   const forModalsConfirmRestart = () => {
-    window.location.reload();
+    setRemainingNames(NAMES);
+    setSelectedNameList([]);
   };
 
   const stopNameDisplay = useCallback(() => {
@@ -171,11 +176,7 @@ const RandomNameApp: React.FC = () => {
   }, [lastName]);
 
   useLayoutEffect(() => {
-    calcFontSize(remainingNames);
     showRandomName();
-    if (nameDisplay.current !== null) {
-      nameDisplay.current.style.opacity = `${0}`;
-    }
   }, [remainingNames, showRandomName]);
 
   return (

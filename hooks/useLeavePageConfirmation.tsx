@@ -4,7 +4,7 @@ import { useBeforeUnload } from "react-use";
 
 export const useLeavePageConfirmation = (
   showAlert = true,
-  message = "入力した内容がキャンセルされますがよろしいでしょうか？"
+  message = "途中経過は保存されません。よろしいでしょうか？"
 ) => {
   useBeforeUnload(showAlert, message);
 

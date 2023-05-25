@@ -220,6 +220,10 @@ const RandomNameApp: React.FC = () => {
       </div>
       <div className={styles.display}>
         <div className={styles.nameDisplay} ref={nameDisplay}></div>
+        <div
+          className="overlay absolute top-0 left-0 w-full h-full opacity-0"
+          onClick={isShowingName ? stopNameDisplay : startNameDisplay}
+        ></div>
         {!isShowingName ? (
           <div
             className={styles.startNotifier}

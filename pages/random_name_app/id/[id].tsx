@@ -125,6 +125,10 @@ const RandomNameApp: React.FC = () => {
   const forModalsConfirmRestart = () => {
     setRemainingNames(originalNames);
     setSelectedNameList([]);
+    if (intervalId.current !== null) {
+      clearInterval(intervalId.current);
+    }
+    setIsShowingName(false);
   };
 
   const stopNameDisplay = useCallback(() => {

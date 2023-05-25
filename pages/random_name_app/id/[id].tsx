@@ -177,7 +177,6 @@ const RandomNameApp: React.FC = () => {
       window.removeEventListener("keydown", handleKeyDown);
     };
   }, [startNameDisplay, stopNameDisplay, isShowingName]);
-
   //モーダル
   useEffect(() => {
     if (lastName) {
@@ -187,7 +186,7 @@ const RandomNameApp: React.FC = () => {
 
   useLayoutEffect(() => {
     showRandomName();
-  }, [remainingNames, showRandomName]);
+  }, [remainingNames, showRandomName, isShowingName]); //isShowingName追加で、リストに追加しなかったときも「エンターキーでスタート」のフォントサイズが計算される
 
   return (
     <Layout>

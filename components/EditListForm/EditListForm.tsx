@@ -157,7 +157,7 @@ const EditListForm = ({
     const delayedHexagonClick = () => {
       timeoutId = setTimeout(() => {
         handleHexagonClick();
-      }, 1500); // 1000ms (1秒)後に実行
+      }, 1000); // 1000ms (1秒)後に実行
     };
 
     if (is640Over) {

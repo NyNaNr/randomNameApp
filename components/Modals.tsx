@@ -61,7 +61,7 @@ export default function Modals({
                         {title}
                       </Dialog.Title>
                       <div className="mt-2">
-                        <p className="text-sm ">{content}</p>
+                        <p className="text-sm dark:text-black ">{content}</p>
                       </div>
                     </div>
                   </div>

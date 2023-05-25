@@ -184,7 +184,7 @@ const RandomNameApp: React.FC = () => {
   //モーダル
   useEffect(() => {
     if (lastName) {
-      setModalContent1(`[${lastName}]を選択済みリストに移動しますか？`);
+      setModalContent1(`{${lastName}}を選択済みリストに移動しますか？`);
     }
   }, [lastName]);
 

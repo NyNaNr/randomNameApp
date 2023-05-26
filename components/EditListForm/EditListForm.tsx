@@ -113,7 +113,12 @@ const EditListForm = ({
     );
     const rib_null_from_userInputList =
       rib_space_from_listNames.filter(Boolean);
-    const formattedUserInput = rib_null_from_userInputList;
+    const uniqueNameList = rib_null_from_userInputList.filter(
+      (value, index, self) => {
+        return self.indexOf(value) === index;
+      }
+    );
+    const formattedUserInput = uniqueNameList;
     return formattedUserInput;
   };
 

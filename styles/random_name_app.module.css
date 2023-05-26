@@ -3,7 +3,7 @@
   flex: auto;
   justify-content: center;
 
-  height: 100vh; /*ページの高さは、ウィンドウの高さと同じ*/
+  min-height: 100vh;
 }
 .upper {
   display: flex;

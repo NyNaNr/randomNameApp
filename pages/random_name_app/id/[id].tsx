@@ -47,6 +47,8 @@ const RandomNameApp: React.FC = () => {
   const [originalNames, setOriginalNames] = useState<string[]>([]);
   const [remainingNames, setRemainingNames] = useState<string[]>([]);
   const [selectedNameList, setSelectedNameList] = useState<string[]>([]);
+  const [lastName, setLastName] = useState<string | null>(null);
+  const fontSize = useRef(0); //fontSizeをuseRefで保持;
 
   const nameDisplay = useRef<HTMLDivElement>(null);
   const startNotifier = useRef<HTMLDivElement>(null);
@@ -57,16 +59,13 @@ const RandomNameApp: React.FC = () => {
   const [modalContent2] = useState("最後の1人になりました。初めからしますか？");
   const [mobileDevice, setMobileDevice] = useState(false);
   const [showLeavingAlert, setShowLeavingAlert] = useState(true);
+
   useLeavePageConfirmation(showLeavingAlert);
 
   useEffect(() => {
     const mobile = isMobile();
     setMobileDevice(mobile !== undefined ? mobile : false);
   }, []);
-
-  const [lastName, setLastName] = useState<string | null>(null);
-
-  const fontSize = useRef(0); //fontSizeをuseRefで保持;
 
   const calcFontSize = (list: string[]) => {
     const longestName = list.reduce(
@@ -92,7 +91,9 @@ const RandomNameApp: React.FC = () => {
     if (!nameDisplay.current) return;
     const randomName =
       remainingNames[Math.floor(Math.random() * remainingNames.length)];
+    console.log("-1", randomName);
     nameDisplay.current.textContent = randomName;
+    console.log("0", nameDisplay.current.textContent);
     calcFontSize(remainingNames);
   }, [remainingNames]);
 
@@ -111,8 +112,6 @@ const RandomNameApp: React.FC = () => {
         if (shouldReload) {
           setRemainingNames(originalNames);
           setSelectedNameList([]);
-          //stop
-
           if (intervalId.current !== null) {
             clearInterval(intervalId.current);
           }
@@ -130,18 +129,11 @@ const RandomNameApp: React.FC = () => {
     }
     setIsShowingName(false);
   };
-
-  const stopNameDisplay = useCallback(() => {
-    if (isShowingName) {
-      if (intervalId.current !== null) {
-        clearInterval(intervalId.current);
-      }
-      setIsShowingName(false);
-    }
-
+  const moveLastName = useCallback(() => {
     if (!nameDisplay.current) return;
-
+    console.log("1", nameDisplay.current.textContent);
     const lastName = nameDisplay.current.textContent;
+    console.log("2", lastName);
     setLastName(lastName);
 
     if (isMobile()) {
@@ -155,7 +147,17 @@ const RandomNameApp: React.FC = () => {
         setRemainingNames(remainingNames.filter((name) => name !== lastName));
       }
     }
-  }, [remainingNames, selectedNameList, isShowingName]);
+  }, [remainingNames, selectedNameList]);
+
+  const stopNameDisplay = useCallback(() => {
+    if (isShowingName) {
+      if (intervalId.current !== null) {
+        clearInterval(intervalId.current);
+      }
+      setIsShowingName(false);
+    }
+    setTimeout(moveLastName, 100);
+  }, [isShowingName, moveLastName]);
 
   const forModalsDeleteLastName = () => {
     if (lastName) {

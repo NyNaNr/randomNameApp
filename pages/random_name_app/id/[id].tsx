@@ -168,7 +168,7 @@ const RandomNameApp: React.FC = () => {
 
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
-      if (event.key === "Enter") {
+      if (event.key === "Enter" && !modalsOpen1 && !modalsOpen2) {
         if (isShowingName) {
           stopNameDisplay();
         } else {
@@ -182,7 +182,13 @@ const RandomNameApp: React.FC = () => {
     return () => {
       window.removeEventListener("keydown", handleKeyDown);
     };
-  }, [startNameDisplay, stopNameDisplay, isShowingName]);
+  }, [
+    startNameDisplay,
+    stopNameDisplay,
+    isShowingName,
+    modalsOpen1,
+    modalsOpen2,
+  ]);
   //モーダル
   useEffect(() => {
     if (lastName) {

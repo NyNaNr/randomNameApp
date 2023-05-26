@@ -10,30 +10,20 @@
   justify-content: space-between;
 }
 
-/* .lists {
+.lists {
   display: flex;
   flex: auto;
   flex-direction: row;
-  justify-content: center;
-  align-items: flex-start;
-} */
+
+  border: 1px solid #a5a5a5;
+  border-radius: 10px;
+  margin: 1em;
+}
 
 .cleanedNames,
 .removedNames {
   margin: 1em 1em;
 }
-
-/* .cleanedNames {
-  font-size: 1.2em;
-  font-size: 20px;
-
-  margin-bottom: 20px;
-} */
-
-/* .removed-names {
-  font-size: 1.2em;
-  font-size: 20px;
-} */
 
 .display {
   /*nameDisplayが現れる前の下地*/

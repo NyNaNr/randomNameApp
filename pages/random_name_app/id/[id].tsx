@@ -73,7 +73,7 @@ const RandomNameApp: React.FC = () => {
       ""
     );
     fontSize.current = Math.floor(
-      (window.innerWidth * 0.9) / longestName.length
+      (window.innerWidth * 0.95) / longestName.length
     );
     if (!nameDisplay.current) return;
     nameDisplay.current.style.fontSize = `${fontSize.current}px`;

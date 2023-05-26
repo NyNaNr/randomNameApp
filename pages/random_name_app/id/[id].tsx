@@ -224,7 +224,7 @@ const RandomNameApp: React.FC = () => {
       <div className={styles.lists}>
         <div className={styles.cleanedNames}>
           {/* 未選択の名前を表示 */}
-          <h2>未選択リスト</h2>
+          <h2 className="underline ">未選択リスト</h2>
 
           <p>{remainingNames.join(" ")}</p>
         </div>
@@ -264,7 +264,7 @@ const RandomNameApp: React.FC = () => {
       <div className={styles.lists}>
         <div className={styles.removedNames}>
           {/* 選択済みの名前を表示 */}
-          <h2>選択済みリスト</h2>
+          <h2 className="underline">選択済みリスト</h2>
 
           <p>{selectedNameList.join(" ")}</p>
         </div>

@@ -271,7 +271,14 @@ const RandomNameApp: React.FC = () => {
       </div>
 
       <h2>
-        <Link href="/random_name_app/home">← Back to home</Link>
+        <Link
+          href="/random_name_app/home"
+          className={
+            "text-blue-500 hover:text-blue-700 underline font-semibold m-8"
+          }
+        >
+          リスト選択画面へ戻る
+        </Link>
       </h2>
     </Layout>
   );

@@ -147,7 +147,6 @@ const RandomNameApp: React.FC = () => {
         setRemainingNames(remainingNames.filter((name) => name !== lastName));
       }
     }
-    setIsShowingName(false); //ここでfalseにすることで、リストに追加の選択画面で「エンターキーでスタート」を表示させない
   }, [remainingNames, selectedNameList]);
 
   const stopNameDisplay = useCallback(() => {
@@ -155,6 +154,7 @@ const RandomNameApp: React.FC = () => {
       if (intervalId.current !== null) {
         clearInterval(intervalId.current);
       }
+      setIsShowingName(false);
     }
     setTimeout(moveLastName, 100);
   }, [isShowingName, moveLastName]);

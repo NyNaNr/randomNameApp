@@ -274,7 +274,7 @@ const RandomNameApp: React.FC = () => {
         <Link
           href="/random_name_app/home"
           className={
-            "border border-solid p-3 pl-4 rounded-lg border-gray-400 　text-blue-400 hover:text-blue-700 underline font-semibold m-4"
+            "border border-solid p-3 pl-4 rounded-lg border-gray-400 text-blue-400 hover:text-blue-700 underline font-semibold m-4"
           }
         >
           リスト選択画面へ戻る

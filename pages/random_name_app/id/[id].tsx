@@ -270,11 +270,11 @@ const RandomNameApp: React.FC = () => {
         </div>
       </div>
 
-      <h2>
+      <h2 className="flex justify-end mr-4">
         <Link
           href="/random_name_app/home"
           className={
-            "border border-solid p-3 pl-4 rounded-lg border-gray-400 text-blue-400 hover:text-blue-700 underline font-semibold m-4"
+            "border border-solid p-3 pl-4 rounded-lg border-gray-400  bg-blue-100 hover:bg-blue-200 font-semibold "
           }
         >
           リスト選択画面へ戻る

@@ -140,7 +140,7 @@ const RandomNameApp: React.FC = () => {
       lastName && setModalsOpen1(true);
     } else {
       const shouldRemove = confirm(
-        `${lastName}を選択済みリストに移動しますか？`
+        `${lastName}を抽選済みリストに移動しますか？`
       );
       if (shouldRemove && lastName) {
         setSelectedNameList([...selectedNameList, lastName]);
@@ -192,7 +192,7 @@ const RandomNameApp: React.FC = () => {
   //モーダル
   useEffect(() => {
     if (lastName) {
-      setModalContent1(`{${lastName}}を選択済みリストに移動しますか？`);
+      setModalContent1(`{${lastName}}を抽選済みリストに移動しますか？`);
     }
   }, [lastName]);
 
@@ -274,7 +274,7 @@ const RandomNameApp: React.FC = () => {
         <Link
           href="/random_name_app/home"
           className={
-            "border border-solid p-2 rounded-lg border-gray-400 　text-blue-400 hover:text-blue-700 underline font-semibold m-4"
+            "border border-solid p-3 pl-4 rounded-lg border-gray-400 　text-blue-400 hover:text-blue-700 underline font-semibold m-4"
           }
         >
           リスト選択画面へ戻る

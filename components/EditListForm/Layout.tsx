@@ -20,15 +20,15 @@ const Layout: React.FC<LayoutProps> = ({
   <React.Fragment>
     {selectedListId && (
       <header className="header fixed top-0 w-full z-1 bg-white ">
+        {isOpen ? (
+          <div
+            onClick={toggleOpen}
+            className="absolute top-0 left-0 z-10 min-h-screen h-full w-full bg-black opacity-70 sm:hidden"
+          ></div>
+        ) : (
+          ""
+        )}
         <div className="container">
-          {isOpen ? (
-            <div
-              onClick={toggleOpen}
-              className="absolute top-0 left-0 z-10 min-h-screen h-full w-full bg-black opacity-70 sm:hidden"
-            ></div>
-          ) : (
-            ""
-          )}
           <div className="text-black">
             <p>保存可能な文字容量: {totalBytes}/4058 bytes</p>
           </div>

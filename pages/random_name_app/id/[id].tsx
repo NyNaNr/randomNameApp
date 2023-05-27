@@ -167,6 +167,7 @@ const RandomNameApp: React.FC = () => {
       setSelectedNameList([...selectedNameList, lastName]);
       setRemainingNames(remainingNames.filter((name) => name !== lastName));
     }
+    setIsTiming(true);
   };
 
   useEffect(() => {

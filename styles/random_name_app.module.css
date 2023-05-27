@@ -56,7 +56,7 @@
   color: rgb(42, 95, 141);
   background-color: ivory;
   border-radius: 0.5rem;
-  padding: 0.2em;
+  padding: 0em 0.1em;
 }
 
 .stopNotifier {
@@ -70,7 +70,7 @@
   color: rgb(42, 95, 141);
   background-color: ivory;
   border-radius: 0.5rem;
-  padding: 0.2em;
+  padding: 0em 0.1em;
 }
 
 @keyframes flash {

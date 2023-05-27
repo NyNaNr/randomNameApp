@@ -388,7 +388,7 @@ const NewListCreator: React.FC<NewListCreatorProps> = ({
                 <div className="absolute right-1 z-10 flex text-gray-300 ">
                   {/* Pencil button */}
                   <button
-                    className="min-w-[20px] p-1 text-neutral-400 hover:text-neutral-100"
+                    className="min-w-[20px] p-1 text-neutral-400"
                     onClick={() => {
                       handleToggleEditMode(list.id);
                       onListClick(list.id);
@@ -413,7 +413,7 @@ const NewListCreator: React.FC<NewListCreatorProps> = ({
 
                   {/* Trash button */}
                   <button
-                    className="min-w-[20px] p-1 text-neutral-400 hover:text-neutral-100"
+                    className="min-w-[20px] p-1 text-neutral-400 "
                     onClick={() => {
                       handleToggleDeleteConfirmMode(list.id);
                       onListClick(list.id);

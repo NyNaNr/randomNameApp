@@ -215,14 +215,6 @@ const EditListForm = ({
 
   return (
     <React.Fragment>
-      {isOpen ? (
-        <div
-          onClick={toggleOpen}
-          className="absolute top-0 left-0 z-10 h-full w-full bg-black opacity-70 sm:hidden"
-        ></div>
-      ) : (
-        ""
-      )}
       <Layout
         selectedListId={selectedListId}
         totalBytes={totalBytes}

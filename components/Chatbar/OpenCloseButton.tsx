@@ -8,7 +8,7 @@ export const CloseSidebarButton = ({ onClick }: Props) => {
   return (
     <>
       <button
-        className={`fixed top-16 left-[270px]
+        className={`fixed top-20 left-[270px]
         z-50 h-7 w-7 hover:text-gray-400 text-white dark:text-white dark:hover:text-gray-300 sm:top-16 sm:left-[270px] sm:h-8 sm:w-8 sm:text-neutral-700`}
         onClick={onClick}
       >

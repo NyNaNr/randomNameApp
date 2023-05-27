@@ -187,7 +187,7 @@ const NewListCreator: React.FC<NewListCreatorProps> = ({
   }, [lists, setLists]);
 
   return (
-    <div className="flex w-full flex-col min-h-screen gap-1">
+    <div className="flex w-full flex-col gap-1">
       {lists.map((list) => (
         <div
           className={`relative flex items-center group ${

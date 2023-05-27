@@ -226,7 +226,7 @@ const EditListForm = ({
           <div>
             <div className="flex justify-around mt-28">
               <div className="userInput flex flex-col">
-                <div className="info border border-solid p-1 ml-8 rounded-lg border-gray-400">
+                <div className="info border border-solid p-1 ml-8 rounded-lg text-center border-gray-400">
                   <p>改行して名前を入力</p>
                 </div>
                 <div className="flex">
@@ -248,7 +248,7 @@ const EditListForm = ({
                 </div>
               </div>
               <div className="formatted flex flex-col">
-                <div className="info border border-solid p-1 ml-8 rounded-lg border-gray-400">
+                <div className="info border border-solid p-1 ml-8 rounded-lg text-center border-gray-400">
                   <p>整形後の名前</p>
                 </div>
                 <div className="flex">
@@ -268,6 +268,14 @@ const EditListForm = ({
           </div>
         ) : (
           <div className="flex items-center justify-center min-h-screen">
+            {isOpen ? (
+              <div
+                onClick={toggleOpen}
+                className="absolute top-0 left-0 z-10 min-h-screen h-full w-full bg-black opacity-60 sm:hidden"
+              ></div>
+            ) : (
+              ""
+            )}
             <div className="mx-auto flex w-[300px] flex-col justify-center mt-10 space-y-6 lg:w-[600px]">
               <div className="text-center text-4xl lg:text-5xl font-bold text-black dark:text-white">
                 Welcome to{" "}

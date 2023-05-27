@@ -234,9 +234,8 @@ const EditListForm = ({
           <div>
             <div className="flex justify-around mt-28">
               <div className="userInput flex flex-col">
-                <div className="info text-right">
-                  <p>ここに名前を入力してください</p>
-                  <p>改行で名前を区切ってください</p>
+                <div className="info border border-solid p-1 ml-8 rounded-lg border-gray-400">
+                  <p>改行して名前を入力</p>
                 </div>
                 <div className="flex">
                   <div className="line-number mr-4 text-right">
@@ -257,9 +256,8 @@ const EditListForm = ({
                 </div>
               </div>
               <div className="formatted flex flex-col">
-                <div className="info text-right">
-                  <p>実際に使われる名前は</p>
-                  <p>ここに表示されている部分です</p>
+                <div className="info border border-solid p-1 ml-8 rounded-lg border-gray-400">
+                  <p>整形後の名前</p>
                 </div>
                 <div className="flex">
                   <div className="line-number mr-4 text-right">

@@ -59,6 +59,7 @@ const RandomNameApp: React.FC = () => {
   const [modalContent2] = useState("最後の1人になりました。初めからしますか？");
   const [mobileDevice, setMobileDevice] = useState(false);
   const [showLeavingAlert, setShowLeavingAlert] = useState(true);
+  const [isTiming, setIsTiming] = useState(false);
 
   useLeavePageConfirmation(showLeavingAlert);
 
@@ -146,6 +147,7 @@ const RandomNameApp: React.FC = () => {
         setSelectedNameList([...selectedNameList, lastName]);
         setRemainingNames(remainingNames.filter((name) => name !== lastName));
       }
+      setIsTiming(true);
     }
   }, [remainingNames, selectedNameList]);
 
@@ -155,6 +157,7 @@ const RandomNameApp: React.FC = () => {
         clearInterval(intervalId.current);
       }
       setIsShowingName(false);
+      setIsTiming(false);
     }
     setTimeout(moveLastName, 100);
   }, [isShowingName, moveLastName]);
@@ -235,7 +238,7 @@ const RandomNameApp: React.FC = () => {
           className="overlay absolute top-0 left-0 w-full h-full opacity-0"
           onClick={isShowingName ? stopNameDisplay : startNameDisplay}
         ></div>
-        {!isShowingName && !modalsOpen1 ? (
+        {!isShowingName && !modalsOpen1 && isTiming ? (
           <div
             className={styles.startNotifier}
             ref={startNotifier}

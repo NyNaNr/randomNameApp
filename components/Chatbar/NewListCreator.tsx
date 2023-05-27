@@ -190,7 +190,7 @@ const NewListCreator: React.FC<NewListCreatorProps> = ({
     <div className="flex w-full flex-col gap-1">
       {lists.map((list) => (
         <div
-          className={`relative flex items-center group ontouchstart="" ${
+          className={`relative flex items-center group  ${
             list.id === selectedListId ? "bg-blue-500 rounded-lg" : ""
           }`}
           key={list.id}

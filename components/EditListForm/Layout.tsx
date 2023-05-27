@@ -48,7 +48,7 @@ const Layout: React.FC<LayoutProps> = ({
             <div></div>
           )}
 
-          <div className="fixed start-links z-5 flex top-2 right-0 w-20">
+          <div className="fixed start-links z-5 flex top-2 right-0 w-24">
             {totalBytes > 4058 || lineNumber < 2 ? (
               <div className="link-blocker absolute h-15 px-2 py-1 text-lg text-white font-semibold rounded z-20 cursor-not-allowed">
                 スタート

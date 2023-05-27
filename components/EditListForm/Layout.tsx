@@ -1,6 +1,5 @@
 import React, { ReactNode } from "react";
 import Link from "next/link";
-
 type LayoutProps = {
   selectedListId: string | null;
   totalBytes: number;
@@ -21,7 +20,7 @@ const Layout: React.FC<LayoutProps> = ({
   <React.Fragment>
     {selectedListId && (
       <header className="header fixed top-0 w-full z-1 bg-white ">
-        <div className="container relative">
+        <div className="container">
           {isOpen ? (
             <div
               onClick={toggleOpen}
@@ -49,7 +48,7 @@ const Layout: React.FC<LayoutProps> = ({
             <div></div>
           )}
 
-          <div className="start-links absolute bottom-0 right-0">
+          <div className="fixed start-links z-5 flex top-2 right-0 w-20">
             {totalBytes > 4058 || lineNumber < 2 ? (
               <div className="link-blocker absolute h-15 px-2 py-1 text-lg text-white font-semibold rounded z-20 cursor-not-allowed">
                 スタート

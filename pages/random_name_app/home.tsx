@@ -52,14 +52,14 @@ export default function Home() {
             />
 
             {/*サイドバー */}
-            <div className="flex-grow overflow-auto">
+            <div className="flex-grow overflow-auto h-screen">
               {/*境界線 */}
               <div className="flex border-b border-white/20 ">
                 <div className="flex w-full flex-col "></div>
               </div>
               {/*以下新規リスト押したあとにできる要素 */}
               <div className="pt-2">
-                <div className="flex w-full flex-col gap-1 sm:min-h-screen">
+                <div className="flex w-full flex-col gap-1 ">
                   {/*newListの要素を作成する */}
                   <NewListCreator
                     lists={lists}
@@ -75,7 +75,7 @@ export default function Home() {
 
             {/*リストが空の場合ノーデータを表示 */}
             {lists.length === 0 && (
-              <div className="flex-grow overflow-auto">
+              <div className="flex-grow ">
                 <div className="mt-8 select-none text-center text-white opacity-50">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"

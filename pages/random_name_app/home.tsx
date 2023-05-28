@@ -35,7 +35,9 @@ export default function Home() {
         <title>とにかく大きい ランダムネーム アプリ</title>
       </Head>
 
-      <div className={`flex min-h-screen ${isOpen ? "w-custom" : "w-full"}`}>
+      <div
+        className={`flex min-h-screen ${isOpen ? "sm:w-custom" : "sm:w-full"}`}
+      >
         {isOpen ? (
           <div
             className={`${

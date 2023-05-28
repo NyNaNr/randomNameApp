@@ -7,6 +7,9 @@ module.exports = {
   ],
   theme: {
     extend: {
+      width: {
+        custom: "calc(100% - 260px)",
+      },
       keyframes: {
         flash: {
           "0%": { opacity: "1" },

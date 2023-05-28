@@ -267,13 +267,7 @@ const EditListForm = ({
             </div>
           </div>
         ) : (
-          <div
-            className="flex items-center justify-center min-h-screen "
-            // style={{
-            //   height: "100dvh",
-            // }}
-            //スマホでアドレスバー分の高さずれ修正できず
-          >
+          <div className="flex items-center justify-center min-h-screen">
             {isOpen ? (
               <div
                 onClick={toggleOpen}

@@ -267,7 +267,13 @@ const EditListForm = ({
             </div>
           </div>
         ) : (
-          <div className="flex items-center justify-center min-h-screen">
+          <div
+            className="flex items-center justify-center min-h-screen "
+            // style={{
+            //   height: "100dvh",
+            // }}
+            //スマホでアドレスバー分の高さずれ修正できず
+          >
             {isOpen ? (
               <div
                 onClick={toggleOpen}
@@ -276,7 +282,7 @@ const EditListForm = ({
             ) : (
               ""
             )}
-            <div className="mx-auto flex w-[300px] flex-col justify-center mt-10 space-y-6 lg:w-[600px]">
+            <div className="mx-auto flex w-[300px] flex-col justify-center space-y-6 lg:w-[600px]">
               <div className="text-center text-4xl lg:text-5xl font-bold text-black dark:text-white">
                 Welcome to{" "}
                 <span className="text-3xl lg:text-5xl">
@@ -303,7 +309,7 @@ const EditListForm = ({
                 <div className="mb-2">
                   リスト名をクリックすると、そのリストのcookieの保存期間が更新・延長されます。
                 </div>
-                <div className="mb-10">
+                <div className="">
                   もしご自身でリストの保存期間を確認されたい場合は、「cookie
                   確認方法」などと検索してください。
                 </div>

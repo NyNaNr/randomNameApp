@@ -1,6 +1,5 @@
 import React, { useState, useRef, useEffect, ChangeEvent } from "react";
 import { fetchListsFromLocalStorage } from "../../utils/random_name_app";
-import useDarkModeButton from "../../hooks/useDarkModeButton";
 
 import Cookies from "js-cookie";
 
@@ -31,7 +30,6 @@ const NewListCreator: React.FC<NewListCreatorProps> = ({
   setListTitle,
   selectedListId,
 }) => {
-  const [checkboxElement, handleChangeDarkMode] = useDarkModeButton();
   useEffect(() => {
     const listsFromLocalStorage = fetchListsFromLocalStorage();
     console.log("listsFromLocalStorage", listsFromLocalStorage);

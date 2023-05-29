@@ -7,6 +7,7 @@ import {
   CloseSidebarButton,
   OpenSidebarButton,
 } from "../../components/Chatbar/OpenCloseButton";
+import { useRouter } from "next/router";
 
 type ListType = {
   id: string;
@@ -14,6 +15,8 @@ type ListType = {
 };
 
 export default function Home() {
+  const router = useRouter();
+  const currentUrl = `https://yur.vercel.app${router.asPath}`;
   const [lists, setLists] = useState<ListType[]>([]);
   //ユーザーがクリックした要素のidを共有
   const [selectedListId, setSelectedListId] = useState<string | null>(null);
@@ -37,6 +40,7 @@ export default function Home() {
           name="description"
           content="このWebアプリはビンゴのように名前をランダムに大きく表示するアプリです。入力した名前は外部サーバーに送信されず、ローカルに保存されます。"
         />
+        <meta property="og:url" content={currentUrl} />
       </Head>
 
       <div className={`flex ${isOpen ? "sm:w-custom" : "sm:w-full"}`}>

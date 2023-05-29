@@ -2,10 +2,13 @@ import Link from "next/link";
 import { Inter } from "next/font/google";
 import { useEffect, useState } from "react";
 import Head from "next/head";
+import { useRouter } from "next/router";
 
 const inter = Inter({ subsets: ["latin"] });
 
 export default function Home() {
+  const router = useRouter();
+  const currentUrl = `https://yur.vercel.app${router.asPath}`;
   const [width, setWidth] = useState(0);
 
   useEffect(() => {
@@ -18,8 +21,9 @@ export default function Home() {
         <title>Features - とにかく大きい ランダムネーム アプリ</title>
         <meta
           name="description"
-          content="このWebアプリはビンゴのように名前をランダムに大きく表示するアプリです。入力した名前は外部サーバーに送信されず、ローカルに保存されます。"
+          content="このWebアプリはビンゴのようにランダムに名前を大きく表示するアプリです。入力した名前は外部サーバーに送信されず、ローカルに保存されます。"
         />
+        <meta property="og:url" content={currentUrl} />
       </Head>
 
       <div className="min-h-screen">

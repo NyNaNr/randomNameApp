@@ -19,7 +19,7 @@ const Layout: React.FC<LayoutProps> = ({
 }) => (
   <React.Fragment>
     {selectedListId && (
-      <header className="header fixed top-0 w-full z-1 p-1 bg-white shadow-lg">
+      <header className="header fixed top-0 w-full z-1 p-1 bg-white shadow-md">
         {isOpen ? (
           <div
             onClick={toggleOpen}

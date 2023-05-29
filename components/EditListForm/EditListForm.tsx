@@ -318,7 +318,7 @@ const EditListForm = ({
               <Link
                 href={`/random_name_app/features`}
                 className={
-                  "border-2 border-solid p-2 rounded-lg border-gray-300   text-gray-600 dark:text-black hover:bg-gray-100 font-medium"
+                  "border-2 border-solid p-2 rounded-lg border-gray-200   text-gray-600 dark:text-black hover:bg-gray-100 font-medium"
                 }
               >
                 アプリの紹介と個人情報の取扱

@@ -32,7 +32,11 @@ export default function Home() {
   return (
     <React.Fragment>
       <Head>
-        <title>とにかく大きい ランダムネーム アプリ</title>
+        <title>Home - とにかく大きい ランダムネーム アプリ</title>
+        <meta
+          name="description"
+          content="このWebアプリはビンゴのように名前をランダムに大きく表示するアプリです。入力した名前は外部サーバーに送信されず、ローカルに保存されます。"
+        />
       </Head>
 
       <div className={`flex ${isOpen ? "sm:w-custom" : "sm:w-full"}`}>

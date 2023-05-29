@@ -267,7 +267,12 @@ const EditListForm = ({
             </div>
           </div>
         ) : (
-          <div className="flex items-center justify-center min-h-screen">
+          <div
+            className="flex items-center justify-center md:min-h-screen"
+            style={{
+              height: "100dvh",
+            }}
+          >
             {isOpen ? (
               <div
                 onClick={toggleOpen}

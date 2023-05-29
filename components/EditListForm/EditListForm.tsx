@@ -314,6 +314,16 @@ const EditListForm = ({
                 </div>
               </div>
             </div>
+            <div className="absolute right-1 bottom-4 bg-transparent">
+              <Link
+                href={`/random_name_app/features`}
+                className={
+                  "border border-solid p-2 rounded-lg border-gray-400  bg-blue-300 text-gray-600 dark:text-black hover:bg-blue-400 hover:text-white font-semibold"
+                }
+              >
+                アプリの紹介と個人情報の取扱
+              </Link>
+            </div>
           </div>
         )}
       </Layout>

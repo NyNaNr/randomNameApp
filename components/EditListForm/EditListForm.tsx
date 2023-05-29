@@ -239,7 +239,7 @@ const EditListForm = ({
                   <textarea
                     id="textarea"
                     value={inputText}
-                    className="pl-2 text-black  border-2 border-black"
+                    className="pl-2 text-black  border-2 border-black mb-5"
                     onChange={handleOnChange}
                     onBlur={handleInputConfirm} // テキストエリアからフォーカスが外れたとき（入力が確定したとき）にhandleInputConfirmを呼び出す
                     rows={lineNumbersOfUserInput.length}

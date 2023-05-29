@@ -35,9 +35,7 @@ export default function Home() {
         <title>とにかく大きい ランダムネーム アプリ</title>
       </Head>
 
-      <div
-        className={`flex min-h-screen ${isOpen ? "sm:w-custom" : "sm:w-full"}`}
-      >
+      <div className={`flex ${isOpen ? "sm:w-custom" : "sm:w-full"}`}>
         {isOpen ? (
           <div
             className={`${
@@ -111,6 +109,9 @@ export default function Home() {
           className={`${
             isOpen ? "z-0 sm:transform sm:translate-x-[260px] " : ""
           }  main-contents flex-grow`}
+          style={{
+            minHeight: "100dvh",
+          }}
         >
           <EditListForm
             selectedListId={selectedListId}

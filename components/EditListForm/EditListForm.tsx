@@ -223,7 +223,7 @@ const EditListForm = ({
         toggleOpen={toggleOpen}
       >
         {selectedListId ? (
-          <div>
+          <div className="">
             <div className="flex justify-around mt-28">
               <div className="userInput flex flex-col">
                 <div className="info border border-solid p-1 ml-8 rounded-lg text-center border-gray-400">
@@ -270,7 +270,7 @@ const EditListForm = ({
           <div
             className="flex items-center justify-center md:min-h-screen"
             style={{
-              height: "100dvh",
+              minHeight: "100dvh",
             }}
           >
             {isOpen ? (

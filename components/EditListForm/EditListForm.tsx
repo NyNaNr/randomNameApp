@@ -276,7 +276,7 @@ const EditListForm = ({
             {isOpen ? (
               <div
                 onClick={toggleOpen}
-                className="absolute top-0 left-0 z-10 min-h-screen h-full w-full bg-black opacity-60 sm:hidden"
+                className="absolute top-0 left-0 z-10 md:min-h-screen h-full w-full bg-black opacity-60 sm:hidden"
               ></div>
             ) : (
               ""

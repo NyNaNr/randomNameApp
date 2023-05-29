@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useCallback } from "react";
+import Link from "next/link";
 import Cookies from "js-cookie";
 import Layout from "./Layout";
 import { isMobile } from "../../utils/random_name_app";
@@ -288,7 +289,6 @@ const EditListForm = ({
                   <br></br>Random Name App
                 </span>
               </div>
-
               <div
                 className={`flex justify-center text-black dark:text-white ${
                   isHexagonClicked ? "animate-spinOnce" : ""

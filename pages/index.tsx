@@ -6,7 +6,12 @@ const inter = Inter({ subsets: ["latin"] });
 export default function Home() {
   return (
     <>
-      <div className="min-h-screen">
+      <div
+        className=""
+        style={{
+          minHeight: "100dvh",
+        }}
+      >
         <section>
           <h1>yur Appへようこそ</h1>
           <p>とにかく大きいランダムネームアプリ</p>

@@ -1,6 +1,7 @@
 ## Random Name App:displaying names randomly from the input list you provide
 
 ## DEMO
+![RandomNameApp](https://github.com/NyNaNr/randomNameApp/assets/123739414/89a98732-ec8b-4aa4-8580-d9903c5bb839)
 
 ## Features
 This is a web app that randomly displays names in a large format, similar to bingo. It can be used in various scenarios such as class or lecture roll calls, parties, and more. It is designed to be used while projected on a large monitor in classrooms or similar settings, and it is also compatible with smartphones and tablets. The app allows for displaying names in a large size, making it easy to view even from a distance. It is guaranteed to create excitement while waiting for the names to be revealed!

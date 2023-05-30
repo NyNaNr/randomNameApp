@@ -20,7 +20,7 @@ export default function App({ Component, pageProps }: AppProps) {
         <meta property="og:type" content="website" />
         <meta
           property="og:image"
-          content="http://www.yourwebsite.com/your-image.jpg"
+          content="https://yur.vercel.app/ogImage.png"
         />
 
         {/* Twitter Card settings */}
@@ -36,7 +36,7 @@ export default function App({ Component, pageProps }: AppProps) {
         />
         <meta
           name="twitter:image"
-          content="http://www.yourwebsite.com/your-image.jpg"
+          content="https://yur.vercel.app/ogImage.png"
         />
       </Head>
       <Component {...pageProps} />

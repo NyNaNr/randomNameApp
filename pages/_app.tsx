@@ -15,7 +15,7 @@ export default function App({ Component, pageProps }: AppProps) {
         />
         <meta
           property="og:description"
-          content="このWebアプリはビンゴのようにランダムに名前を大きく表示するアプリです。入力した名前は外部サーバーに送信されず、ローカルに保存されます。"
+          content="ビンゴのようにランダムに名前を大きく表示するWebアプリです。入力した名前は外部サーバーに送信されず、ローカルに保存されます。"
         />
         <meta property="og:type" content="website" />
         <meta
@@ -32,7 +32,7 @@ export default function App({ Component, pageProps }: AppProps) {
         />
         <meta
           name="twitter:description"
-          content="このWebアプリはビンゴのようにランダムに名前を大きく表示するアプリです。入力した名前は外部サーバーに送信されず、ローカルに保存されます。"
+          content="ビンゴのようにランダムに名前を大きく表示するWeアプリです。入力した名前は外部サーバーに送信されず、ローカルに保存されます。"
         />
         <meta
           name="twitter:image"

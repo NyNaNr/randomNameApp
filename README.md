@@ -1,3 +1,11 @@
+## Random Name App: randomly displaying names from the input list you provide
+
+## DEMO
+
+## Features
+This is a web app that randomly displays names in a large format, similar to bingo. It can be used in various scenarios such as class or lecture roll calls, parties, and more. It is designed to be used while projected on a large monitor in classrooms or similar settings, and it is also compatible with smartphones and tablets. The app allows for displaying names in a large size, making it easy to view even from a distance. It is guaranteed to create excitement while waiting for the names to be revealed!
+
+
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
 ## Getting Started

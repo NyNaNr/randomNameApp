@@ -1,4 +1,5 @@
-![hexagon-letter-r](https://github.com/NyNaNr/randomNameApp/assets/123739414/dc6d993c-effa-4fc2-991c-f1ca6c93076d)
+![hexagon-letter-r](https://github.com/NyNaNr/randomNameApp/assets/123739414/446ce484-2dab-43cd-87d3-d2e19931c61d)
+
 
 ## Random Name App:displaying names randomly from the input list you provide
 

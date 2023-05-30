@@ -25,10 +25,10 @@ export default function App({ Component, pageProps }: AppProps) {
 
         {/* Twitter Card settings */}
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:site" content="@your_twitter_username" />
+        <meta name="twitter:site" content="" />
         <meta
           name="twitter:title"
-          content="Features - とにかく大きい ランダムネーム アプリ"
+          content="とにかく大きい ランダムネーム アプリ"
         />
         <meta
           name="twitter:description"

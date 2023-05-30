@@ -19,10 +19,6 @@ export default function Home() {
     <>
       <Head>
         <title>Features - とにかく大きい ランダムネーム アプリ</title>
-        <meta
-          name="description"
-          content="ビンゴのようにランダムに名前を大きく表示するWebアプリです。入力した名前は外部サーバーに送信されず、ローカルに保存されます。"
-        />
         <meta property="og:url" content={currentUrl} />
       </Head>
 

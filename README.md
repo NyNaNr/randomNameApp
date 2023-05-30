@@ -1,6 +1,6 @@
 ![hexagon-letter-r](https://github.com/NyNaNr/randomNameApp/assets/123739414/446ce484-2dab-43cd-87d3-d2e19931c61d)
 <p align="center">
-  <img width="200" height="200" src="https://www.pexels.com/photo/photo-of-grey-tabby-kitten-lying-down-2558605/](https://github.com/NyNaNr/randomNameApp/assets/123739414/446ce484-2dab-43cd-87d3-d2e19931c61d">
+  <img width="200" height="200" src="https://github.com/NyNaNr/randomNameApp/assets/123739414/446ce484-2dab-43cd-87d3-d2e19931c61d">
 </p>
 
 ## Random Name App:displaying names randomly from the input list you provide

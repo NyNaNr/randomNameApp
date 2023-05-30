@@ -35,9 +35,7 @@ export default function Home() {
           <h2 className="text-2xl font-semibold ">アプリ紹介</h2>
           <div className="paragraph mb-10">
             <div className="flex border-b border-black/20 dark:border-white/20 mt-2 mb-2"></div>
-            <p>
-              　当Webアプリは、名前をビンゴのようにランダムに大きく表示するアプリです。
-            </p>
+            <p>　名前をビンゴのようにランダムに大きく表示するWebアプリです。</p>
             <p>
               　授業や講義の指名、結婚式の余興など、さまざまなシーンでご利用いただけます。教室等の大型モニターに映しながら使用することを想定して作成しました。スマホやタブレットにも対応しています。
             </p>

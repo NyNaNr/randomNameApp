@@ -274,55 +274,57 @@ const EditListForm = ({
               minHeight: "100dvh",
             }}
           >
-            {isOpen ? (
-              <div
-                onClick={toggleOpen}
-                className="absolute top-0 left-0 z-10 md:min-h-screen h-full w-full bg-black opacity-60 sm:hidden"
-              ></div>
-            ) : (
-              ""
-            )}
-            <div className="mx-auto flex w-[300px] flex-col justify-center space-y-6 lg:w-[600px]">
-              <div className="text-center text-4xl lg:text-5xl font-bold text-black dark:text-white">
-                Welcome to{" "}
-                <span className="text-3xl lg:text-5xl">
-                  <br></br>Random Name App
-                </span>
-              </div>
-              <div
-                className={`flex justify-center text-black dark:text-white ${
-                  isHexagonClicked ? "animate-spinOnce" : ""
-                }`}
-                onClick={handleHexagonClick}
-              >
-                <HexagonLetterR
-                  size={isMobile() ? 150 : 200}
-                  strokeWidth={0.5}
-                  color={"currentColor"}
-                />
-              </div>
-              <div className="text-center text-gray-500 dark:text-gray-400 ">
-                <div className="mb-2">
-                  入力された名前データの保存期間は、基本的に365日、一部ブラウザで7日間です。
+            <div className="flex flex-col items-center m-10">
+              {isOpen ? (
+                <div
+                  onClick={toggleOpen}
+                  className="absolute top-0 left-0 z-10 md:min-h-screen h-full w-full bg-black opacity-60 sm:hidden"
+                ></div>
+              ) : (
+                ""
+              )}
+              <div className="mx-auto flex w-[300px] flex-col justify-center space-y-6 lg:w-[600px]">
+                <div className="text-center text-4xl lg:text-5xl font-bold text-black dark:text-white">
+                  Welcome to{" "}
+                  <span className="text-3xl lg:text-5xl">
+                    <br></br>Random Name App
+                  </span>
                 </div>
-                <div className="mb-2">
-                  リスト名をクリックすると、そのリストのcookieの保存期間が更新・延長されます。
+                <div
+                  className={`flex justify-center text-black dark:text-white ${
+                    isHexagonClicked ? "animate-spinOnce" : ""
+                  }`}
+                  onClick={handleHexagonClick}
+                >
+                  <HexagonLetterR
+                    size={isMobile() ? 150 : 200}
+                    strokeWidth={0.5}
+                    color={"currentColor"}
+                  />
                 </div>
-                <div className="">
-                  もしリストの保存期間を確認されたい場合は、「cookie
-                  確認方法」などと検索してください。
+                <div className="text-center text-gray-500 dark:text-gray-400 ">
+                  <div className="mb-2">
+                    入力された名前データの保存期間は、基本的に365日、一部ブラウザで7日間です。
+                  </div>
+                  <div className="mb-2">
+                    リスト名をクリックすると、そのリストのcookieの保存期間が更新・延長されます。
+                  </div>
+                  <div className="mb-10">
+                    もしリストの保存期間を確認されたい場合は、「cookie
+                    確認方法」などと検索してください。
+                  </div>
                 </div>
               </div>
-            </div>
-            <div className="absolute right-1 bottom-4 bg-transparent">
-              <Link
-                href={`/random_name_app/features`}
-                className={
-                  "border-2 border-solid p-2 rounded-lg border-gray-200   text-gray-600 dark:text-black hover:bg-gray-100 font-medium"
-                }
-              >
-                アプリの紹介と個人情報の取扱
-              </Link>
+              <div className="relative bottom-0 right-0 bg-transparent">
+                <Link
+                  href={`/random_name_app/features`}
+                  className={
+                    "border-2 border-solid p-2 rounded-lg border-gray-200 text-gray-600 dark:text-black hover:bg-gray-100 font-medium"
+                  }
+                >
+                  アプリの紹介と個人情報の取り扱い
+                </Link>
+              </div>
             </div>
           </div>
         )}

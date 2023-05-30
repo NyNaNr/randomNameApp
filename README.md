@@ -1,4 +1,4 @@
-## Random Name App: randomly displaying names from the input list you provide
+## Random Name App:displaying names randomly from the input list you provide
 
 ## DEMO
 

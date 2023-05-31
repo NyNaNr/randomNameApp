@@ -3,8 +3,11 @@ import "@/styles/globals.css";
 import type { AppProps } from "next/app";
 import { Analytics } from "@vercel/analytics/react";
 import Head from "next/head";
+import GoogleAnalytics from "../components/GoogleAnalytics";
+import usePageView from "../hooks/usePageView";
 
 export default function App({ Component, pageProps }: AppProps) {
+  usePageView();
   return (
     <>
       <Head>
@@ -39,6 +42,7 @@ export default function App({ Component, pageProps }: AppProps) {
           content="https://yur.vercel.app/ogImage.png"
         />
       </Head>
+      <GoogleAnalytics />
       <Component {...pageProps} />
       <Analytics />
     </>

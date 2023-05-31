@@ -35,3 +35,5 @@ yarn-error.log*
 next-env.d.ts
 pages/random_name_app/fixing.tsx
 .gitignore
+.env
+.gitignore

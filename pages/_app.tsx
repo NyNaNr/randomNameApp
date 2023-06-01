@@ -41,6 +41,10 @@ export default function App({ Component, pageProps }: AppProps) {
           name="twitter:image"
           content="https://yur.vercel.app/ogImage.png"
         />
+        <meta
+          name="google-site-verification"
+          content="9egKRDBY78wzxWE3GjSqBkjZ-xw480zb4PVogFGOhn0"
+        />
       </Head>
       <GoogleAnalytics />
       <Component {...pageProps} />

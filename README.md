@@ -4,7 +4,7 @@
 </p>
 
 ### The Origin of the Logo
-This logo represents the distinctive shape of the Japanese 'garagara' lottery machine. The 'garagara' lottery machine is a traditional lottery machine widely used in Japan. Its appearance features a hexagonal wooden box, with small balls or cards inside. The 'R' in the center represents the initial letter of 'random'.
+This logo represents the distinctive shape of the Japanese 'garagara' lottery machine. The 'garagara' lottery machine is a traditional lottery machine widely used in Japan. Its appearance features a hexagonal wooden box, with small balls or cards inside. The 'R' in the center represents the initial letter of 'Random'.
 
 
 ## DEMO

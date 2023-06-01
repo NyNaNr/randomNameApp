@@ -11,7 +11,7 @@ export default function App({ Component, pageProps }: AppProps) {
   return (
     <>
       <Head>
-        {/* OGP settings */}
+        {/* OGP settings  */}
         <meta
           property="og:title"
           content="とにかく大きい ランダムネーム アプリ"

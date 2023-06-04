@@ -25,20 +25,20 @@ const List = {
       title: "Read a book",
     },
   ],
-getList: function () {
-  if (typeof window !== 'undefined') {
-    return (
-      (window.localStorage.getItem("theList") &&
-        JSON.parse(window.localStorage.getItem("theList"))) ||
-      this.list
-    );
-  } else {
-    // サーバーサイドではデフォルトのリストを返す（または他の適切な処理）
-    return this.list;
-  }
-},
+  getList: function () {
+    if (typeof window !== "undefined") {
+      return (
+        (window.localStorage.getItem("listNames") &&
+          JSON.parse(window.localStorage.getItem("listNames"))) ||
+        this.list
+      );
+    } else {
+      // サーバーサイドではデフォルトのリストを返す（または他の適切な処理）
+      return this.list;
+    }
+  },
   saveList: (list) => {
-    window.localStorage.setItem("theList", JSON.stringify(list));
+    window.localStorage.setItem("listNames", JSON.stringify(list));
   },
 };
 

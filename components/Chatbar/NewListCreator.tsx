@@ -201,7 +201,7 @@ const NewListCreator: React.FC<NewListCreatorProps> = ({
       <Droppable droppableId="eachList">
         {(provided) => (
           <div
-            className="eachList"
+            className="eachList "
             {...provided.droppableProps}
             ref={provided.innerRef}
           >
@@ -212,7 +212,7 @@ const NewListCreator: React.FC<NewListCreatorProps> = ({
                     ref={provided.innerRef}
                     {...provided.draggableProps}
                     {...provided.dragHandleProps}
-                    className={`relative flex items-center group ${
+                    className={`relative flex items-center group bg-[#202123] rounded-lg${
                       list.id === selectedListId ? "bg-blue-500 rounded-lg" : ""
                     }`}
                   >

@@ -1,6 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  reactStrictMode: true,
-}
+  reactStrictMode: false, //react-beautiful-dndはReact18ではfalseの状態のみで起動
+};
 
-module.exports = nextConfig
+module.exports = nextConfig;

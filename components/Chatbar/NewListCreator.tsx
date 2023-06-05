@@ -212,7 +212,7 @@ const NewListCreator: React.FC<NewListCreatorProps> = ({
                     ref={provided.innerRef}
                     {...provided.draggableProps}
                     {...provided.dragHandleProps}
-                    className={`relative flex items-center group bg-[#202123] rounded-lg${
+                    className={`relative flex items-center group bg-[#202123] rounded-lg opacity-80 ${
                       list.id === selectedListId ? "bg-blue-500 rounded-lg" : ""
                     }`}
                   >

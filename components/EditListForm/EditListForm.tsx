@@ -232,7 +232,6 @@ const EditListForm = ({
                 </div>
                 <div className="flex">
                   <div className="line-number mr-4 text-right">
-                    {/* margin-rightを追加してtextareaとの間にスペースを作ります */}
                     {lineNumbersOfUserInput.map((num, index) => (
                       <p key={index}>{num}</p>
                     ))}

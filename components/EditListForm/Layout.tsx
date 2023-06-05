@@ -19,7 +19,7 @@ const Layout: React.FC<LayoutProps> = ({
 }) => (
   <React.Fragment>
     {selectedListId && (
-      <header className="header fixed top-0 w-full z-1 p-1 bg-white shadow-md">
+      <header className="header fixed top-0 w-full z-10 p-1 bg-white shadow-md">
         {isOpen ? (
           <div
             onClick={toggleOpen}
@@ -57,7 +57,7 @@ const Layout: React.FC<LayoutProps> = ({
 
             <Link
               href={`/random_name_app/id/${selectedListId}`}
-              className={`absolute h-15 z-10 shadow-lg px-2 py-1 bg-blue-400 text-lg text-white font-semibold rounded  hover:shadow-sm  ${
+              className={`absolute h-15 z-10 shadow-lg px-2 py-1 bg-blue-400 text-lg text-white font-semibold rounded hover:shadow-sm  ${
                 totalBytes > 4058 || lineNumber < 2
                   ? " bg-gray-500/50"
                   : "hover:bg-blue-500"

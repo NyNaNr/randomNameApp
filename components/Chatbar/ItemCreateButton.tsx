@@ -94,27 +94,32 @@ const ItemCreateButton: React.FC<ItemCreateButtonProps> = ({
         <button
           className={`text-sidebar flex w-[240px] flex-shrink-0 cursor-pointer select-none items-center gap-3 rounded-md border border-white/20 p-3 text-white transition-colors duration-200 ${
             lists.length >= 40
-              ? "bg-gray-500/50 cursor-not-allowed"
+              ? "bg-gray-500/50 cursor-not-allowed justify-center"
               : "hover:bg-gray-500/10"
           }`}
           onClick={handleCreateItem}
           disabled={lists.length >= 40}
         >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="16"
-            height="16"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="2"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            className="tabler-icon tabler-icon-plus"
-          >
-            <path d="M12 5l0 14"></path>
-            <path d="M5 12l14 0"></path>
-          </svg>
+          {lists.length >= 40 ? (
+            ""
+          ) : (
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              className="tabler-icon tabler-icon-plus"
+            >
+              <path d="M12 5l0 14"></path>
+              <path d="M5 12l14 0"></path>
+            </svg>
+          )}
+
           {lists.length >= 40 ? "リスト作成数が上限に達しました" : "新規リスト"}
         </button>
       </div>

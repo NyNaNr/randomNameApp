@@ -247,7 +247,7 @@ const EditListForm = ({
                   />
                 </div>
               </div>
-              <div className="formatted flex flex-col">
+              <div className="formatted flex flex-col w-[175px] ">
                 <div className="info border border-solid p-1 ml-8 rounded-lg text-center border-gray-400">
                   <p>整形後の名前</p>
                 </div>
@@ -257,9 +257,14 @@ const EditListForm = ({
                       <p key={index}>{num}</p>
                     ))}
                   </div>
-                  <div className="formatted-list">
+                  <div className="formatted-list overflow-hidden w-full">
                     {formattedInput.map((item, index) => (
-                      <p key={index}>{item}</p>
+                      <p
+                        className="text-ellipsis whitespace-nowrap overflow-hidden w-full"
+                        key={index}
+                      >
+                        {item}
+                      </p>
                     ))}
                   </div>
                 </div>

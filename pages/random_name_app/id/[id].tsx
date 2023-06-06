@@ -59,7 +59,7 @@ const RandomNameApp: React.FC = () => {
   const [modalContent2] = useState("最後の1人になりました。初めからしますか？");
   const [mobileDevice, setMobileDevice] = useState(false);
   const [showLeavingAlert, setShowLeavingAlert] = useState(true);
-  const [isTiming, setIsTiming] = useState(false);
+  const [isTiming, setIsTiming] = useState(true);
 
   useLeavePageConfirmation(showLeavingAlert);
 

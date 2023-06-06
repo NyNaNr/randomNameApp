@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Head from "next/head";
 import ItemCreateButton from "../../components/Chatbar/ItemCreateButton";
 import NewListCreator from "../../components/Chatbar/NewListCreator";
@@ -32,6 +32,25 @@ export default function Home() {
     setIsOpen(!isOpen);
   };
 
+  const [isWideScreen, setIsWideScreen] = useState(false);
+  useEffect(() => {
+    const checkScreenSize = () => {
+      setIsWideScreen(window.innerWidth >= 640);
+    };
+
+    checkScreenSize();
+
+    window.addEventListener("resize", checkScreenSize);
+
+    return () => window.removeEventListener("resize", checkScreenSize);
+  }, []);
+
+  useEffect(() => {
+    if (isWideScreen) {
+      setIsOpen(true);
+    }
+  }, [isWideScreen]);
+
   return (
     <React.Fragment>
       <Head>
@@ -43,11 +62,11 @@ export default function Home() {
         <meta property="og:url" content={currentUrl} />
       </Head>
 
-      <div className={`flex ${isOpen ? "sm:w-custom" : "sm:w-full"}`}>
+      <div className={`flex`}>
         {isOpen ? (
           <div
             className={`${
-              isOpen ? "z-10 " : ""
+              isOpen ? "z-30 " : ""
             } sidebar fixed top-0 left-0 z-60 flex h-screen w-[260px] flex-none flex-col space-y-2 bg-[#202123] p-2 text-[14px] transition-all  sm:min-h-screen`}
           >
             {/*新規リストを作成するボタン */}
@@ -107,16 +126,14 @@ export default function Home() {
                 </div>
               </div>
             )}
-            <CloseSidebarButton onClick={toggleOpen} />
+            {!isWideScreen && <CloseSidebarButton onClick={toggleOpen} />}
           </div>
         ) : (
           <OpenSidebarButton onClick={toggleOpen} />
         )}
 
         <div
-          className={`${
-            isOpen ? "z-0 sm:transform sm:translate-x-[260px] " : ""
-          }  main-contents flex-grow`}
+          className={`flex-grow sm:ml-[260px]`}
           style={{
             minHeight: "100dvh",
           }}

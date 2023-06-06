@@ -3,6 +3,7 @@ import Head from "next/head";
 import ItemCreateButton from "../../components/Chatbar/ItemCreateButton";
 import NewListCreator from "../../components/Chatbar/NewListCreator";
 import EditListForm from "../../components/EditListForm/EditListForm";
+import { isMobile } from "../../utils/random_name_app";
 import {
   CloseSidebarButton,
   OpenSidebarButton,
@@ -75,16 +76,17 @@ export default function Home() {
               setLists={setLists}
               setSelectedListId={setSelectedListId}
             />
-
+            {/*境界線 */}
+            <div className="flex border-b border-white/20 "></div>
             {/*サイドバー */}
-            <div className="flex-grow overflow-auto h-screen">
-              {/*境界線 */}
-              <div className="flex border-b border-white/20 ">
-                <div className="flex w-full flex-col "></div>
-              </div>
+            <div className="flex-grow overflow-auto">
               {/*以下新規リスト押したあとにできる要素 */}
               <div className="pt-2">
-                <div className="flex w-full flex-col gap-1 ">
+                <div
+                  className={`${
+                    isMobile() ? " pb-24" : ""
+                  } flex flex-col gap-1`}
+                >
                   {/*newListの要素を作成する */}
                   <NewListCreator
                     lists={lists}

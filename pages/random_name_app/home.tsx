@@ -81,7 +81,7 @@ export default function Home() {
             />
             <div className="underNewButton flex justify-between">
               <button
-                className=" flex flex-grow mr-3 cursor-pointer select-none items-center gap-3 rounded-md border p-0.5 border-white/20 text-white transition-colors duration-200 hover:bg-gray-500/10"
+                className=" flex flex-grow mr-2 cursor-pointer select-none items-center gap-3 rounded-md border p-0.5 border-white/20 text-white transition-colors duration-200 hover:bg-gray-500/10"
                 onClick={() => setSelectedListId(null)}
               >
                 <svg
@@ -103,7 +103,7 @@ export default function Home() {
                 </svg>
                 ホーム画面
               </button>
-              <div className="show-list-count p-0.5 text-white text-right pr-2 ">
+              <div className="show-list-count py-0.5 text-white text-right pr-2 ">
                 {listCount}
               </div>
             </div>

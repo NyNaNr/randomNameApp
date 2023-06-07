@@ -89,7 +89,7 @@ const ItemCreateButton: React.FC<ItemCreateButtonProps> = ({
     <React.Fragment>
       <div className="flex items-center">
         <button
-          className={`text-sidebar flex w-[240px] flex-shrink-0 cursor-pointer select-none items-center gap-3 rounded-md border border-white/20 p-3 text-white transition-colors duration-200 ${
+          className={`text-sidebar flex w-[240px] flex-shrink-0 cursor-pointer select-none items-center gap-3 rounded-md border border-white/20 pl-3 py-2 text-white transition-colors duration-200 ${
             lists.length >= 40
               ? "bg-gray-500/50 cursor-not-allowed justify-center"
               : "hover:bg-gray-500/10"

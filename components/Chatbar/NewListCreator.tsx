@@ -99,7 +99,7 @@ const NewListCreator: React.FC<NewListCreatorProps> = ({
       textInput.current.focus();
     }
   };
-
+  const [globalList, setGlobalList] = useState<ListType[]>([]);
   //その場編集関数
   const save = (id: string) => {
     if (newListNames[id] !== "") {
@@ -125,6 +125,7 @@ const NewListCreator: React.FC<NewListCreatorProps> = ({
         }
       });
 
+      setGlobalList(updatedLists);
       window.localStorage.setItem("listNames", JSON.stringify(updatedLists));
       setListTitle(newListNames[id].toString());
     }
@@ -193,8 +194,15 @@ const NewListCreator: React.FC<NewListCreatorProps> = ({
         const srcI = param.source.index;
         const desI = param.destination?.index;
         if (desI !== undefined) {
-          lists.splice(desI, 0, lists.splice(srcI, 1)[0]);
-          List.saveList(lists);
+          //以下の分岐は、onDragEnd処理後、save()処理後の競合を避けるため
+          if (globalList.length >= 1) {
+            globalList.splice(desI, 0, globalList.splice(srcI, 1)[0]);
+            List.saveList(globalList);
+            setLists(globalList);
+          } else {
+            lists.splice(desI, 0, lists.splice(srcI, 1)[0]);
+            List.saveList(lists);
+          }
         }
       }}
     >

@@ -85,9 +85,6 @@ const ItemCreateButton: React.FC<ItemCreateButtonProps> = ({
     }
   }, [setLists]);
 
-  //リストカウント
-  const listCount = "リストの数: " + String(lists.length) + "/40";
-
   return (
     <React.Fragment>
       <div className="flex items-center">
@@ -122,9 +119,6 @@ const ItemCreateButton: React.FC<ItemCreateButtonProps> = ({
 
           {lists.length >= 40 ? "リスト作成数が上限に達しました" : "新規リスト"}
         </button>
-      </div>
-      <div className="show-list-count text-white text-right pr-2 ">
-        {listCount}
       </div>
     </React.Fragment>
   );

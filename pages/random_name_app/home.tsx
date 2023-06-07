@@ -27,6 +27,9 @@ export default function Home() {
   //ListTitle
   const [listTitle, setListTitle] = useState<string | null>("");
 
+  //リストカウント
+  const listCount = "リストの数: " + String(lists.length) + "/40";
+
   //サイドバー
   const [isOpen, setIsOpen] = useState<boolean>(true);
   const toggleOpen = () => {
@@ -76,6 +79,34 @@ export default function Home() {
               setLists={setLists}
               setSelectedListId={setSelectedListId}
             />
+            <div className="underNewButton flex justify-between">
+              <button
+                className=" flex flex-grow mr-3 cursor-pointer select-none items-center gap-3 rounded-md border p-0.5 border-white/20 text-white transition-colors duration-200 hover:bg-gray-500/10"
+                onClick={() => setSelectedListId(null)}
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="icon icon-tabler icon-tabler-home ml-2.5"
+                  width="16"
+                  height="16"
+                  viewBox="0 0 24 24"
+                  stroke-width="2"
+                  stroke="currentColor"
+                  fill="none"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                  <path d="M5 12l-2 0l9 -9l9 9l-2 0" />
+                  <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
+                  <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" />
+                </svg>
+                ホーム画面
+              </button>
+              <div className="show-list-count p-0.5 text-white text-right pr-2 ">
+                {listCount}
+              </div>
+            </div>
             {/*境界線 */}
             <div className="flex border-b border-white/20 "></div>
             {/*サイドバー */}

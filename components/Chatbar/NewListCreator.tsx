@@ -287,6 +287,7 @@ const NewListCreator: React.FC<NewListCreatorProps> = ({
                               width="18"
                               height="18"
                               aria-hidden="true"
+                              className="cursor-grab"
                             >
                               <path
                                 strokeLinecap="round"

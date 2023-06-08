@@ -28,7 +28,7 @@ export default function Home() {
             とにかく大きい{width > 639 ? "" : <br></br>}
             ランダムネームアップ
           </h1>
-          <h2 className="text-2xl font-semibold ">アプリ紹介</h2>
+          <h2 className="text-2xl font-semibold pl-3">アプリ紹介</h2>
           <div className="paragraph mb-10">
             <div className="flex border-b border-black/20 dark:border-white/20 mt-2 mb-2"></div>
             <p>　名前をビンゴのようにランダムに大きく表示するWebアプリです。</p>
@@ -39,7 +39,7 @@ export default function Home() {
               　とにかく大きく名前を表示できるので、遠くからでも見やすく表示できます。名前が確定するのを待つ間、盛り上がること間違いなし！
             </p>
           </div>
-          <h2 className="text-2xl font-semibold mb-2">
+          <h2 className="text-2xl font-semibold mb-2 pl-3">
             入力された個人情報について
           </h2>
           <div className="paragraph mb-10">

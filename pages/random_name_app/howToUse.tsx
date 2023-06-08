@@ -117,6 +117,7 @@ export default function Home() {
                 <p>
                   システムの都合上、リストを移動するときに選ばれた名前と一致する名前を移動させます。なので、複数同じ名前を入力しても意味がないのです。
                 </p>
+                <br />
                 <p>もし、同じ名前を複数入力したいときは、</p>
                 <ul className="list-disc list-inside">
                   <li>1坂本龍馬</li>

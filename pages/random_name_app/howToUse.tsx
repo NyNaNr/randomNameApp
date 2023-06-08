@@ -3,6 +3,7 @@ import { Inter } from "next/font/google";
 import { useEffect, useState } from "react";
 import Head from "next/head";
 import { useRouter } from "next/router";
+import Image from "next/image";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -20,19 +21,24 @@ export default function Home() {
 
       <div className="min-h-screen">
         <div className="m-10">
-          <h1 className="text-4xl text-center font-bold mb-10">
+          <h1 className="text-3xl sm:text-4xl text-center font-bold mb-10">
             アプリの使い方で困ったら
           </h1>
           <h2 className="text-2xl font-semibold pl-3">リストの順番を変える</h2>
           <div className="flex border-b border-black/20 dark:border-white/20 mt-2 mb-2"></div>
-          <div className="paragraph mb-10">
-            <p>　名前をビンゴのようにランダムに大きく表示するWebアプリです。</p>
-            <p>
-              　授業や講義の指名、結婚式の余興など、さまざまなシーンでご利用いただけます。教室等の大型モニターに映しながら使用することを想定して作成しました。スマホやタブレットにも対応しています。
-            </p>
-            <p>
-              　とにかく大きく名前を表示できるので、遠くからでも見やすく表示できます。名前が確定するのを待つ間、盛り上がること間違いなし！
-            </p>
+          <div className="image_description flex flex-col items-center sm:flex-row mt-5 sm:mb-10 sm:items-start">
+            <Image
+              src="/howToUse/dnd_example2.gif"
+              alt="How to reorder the list using drag and drop."
+              width={250}
+              height={375}
+              className="flex "
+            />
+            <div className="paragraph mb-10 mx-3 mt-5 sm:mt-0">
+              <p>
+                リスト名の左横にあるマークをクリックまたはタッチでドラッグアンドドロップし、入れ替えてください。
+              </p>
+            </div>
           </div>
           <h2 className="text-2xl font-semibold mb-2 pl-3">
             リストの名前を変更する

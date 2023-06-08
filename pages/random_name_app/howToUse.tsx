@@ -44,35 +44,38 @@ export default function Home() {
             リストの名前を変更する
           </h2>
           <div className="flex border-b border-black/20 dark:border-white/20 mt-2 mb-2"></div>
-          <div className="paragraph mb-10">
-            <p>
-              　利用の際に入力される情報は、当Webアプリが外部サーバーに送信することはありません。すべての情報はローカルに保存され、第三者と共有されることはありません。
-            </p>
-            <p>
-              　すべての入力された情報はユーザーのパソコン（ブラウザ）にファーストパーティーcookieの技術を用いて保存されます。これはブラウザを閉じても情報が保持され、再度開いた時に同じ情報が表示されることを可能にします。
-            </p>
-            <p>
-              　cookieの性質上、ユーザーがリストを編集・保存してから1年後、入力した名前が自動的に削除されます。ただし、Safariブラウザではcookieの保存期限が1週間となる等、ブラウザの仕様変更などで保存できる期限が変わる可能性があります。ユーザーがリストを削除することで、個人情報もブラウザから削除されます。
-            </p>
-            <p>
-              　プライベートモードやシークレットモードで使用する際は、cookieに情報が保存できません。通常モードでアクセスしなおしてください。
-            </p>
+          <div className="image_description flex flex-col items-center sm:flex-row mt-5 sm:mb-10 sm:items-start">
+            <Image
+              src="/howToUse/rename_example.gif"
+              alt="How to reorder the list using drag and drop."
+              width={250}
+              height={375}
+              className="flex "
+            />
+            <div className="paragraph mb-10 mx-3 mt-5 sm:mt-0">
+              <p>
+                ペンシルアイコンをクリックまたはタッチしてください。リストの名前が変更できます。変更後、内容を保存するにはエンターキーを押すか、チェックマークをクリックまたはタッチしてください。変更を取り消す場合は、×アイコンをクリックまたはタッチしてください。
+              </p>
+            </div>
           </div>
           <h2 className="text-2xl font-semibold mb-2 pl-3">リストを削除する</h2>
           <div className="flex border-b border-black/20 dark:border-white/20 mt-2 mb-2"></div>
-          <div className="paragraph mb-10">
-            <p>
-              　利用の際に入力される情報は、当Webアプリが外部サーバーに送信することはありません。すべての情報はローカルに保存され、第三者と共有されることはありません。
-            </p>
-            <p>
-              　すべての入力された情報はユーザーのパソコン（ブラウザ）にファーストパーティーcookieの技術を用いて保存されます。これはブラウザを閉じても情報が保持され、再度開いた時に同じ情報が表示されることを可能にします。
-            </p>
-            <p>
-              　cookieの性質上、ユーザーがリストを編集・保存してから1年後、入力した名前が自動的に削除されます。ただし、Safariブラウザではcookieの保存期限が1週間となる等、ブラウザの仕様変更などで保存できる期限が変わる可能性があります。ユーザーがリストを削除することで、個人情報もブラウザから削除されます。
-            </p>
-            <p>
-              　プライベートモードやシークレットモードで使用する際は、cookieに情報が保存できません。通常モードでアクセスしなおしてください。
-            </p>
+          <div className="image_description flex flex-col items-center sm:flex-row mt-5 sm:mb-10 sm:items-start">
+            <Image
+              src="/howToUse/delete_example.gif"
+              alt="How to reorder the list using drag and drop."
+              width={250}
+              height={375}
+              className="flex "
+            />
+            <div className="paragraph mb-10 mx-3 mt-5 sm:mt-0">
+              <p>
+                ゴミ箱アイコンをクリックまたはタッチしてください。リスト削除ができます。本当に削除するならチェックマークをクリックまたはタッチしてください。もし削除を取り消す場合は、×アイコンをクリックまたはタッチしてください。
+              </p>
+              <p>
+                リストを削除した時点で、あなたのパソコンのブラウザに保存されていた生徒の名前は削除されます。
+              </p>
+            </div>
           </div>
           <h2 className="text-2xl font-semibold mb-2 pl-3">
             ランダムに表示される文字が小さい
@@ -80,20 +83,50 @@ export default function Home() {
           <div className="flex border-b border-black/20 dark:border-white/20 mt-2 mb-2"></div>
           <div className="paragraph mb-10">
             <p>
-              　利用の際に入力される情報は、当Webアプリが外部サーバーに送信することはありません。すべての情報はローカルに保存され、第三者と共有されることはありません。
+              表示される文字の大きさは、名前リストで一番長い名前が収まるように計算されています。例えば
             </p>
+            <br />
+            <ul className="list-disc list-inside">
+              <li>紀伊國屋文左衛門</li>
+              <li>三井高利</li>
+              <li>大村彦太郎</li>
+              <li>淀屋辰五郎</li>
+            </ul>
+            <br />
             <p>
-              　すべての入力された情報はユーザーのパソコン（ブラウザ）にファーストパーティーcookieの技術を用いて保存されます。これはブラウザを閉じても情報が保持され、再度開いた時に同じ情報が表示されることを可能にします。
+              のような名前のリストを作成すると、一番長い名前である「紀伊國屋文左衛門」が画面に収まるフォントサイズを計算し、決定します。よって、4文字の「三井高利」は相対的に小さくなります。
             </p>
-            <p>
-              　cookieの性質上、ユーザーがリストを編集・保存してから1年後、入力した名前が自動的に削除されます。ただし、Safariブラウザではcookieの保存期限が1週間となる等、ブラウザの仕様変更などで保存できる期限が変わる可能性があります。ユーザーがリストを削除することで、個人情報もブラウザから削除されます。
-            </p>
-            <p>
-              　プライベートモードやシークレットモードで使用する際は、cookieに情報が保存できません。通常モードでアクセスしなおしてください。
-            </p>
-            <h2 className="text-2xl font-semibold mb-2 pl-3">
-              入力した名前と整形後の名前の表示形式が違うのはなぜ？
-            </h2>
+          </div>
+          <h2 className="text-2xl font-semibold mb-2 pl-3">
+            入力した名前と整形後の名前の表示形式が違うのはなぜ？
+          </h2>
+          <div className="flex border-b border-black/20 dark:border-white/20 mt-2 mb-2"></div>
+          <div className="paragraph mb-10">
+            <h2 className="text-[20px] font-medium mt-5 mb-2 pl-3"></h2>
+            <p>理由は2つあります。</p>
+            <ul className="list-decimal list-inside">
+              <li>ランダムに表示される名前が少しでも大きくするため</li>
+              <div className="paragraph ml-4">
+                <p>
+                  先ほど述べた通り、ランダムに名前を表示する際、フォントサイズは文字数が最も多い名前が収まるサイズになるように計算されます。よって少しでも文字数を減らすために、姓と名の間の全角・半角スペースは自動的に削除されます。
+                </p>
+                <br />
+              </div>
+              <li>重複して名前を入力できないようにするため</li>
+              <div className="paragraph ml-4">
+                <p>
+                  システムの都合上、リストを移動するときに選ばれた名前と一致する名前を移動させます。なので、複数同じ名前を入力しても意味がないのです。
+                </p>
+                <p>もし、同じ名前を複数入力したいときは、</p>
+                <ul className="list-disc list-inside">
+                  <li>1坂本龍馬</li>
+                  <li>2坂本龍馬</li>
+                  <li>3坂本龍馬</li>
+                  <li>4坂本龍馬</li>
+                </ul>
+                <p>と少し変化をつけるといいです。</p>
+              </div>
+            </ul>
           </div>
           <div className="flex justify-end">
             <Link
@@ -102,7 +135,7 @@ export default function Home() {
                 "border border-solid p-3 pl-4 rounded-lg border-gray-400  bg-blue-400 text-white dark:text-black hover:bg-blue-500 font-semibold"
               }
             >
-              アプリへ
+              アプリへ戻る
             </Link>
           </div>
         </div>

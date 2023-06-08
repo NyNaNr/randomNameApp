@@ -319,14 +319,22 @@ const EditListForm = ({
                   </div>
                 </div>
               </div>
-              <div className="relative bottom-0 right-0 bg-transparent">
+              <div className="relative bottom-0 right-0 bg-transparent flex flex-col">
                 <Link
                   href={`/random_name_app/features`}
                   className={
-                    "border-2 border-solid p-2 rounded-lg border-gray-200 text-gray-600 dark:text-white hover:bg-gray-100 font-medium"
+                    "border-2 border-solid p-2 rounded-lg border-gray-200 text-gray-600  dark:text-white hover:bg-gray-100 font-medium text-center"
                   }
                 >
                   アプリの紹介と個人情報の取り扱い
+                </Link>
+                <Link
+                  href={`/random_name_app/howToUse`}
+                  className={
+                    "border-2 border-solid p-2 rounded-lg border-gray-200 text-gray-600 dark:text-white hover:bg-gray-100 font-medium text-center"
+                  }
+                >
+                  アプリの使い方で困ったら
                 </Link>
               </div>
             </div>

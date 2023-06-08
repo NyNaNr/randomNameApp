@@ -69,11 +69,12 @@ const NewListCreator: React.FC<NewListCreatorProps> = ({
   const [origListNames, setOrigListNames] = useState<{
     [key: string]: string | number;
   }>(
-    lists.reduce((names: { [key: string]: string | number }, list) => {
-      names[list.id] = list.title;
-
+    lists?.reduce((names: { [key: string]: string | number }, list) => {
+      if (list && list.id && list.title) {
+        names[list.id] = list.title;
+      }
       return names;
-    }, {})
+    }, {} || {})
   );
 
   const [newListNames, setNewListNames] = useState({ ...origListNames });

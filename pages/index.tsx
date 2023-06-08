@@ -1,30 +1,14 @@
-import Link from "next/link";
-import { Inter } from "next/font/google";
+import { GetServerSideProps } from "next";
 
-const inter = Inter({ subsets: ["latin"] });
+const Home = () => null;
 
-export default function Home() {
-  return (
-    <>
-      <div
-        className=""
-        style={{
-          minHeight: "100dvh",
-        }}
-      >
-        <section>
-          <h1>yur Appへようこそ</h1>
-          <p>とにかく大きいランダムネームアプリ</p>
-          <Link
-            href={`/random_name_app/features`}
-            className={
-              "text-blue-500 hover:text-blue-700 underline font-semibold"
-            }
-          >
-            とにかく大きいランダムネームアプリ
-          </Link>
-        </section>
-      </div>
-    </>
-  );
-}
+export default Home;
+
+export const getServerSideProps: GetServerSideProps = async () => {
+  return {
+    redirect: {
+      permanent: true,
+      destination: "/random_name_app/features",
+    },
+  };
+};

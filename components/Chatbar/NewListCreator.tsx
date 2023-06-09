@@ -181,7 +181,9 @@ const NewListCreator: React.FC<NewListCreatorProps> = ({
   useEffect(() => {
     const newRefs = lists.reduce(
       (refs: { [key: string]: React.RefObject<HTMLInputElement> }, list) => {
-        refs[list.id] = React.createRef();
+        if (list) {
+          refs[list.id] = React.createRef();
+        }
         return refs;
       },
       {}

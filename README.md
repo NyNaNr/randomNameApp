@@ -4,9 +4,9 @@
 </p>
 <p align="center">
 <picture　>
-  <source media="(prefers-color-scheme: dark)"　width="200" height="200" srcset="https://github.com/NyNaNr/randomNameApp/assets/123739414/3223b5f4-d24f-4a10-909f-c0f7b5ea8f8c">
-  <source media="(prefers-color-scheme: light)" width="200" height="200"　srcset="https://github.com/NyNaNr/randomNameApp/assets/123739414/3542149d-cc8d-446d-9f71-9b539a44556c">
-  <img alt="Shows an illustrated sun in light mode and a moon with stars in dark mode."　width="200" height="200" src="https://github.com/NyNaNr/randomNameApp/assets/123739414/3542149d-cc8d-446d-9f71-9b539a44556c">
+  <source media="(prefers-color-scheme: dark)"　width="200" height="200" srcset="https://https://user-images.githubusercontent.com/123739414/3223b5f4-d24f-4a10-909f-c0f7b5ea8f8c.png">
+  <source media="(prefers-color-scheme: light)" width="200" height="200"　srcset="https://https://user-images.githubusercontent.com/123739414/246587690-3542149d-cc8d-446d-9f71-9b539a44556c.png">
+  <img alt="Shows an illustrated sun in light mode and a moon with stars in dark mode."　width="200" height="200" src="https://user-images.githubusercontent.com/123739414/246587690-3542149d-cc8d-446d-9f71-9b539a44556c.png">
 </picture>
 </p>
 ### The Origin of the Logo

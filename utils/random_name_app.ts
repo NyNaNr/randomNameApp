@@ -12,21 +12,21 @@ export const isMobile = () => {
       window.matchMedia("(max-device-width: 640px)").matches
     ) {
       return true;
-    } else {
-      //ユーザーエージェントの篩
-      if (
-        //スマホ・タブレットの場合
-        navigator.userAgent.indexOf("iPhone") > 0 ||
-        (navigator.userAgent.indexOf("Android") > 0 &&
-          navigator.userAgent.indexOf("Mobile") > 0) ||
-        navigator.userAgent.indexOf("iPad") > 0 ||
-        navigator.userAgent.indexOf("Android") > 0 ||
-        (navigator.userAgent.indexOf("macintosh") && "ontouchend" in document)
-      ) {
-        return true;
-      } else {
-        return false;
-      }
     }
+
+    //ユーザーエージェントの篩
+    if (
+      //スマホ・タブレットの場合
+      navigator.userAgent.indexOf("iPhone") > 0 ||
+      (navigator.userAgent.indexOf("Android") > 0 &&
+        navigator.userAgent.indexOf("Mobile") > 0) ||
+      navigator.userAgent.indexOf("iPad") > 0 ||
+      navigator.userAgent.indexOf("Android") > 0 ||
+      (navigator.userAgent.indexOf("macintosh") && "ontouchend" in document)
+    ) {
+      return true;
+    }
+
+    return false;
   }
 };

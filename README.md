@@ -1,7 +1,7 @@
 ## Random Name App:displaying names randomly from the input list you provide
 <picture align="center">
-  <source media="(prefers-color-scheme: dark)" width="200" height="200" srcset="https://github.com/NyNaNr/randomNameApp/assets/123739414/931a2314-e8d6-481d-bc9d-da65c817a69e">
-  <source media="(prefers-color-scheme: light)" width="200" height="200" srcset="https://github.com/NyNaNr/randomNameApp/assets/123739414/2e796aff-68ea-455b-8c38-2c5987284988">
+  <source media="(prefers-color-scheme: dark)" srcset="https://github.com/NyNaNr/randomNameApp/assets/123739414/931a2314-e8d6-481d-bc9d-da65c817a69e">
+  <source media="(prefers-color-scheme: light)" srcset="https://github.com/NyNaNr/randomNameApp/assets/123739414/2e796aff-68ea-455b-8c38-2c5987284988">
 </picture>
 
 ### The Origin of the Logo

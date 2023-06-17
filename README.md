@@ -1,13 +1,6 @@
 ## Random Name App:displaying names randomly from the input list you provide
 <p align="center">
-  <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hexagon-letter-r" width="1000" height="1000" viewBox="0 0 24 24" stroke-width="0.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
-  <path d="M19.875 6.27a2.225 2.225 0 0 1 1.125 1.948v7.284c0 .809 -.443 1.555 -1.158 1.948l-6.75 4.27a2.269 2.269 0 0 1 -2.184 0l-6.75 -4.27a2.225 2.225 0 0 1 -1.158 -1.948v-7.285c0 -.809 .443 -1.554 1.158 -1.947l6.75 -3.98a2.33 2.33 0 0 1 2.25 0l6.75 3.98h-.033z" />
-  <path d="M10 12h2a2 2 0 1 0 0 -4h-2v8m4 0l-3 -4" />
-</svg>
-
-
-
+  <img width="200" height="200" src="https://github.com/NyNaNr/randomNameApp/assets/123739414/2e796aff-68ea-455b-8c38-2c5987284988">
 </p>
 
 ### The Origin of the Logo

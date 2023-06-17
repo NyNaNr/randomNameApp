@@ -1,7 +1,5 @@
 ## Random Name App:displaying names randomly from the input list you provide
-<p align="center">
-  <img width="200" height="200" src="https://github.com/NyNaNr/randomNameApp/assets/123739414/2698df6f-8698-4a01-989c-133d5eb59403">
-</p>
+
 <p align="center">
 <picture　>
   <source media="(prefers-color-scheme: dark)"　width="200" height="200" srcset="https://https://user-images.githubusercontent.com/123739414/3223b5f4-d24f-4a10-909f-c0f7b5ea8f8c.png">

@@ -2,7 +2,13 @@
 <p align="center">
   <img width="200" height="200" src="https://github.com/NyNaNr/randomNameApp/assets/123739414/2698df6f-8698-4a01-989c-133d5eb59403">
 </p>
-
+<p align="center">
+<picture　>
+  <source media="(prefers-color-scheme: dark)"　width="200" height="200" srcset="https://github.com/NyNaNr/randomNameApp/assets/123739414/3223b5f4-d24f-4a10-909f-c0f7b5ea8f8c">
+  <source media="(prefers-color-scheme: light)" width="200" height="200"　srcset="https://github.com/NyNaNr/randomNameApp/assets/123739414/3542149d-cc8d-446d-9f71-9b539a44556c">
+  <img alt="Shows an illustrated sun in light mode and a moon with stars in dark mode."　width="200" height="200" src="https://github.com/NyNaNr/randomNameApp/assets/123739414/3542149d-cc8d-446d-9f71-9b539a44556c">
+</picture>
+</p>
 ### The Origin of the Logo
 This logo represents the distinctive shape of the Japanese 'garagara' lottery machine. The 'garagara' lottery machine is a traditional lottery machine widely used in Japan. Its appearance features a hexagonal wooden box, with small balls or cards inside. The 'R' in the center represents the initial letter of 'Random'.
 
@@ -30,3 +36,5 @@ pnpm dev
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
 
+![hexagon-letter-r white](https://github.com/NyNaNr/randomNameApp/assets/123739414/3223b5f4-d24f-4a10-909f-c0f7b5ea8f8c)
+![hexagon-letter-r black](https://github.com/NyNaNr/randomNameApp/assets/123739414/3542149d-cc8d-446d-9f71-9b539a44556c)

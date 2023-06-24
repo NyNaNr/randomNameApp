@@ -9,12 +9,7 @@ const inter = Inter({ subsets: ["latin"] });
 export default function Home() {
   const router = useRouter();
   const currentUrl = `https://yur.vercel.app${router.asPath}`;
-  const [width, setWidth] = useState(0);
 
-  useEffect(() => {
-    // Only run on the client side
-    setWidth(window.innerWidth);
-  }, []);
   return (
     <>
       <Head>
@@ -25,8 +20,8 @@ export default function Home() {
       <div className="min-h-screen">
         <div className="m-10">
           <h1 className="text-4xl text-center font-bold mb-10">
-            とにかく大きい{width > 639 ? "" : <br></br>}
-            ランダムネームアップ
+            <p className="md:inline-block">とにかく大きい</p>
+            <p className="md:inline-block">ランダムネームアップ</p>
           </h1>
           <h2 className="text-2xl font-semibold pl-3">アプリ紹介</h2>
           <div className="paragraph mb-10">

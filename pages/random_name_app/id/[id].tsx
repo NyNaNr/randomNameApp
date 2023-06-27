@@ -294,9 +294,9 @@ const RandomNameApp: React.FC = () => {
         </div>
       </div>
       <div className="flex justify-between">
-        <h2 className="m-5">
+        <div className="m-4">
           <button
-            className={`border border-solid p-3 pl-4 rounded-lg border-gray-400  bg-blue-100 dark:text-black hover:bg-blue-600 hover:text-white font-semibold ${
+            className={`border border-solid p-3 rounded-lg border-gray-400  bg-blue-100 dark:text-black hover:bg-blue-600 hover:text-white font-semibold ${
               selectedNameList.length > 0 ? "" : "cursor-not-allowed"
             }`}
             onClick={clickResetButton}
@@ -304,18 +304,18 @@ const RandomNameApp: React.FC = () => {
           >
             リセット
           </button>
-        </h2>
+        </div>
 
-        <h2 className="m-5">
+        <div className="m-4 mt-7 ">
           <Link
             href="/random_name_app/home"
             className={
-              "border border-solid p-3 pl-4 rounded-lg border-gray-400  bg-blue-100 dark:text-black hover:bg-blue-600 hover:text-white font-semibold "
+              "border border-solid p-3 rounded-lg border-gray-400  bg-blue-100 dark:text-black hover:bg-blue-600 hover:text-white font-semibold "
             }
           >
             リスト選択画面へ戻る
           </Link>
-        </h2>
+        </div>
       </div>
     </Layout>
   );

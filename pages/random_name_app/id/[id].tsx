@@ -49,6 +49,7 @@ const RandomNameApp: React.FC = () => {
   const [selectedNameList, setSelectedNameList] = useState<string[]>([]);
   const [lastName, setLastName] = useState<string | null>(null);
   const fontSize = useRef(0); //fontSizeをuseRefで保持;
+  const resetButtonRef = React.useRef<HTMLButtonElement | null>(null);
 
   const nameDisplay = useRef<HTMLDivElement>(null);
   const startNotifier = useRef<HTMLDivElement>(null);
@@ -97,6 +98,23 @@ const RandomNameApp: React.FC = () => {
     console.log("0", nameDisplay.current.textContent);
     calcFontSize(remainingNames);
   }, [remainingNames]);
+
+  const clickResetButton = () => {
+    const message = "はじめからにしますか？";
+    const shouldReload = confirm(message);
+    if (shouldReload) {
+      setRemainingNames(originalNames);
+      setSelectedNameList([]);
+      if (intervalId.current !== null) {
+        clearInterval(intervalId.current);
+      }
+      setIsShowingName(false);
+    }
+    // フォーカスを外す
+    if (resetButtonRef.current) {
+      resetButtonRef.current.blur();
+    }
+  };
 
   const startNameDisplay = useCallback(() => {
     if (!isShowingName) {
@@ -273,17 +291,30 @@ const RandomNameApp: React.FC = () => {
           <p>{selectedNameList.join(" ")}</p>
         </div>
       </div>
+      <div className="flex justify-between">
+        <h2 className="m-5">
+          <button
+            className={
+              "border border-solid p-3 pl-4 rounded-lg border-gray-400  bg-blue-100 dark:text-black hover:bg-blue-600 hover:text-white font-semibold "
+            }
+            onClick={clickResetButton}
+            ref={resetButtonRef}
+          >
+            リセット
+          </button>
+        </h2>
 
-      <h2 className="flex justify-end mr-4">
-        <Link
-          href="/random_name_app/home"
-          className={
-            "border border-solid p-3 pl-4 rounded-lg border-gray-400  bg-blue-100 dark:text-black hover:bg-blue-200 font-semibold "
-          }
-        >
-          リスト選択画面へ戻る
-        </Link>
-      </h2>
+        <h2 className="m-5">
+          <Link
+            href="/random_name_app/home"
+            className={
+              "border border-solid p-3 pl-4 rounded-lg border-gray-400  bg-blue-100 dark:text-black hover:bg-blue-600 hover:text-white font-semibold "
+            }
+          >
+            リスト選択画面へ戻る
+          </Link>
+        </h2>
+      </div>
     </Layout>
   );
 };

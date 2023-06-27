@@ -101,18 +101,20 @@ const RandomNameApp: React.FC = () => {
 
   const clickResetButton = () => {
     const message = "はじめからにしますか？";
-    const shouldReload = confirm(message);
-    if (shouldReload) {
-      setRemainingNames(originalNames);
-      setSelectedNameList([]);
-      if (intervalId.current !== null) {
-        clearInterval(intervalId.current);
+    if (selectedNameList.length > 0) {
+      const shouldReload = confirm(message);
+      if (shouldReload) {
+        setRemainingNames(originalNames);
+        setSelectedNameList([]);
+        if (intervalId.current !== null) {
+          clearInterval(intervalId.current);
+        }
+        setIsShowingName(false);
       }
-      setIsShowingName(false);
-    }
-    // フォーカスを外す
-    if (resetButtonRef.current) {
-      resetButtonRef.current.blur();
+      // フォーカスを外す
+      if (resetButtonRef.current) {
+        resetButtonRef.current.blur();
+      }
     }
   };
 
@@ -294,9 +296,9 @@ const RandomNameApp: React.FC = () => {
       <div className="flex justify-between">
         <h2 className="m-5">
           <button
-            className={
-              "border border-solid p-3 pl-4 rounded-lg border-gray-400  bg-blue-100 dark:text-black hover:bg-blue-600 hover:text-white font-semibold "
-            }
+            className={`border border-solid p-3 pl-4 rounded-lg border-gray-400  bg-blue-100 dark:text-black hover:bg-blue-600 hover:text-white font-semibold ${
+              selectedNameList.length > 0 ? "" : "cursor-not-allowed"
+            }`}
             onClick={clickResetButton}
             ref={resetButtonRef}
           >

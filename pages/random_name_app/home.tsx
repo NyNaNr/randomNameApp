@@ -103,7 +103,7 @@ export default function Home() {
                 </svg>
                 ホーム画面
               </button>
-              <div className="show-list-count rounded-md border border-white/20 text-white text-right px-3 py-2 mr-1 ml-2">
+              <div className="show-list-count rounded-md border border-white/20 text-white text-right px-1 py-2 mx-1">
                 {listCount}
               </div>
             </div>

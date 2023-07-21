@@ -2,5 +2,6 @@
 module.exports = {
   siteUrl: "https://yur.vercel.app/",
   generateRobotsTxt: true, // (optional)
-  // ...other options
+  sitemapSize: 7000,
+  outDir: "./out",
 };

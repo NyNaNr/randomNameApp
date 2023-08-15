@@ -30,5 +30,3 @@ pnpm dev
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
 
-![hexagon-letter-r white](https://github.com/NyNaNr/randomNameApp/assets/123739414/3223b5f4-d24f-4a10-909f-c0f7b5ea8f8c)
-![hexagon-letter-r black](https://github.com/NyNaNr/randomNameApp/assets/123739414/3542149d-cc8d-446d-9f71-9b539a44556c)

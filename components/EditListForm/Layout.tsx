@@ -18,6 +18,11 @@ const Layout: React.FC<LayoutProps> = ({
   isOpen,
   toggleOpen,
 }) => {
+  //以下詳細設定のチェックボックスの状態管理
+  const [isDeleteSpaceChecked, setIsDeleteSpaceChecked] = useState(true);
+
+  //以下詳細設定のローカルストレージ管理
+
   //以下ユーザーオプションの開閉を検知する
   const [isDetailsOpen, setIsDetailsOpen] = useState(false);
 
@@ -123,6 +128,24 @@ const Layout: React.FC<LayoutProps> = ({
                 user-optionsをコンテナの中に配置し、absoluteクラスを使用してコンテナの右下に配置します。
                 コードとしては以下のようになります：
               </p>
+              <fieldset>
+                <legend>文字間のスペースを削除する。</legend>
+                <div>
+                  <input
+                    type="checkbox"
+                    id="deleteSpace"
+                    name="interest"
+                    value="deleteSpace"
+                    checked={isDeleteSpaceChecked}
+                    onChange={() =>
+                      setIsDeleteSpaceChecked(!isDeleteSpaceChecked)
+                    }
+                  />
+                  <label htmlFor="deleteSpace">
+                    する。（したほうが少しでも文字が大きく表示できます。）
+                  </label>
+                </div>
+              </fieldset>
               <form>
                 <fieldset>
                   <legend>フォントサイズの計算方法を選んでください。</legend>

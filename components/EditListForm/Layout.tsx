@@ -20,6 +20,7 @@ const Layout: React.FC<LayoutProps> = ({
 }) => {
   //以下詳細設定のチェックボックスの状態管理
   const [isDeleteSpaceChecked, setIsDeleteSpaceChecked] = useState(true);
+  const [isNewLineChecked, setIsNewLineChecked] = useState(false);
 
   //以下詳細設定のローカルストレージ管理
 
@@ -147,17 +148,13 @@ const Layout: React.FC<LayoutProps> = ({
                 <div>
                   <input
                     type="checkbox"
-                    id="deleteSpace"
+                    id="newLine"
                     name="interest"
-                    // value="deleteSpace"
-                    // checked={isDeleteSpaceChecked}
-                    onChange={() =>
-                      setIsDeleteSpaceChecked(!isDeleteSpaceChecked)
-                    }
+                    value="newLine"
+                    checked={isNewLineChecked}
+                    onChange={() => setIsNewLineChecked(!isNewLineChecked)}
                   />
-                  <label htmlFor="deleteSpace">
-                    する。（したほうが少しでも文字が大きく表示できます。）
-                  </label>
+                  <label htmlFor="deleteSpace">する。</label>
                 </div>
               </fieldset>
               <form>

@@ -121,13 +121,7 @@ const Layout: React.FC<LayoutProps> = ({
               }`}
             >
               <summary className="">詳細設定</summary>
-              <p>
-                了解しました。ヘッダー内にその要素を入れずに、ヘッダーのすぐ右下に表示させる場合、ヘッダーとその要素が含まれる親要素（コンテナ）をrelativeで配置し、user-optionsをその親要素に対して絶対配置する方法が考えられます。
-                以下の手順でそれを実現できます。
-                ヘッダーとuser-optionsの両方を含む親要素（コンテナ）を作成し、そのコンテナにrelativeクラスを追加します。
-                user-optionsをコンテナの中に配置し、absoluteクラスを使用してコンテナの右下に配置します。
-                コードとしては以下のようになります：
-              </p>
+              <p></p>
               <fieldset>
                 <legend>文字間のスペースを削除する。</legend>
                 <div>
@@ -137,6 +131,26 @@ const Layout: React.FC<LayoutProps> = ({
                     name="interest"
                     value="deleteSpace"
                     checked={isDeleteSpaceChecked}
+                    onChange={() =>
+                      setIsDeleteSpaceChecked(!isDeleteSpaceChecked)
+                    }
+                  />
+                  <label htmlFor="deleteSpace">
+                    する。（したほうが少しでも文字が大きく表示できます。）
+                  </label>
+                </div>
+              </fieldset>
+              <fieldset>
+                <legend>
+                  文字間のスペースを改行として表示する。（英単語の表示に便利です。）
+                </legend>
+                <div>
+                  <input
+                    type="checkbox"
+                    id="deleteSpace"
+                    name="interest"
+                    // value="deleteSpace"
+                    // checked={isDeleteSpaceChecked}
                     onChange={() =>
                       setIsDeleteSpaceChecked(!isDeleteSpaceChecked)
                     }

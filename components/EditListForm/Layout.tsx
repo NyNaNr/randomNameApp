@@ -104,7 +104,11 @@ const Layout: React.FC<LayoutProps> = ({
               </div>
             </div>
           </header>
-          <div className="user-options absolute top-14 right-0 z-30">
+          <div
+            className={`user-options absolute ${
+              lineNumber < 2 ? "top-20" : "top-14"
+            } right-0 z-30`}
+          >
             <details
               open={isDetailsOpen}
               className={`rounded-lg shadow-md rounded-tl-none rounded-tr-none bg-white px-2 ${

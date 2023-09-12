@@ -45,25 +45,25 @@ const Layout: React.FC<LayoutProps> = ({
     <React.Fragment>
       {selectedListId && (
         <div className="relative">
-          <header className="header fixed top-0 w-full z-20 p-1 bg-white shadow-md">
-            {/* 詳細設定用、黒背景 */}
-            {isDetailsOpen ? (
-              <div
-                onClick={handleBackgroundClick}
-                className="absolute top-0 left-0 z-10 min-h-screen h-full w-full bg-black opacity-20 "
-              ></div>
-            ) : (
-              ""
-            )}
-            {/* スマホ用、黒背景 */}
-            {isOpen ? (
-              <div
-                onClick={toggleOpen}
-                className="absolute top-0 left-0 z-30 min-h-screen h-full w-full bg-black opacity-70 sm:hidden"
-              ></div>
-            ) : (
-              ""
-            )}
+          {/* 詳細設定用、黒背景 */}
+          {isDetailsOpen ? (
+            <div
+              onClick={handleBackgroundClick}
+              className="absolute top-0 left-0 z-30 min-h-screen h-full w-full bg-black opacity-20 "
+            ></div>
+          ) : (
+            ""
+          )}
+          {/* スマホ用、黒背景 */}
+          {isOpen ? (
+            <div
+              onClick={toggleOpen}
+              className="absolute top-0 left-0 z-40 min-h-screen h-full w-full bg-black opacity-70 sm:hidden"
+            ></div>
+          ) : (
+            ""
+          )}
+          <header className="header fixed top-0 w-full z-30 p-1 bg-white shadow-md">
             <div className="container">
               <div className="text-black">
                 <p>保存可能な文字容量: {totalBytes}/4058 bytes</p>
@@ -104,7 +104,7 @@ const Layout: React.FC<LayoutProps> = ({
               </div>
             </div>
           </header>
-          <div className="user-options absolute top-14 right-0 z-10">
+          <div className="user-options absolute top-14 right-0 z-30">
             <details
               open={isDetailsOpen}
               className={`rounded-lg shadow-md rounded-tl-none rounded-tr-none bg-white px-2 ${

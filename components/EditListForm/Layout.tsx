@@ -143,7 +143,7 @@ const Layout: React.FC<LayoutProps> = ({
               </fieldset>
               <fieldset>
                 <legend>
-                  文字間のスペースを改行として表示する。（英単語の表示に便利です。）
+                  文字間のスペースを改行として表示する。（英単語の複合名詞の表示に便利です。）
                 </legend>
                 <div>
                   <input

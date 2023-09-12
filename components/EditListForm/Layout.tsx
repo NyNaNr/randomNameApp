@@ -50,7 +50,7 @@ const Layout: React.FC<LayoutProps> = ({
             {isDetailsOpen ? (
               <div
                 onClick={handleBackgroundClick}
-                className="absolute top-0 left-0 z-10 min-h-screen h-full w-full bg-black opacity-70 "
+                className="absolute top-0 left-0 z-10 min-h-screen h-full w-full bg-black opacity-20 "
               ></div>
             ) : (
               ""

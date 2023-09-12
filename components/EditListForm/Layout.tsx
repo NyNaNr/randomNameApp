@@ -119,6 +119,33 @@ const Layout: React.FC<LayoutProps> = ({
                 user-optionsをコンテナの中に配置し、absoluteクラスを使用してコンテナの右下に配置します。
                 コードとしては以下のようになります：
               </p>
+              <form>
+                <fieldset>
+                  <legend>フォントサイズの計算方法を選んでください。</legend>
+                  <div>
+                    <input
+                      type="radio"
+                      id="fontSizeChoice1"
+                      name="fontSize"
+                      value="vertical"
+                      checked
+                    />
+                    <label htmlFor="fontSizeChoice1">
+                      垂直方向にフォントサイズをそろえる。（最長文字数に依存します。）
+                    </label>
+                    <br />
+                    <input
+                      type="radio"
+                      id="fontSizeChoice2"
+                      name="fontSize"
+                      value="horizontal"
+                    />
+                    <label htmlFor="fontSizeChoice2">
+                      水平方向いっぱいに文字を大きく表示する。（画面いっぱいに表示できます。）
+                    </label>
+                  </div>
+                </fieldset>
+              </form>
             </details>
           </div>
         </div>

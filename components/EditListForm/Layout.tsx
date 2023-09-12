@@ -41,6 +41,7 @@ const Layout: React.FC<LayoutProps> = ({
       {selectedListId && (
         <div className="relative">
           <header className="header fixed top-0 w-full z-10 p-1 bg-white shadow-md">
+            {/* スマホ用、黒背景 */}
             {isOpen ? (
               <div
                 onClick={toggleOpen}

@@ -36,16 +36,30 @@ const Layout: React.FC<LayoutProps> = ({
   }, []);
   //以上ユーザーオプションの開閉を検知する
 
+  // アコーディオンメニューを閉じる(黒背景クリック)
+  const handleBackgroundClick = () => {
+    setIsDetailsOpen(false);
+  };
+
   return (
     <React.Fragment>
       {selectedListId && (
         <div className="relative">
-          <header className="header fixed top-0 w-full z-10 p-1 bg-white shadow-md">
+          <header className="header fixed top-0 w-full z-20 p-1 bg-white shadow-md">
+            {/* 詳細設定用、黒背景 */}
+            {isDetailsOpen ? (
+              <div
+                onClick={handleBackgroundClick}
+                className="absolute top-0 left-0 z-10 min-h-screen h-full w-full bg-black opacity-70 "
+              ></div>
+            ) : (
+              ""
+            )}
             {/* スマホ用、黒背景 */}
             {isOpen ? (
               <div
                 onClick={toggleOpen}
-                className="absolute top-0 left-0 z-10 min-h-screen h-full w-full bg-black opacity-70 sm:hidden"
+                className="absolute top-0 left-0 z-30 min-h-screen h-full w-full bg-black opacity-70 sm:hidden"
               ></div>
             ) : (
               ""
@@ -90,9 +104,10 @@ const Layout: React.FC<LayoutProps> = ({
               </div>
             </div>
           </header>
-          <div className="user-options absolute top-14 right-0 z-20">
+          <div className="user-options absolute top-14 right-0 z-10">
             <details
-              className={`rounded-lg shadow-md rounded-tl-none rounded-tr-none bg-white z-20 px-2 ${
+              open={isDetailsOpen}
+              className={`rounded-lg shadow-md rounded-tl-none rounded-tr-none bg-white px-2 ${
                 isDetailsOpen ? "" : "mr-4"
               }`}
             >

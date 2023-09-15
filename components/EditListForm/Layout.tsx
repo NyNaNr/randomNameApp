@@ -121,7 +121,9 @@ const Layout: React.FC<LayoutProps> = ({
                 isDetailsOpen ? "" : "mr-4"
               }`}
             >
-              <summary className="">詳細設定</summary>
+              <summary className={`  ${isDetailsOpen ? " animate-flash" : ""}`}>
+                詳細設定
+              </summary>
               <p></p>
               <fieldset>
                 <legend>文字間のスペースを削除する。</legend>

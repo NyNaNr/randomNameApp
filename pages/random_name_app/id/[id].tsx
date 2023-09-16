@@ -266,9 +266,11 @@ const RandomNameApp: React.FC = () => {
       <div className={styles.lists}>
         <div className={styles.cleanedNames}>
           {/* 未選択の名前を表示 */}
-          <h2 className="underline ">抽選候補リスト</h2>
+          <details open>
+            <summary className="underline ">抽選候補リスト</summary>
 
-          <p>{remainingNames.join(" ")}</p>
+            <p>{remainingNames.join(" ")}</p>
+          </details>
         </div>
       </div>
       <div className={styles.display}>
@@ -309,9 +311,11 @@ const RandomNameApp: React.FC = () => {
       <div className={styles.lists}>
         <div className={styles.removedNames}>
           {/* 選択済みの名前を表示 */}
-          <h2 className="underline">抽選済みリスト</h2>
+          <details open>
+            <summary className="underline">抽選済みリスト</summary>
 
-          <p>{selectedNameList.join(" ")}</p>
+            <p>{selectedNameList.join(" ")}</p>
+          </details>
         </div>
       </div>
       <div className="flex justify-between">

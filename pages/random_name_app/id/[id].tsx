@@ -91,6 +91,7 @@ const RandomNameApp: React.FC = () => {
   // };
 
   const calcFontSize = (name: string) => {
+    if (!name) return; // nameがundefinedの場合、関数を早期に終了する。
     fontSize.current = Math.floor((window.innerWidth * 0.95) / name.length);
     if (!nameDisplay.current) return;
     nameDisplay.current.style.fontSize = `${fontSize.current}px`;

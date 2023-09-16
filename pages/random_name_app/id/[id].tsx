@@ -118,6 +118,8 @@ const RandomNameApp: React.FC = () => {
     calcFontSize(randomName); //　新フォントサイズ計算
   }, [remainingNames]);
 
+  //以下、新フォントサイズ計算のdisplayBehindNameDisplayの高さを計算する。
+
   const clickResetButton = () => {
     const message = "はじめからにしますか？";
     if (selectedNameList.length > 0) {
@@ -268,7 +270,9 @@ const RandomNameApp: React.FC = () => {
         <div className={styles.cleanedNames}>
           {/* 未選択の名前を表示 */}
           <details open>
-            <summary className="underline ">抽選候補リスト</summary>
+            <summary className="underline ">
+              抽選候補リスト(折りたためます)
+            </summary>
 
             <p>{remainingNames.join(" ")}</p>
           </details>

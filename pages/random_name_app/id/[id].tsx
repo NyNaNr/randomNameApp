@@ -133,6 +133,7 @@ const RandomNameApp: React.FC = () => {
     fontSize.current = Math.min(calculatedFontSize, maxAllowedFontSize);
 
     if (!shortestName.current) return;
+    shortestName.current.textContent = ShortestName;
     shortestName.current.style.fontSize = `${fontSize.current}px`;
     shortestName.current.style.opacity = `${1}`;
 

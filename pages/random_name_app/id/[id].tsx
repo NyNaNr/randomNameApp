@@ -111,7 +111,10 @@ const RandomNameApp: React.FC = () => {
     console.log("-1", randomName);
     nameDisplay.current.textContent = randomName;
     console.log("0", nameDisplay.current.textContent);
-    calcFontSize(remainingNames);
+    // 旧フォントサイズ計算
+    // calcFontSize(remainingNames);
+
+    calcFontSize(randomName); //　新フォントサイズ計算
   }, [remainingNames]);
 
   const clickResetButton = () => {

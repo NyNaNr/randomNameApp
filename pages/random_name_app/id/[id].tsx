@@ -272,7 +272,10 @@ const RandomNameApp: React.FC = () => {
         </div>
       </div>
       <div className={styles.display}>
-        <div className={styles.nameDisplay} ref={nameDisplay}></div>
+        <div
+          className={`nameDisplay items-center whitespace-nowrap mt-auto text-center z-10 transition-all duration-1000 ease-out`}
+          ref={nameDisplay}
+        ></div>
         <div
           className="overlay absolute top-0 left-0 w-full h-full opacity-0"
           onClick={isShowingName ? stopNameDisplay : startNameDisplay}

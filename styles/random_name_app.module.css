@@ -33,19 +33,6 @@
   margin: 1em;
 }
 
-.nameDisplay {
-  align-items: center;
-
-  white-space: nowrap;
-  margin-top: auto;
-  text-align: center;
-  z-index: 1;
-  /* ↓、 これは、フォントサイズ、それぞれMaxの時は不要。*/
-  /* transition: all 1s ease-out; */
-
-  /* margin-bottom: 2em;  下に謎の空白を作る */
-}
-
 .startNotifier {
   animation: flash 1.5s linear infinite;
   position: absolute;

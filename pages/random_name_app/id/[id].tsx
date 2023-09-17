@@ -323,11 +323,11 @@ const RandomNameApp: React.FC = () => {
         className={`displayBehindNameDisplay relative border border-gray-400 rounded-lg m-4`}
       >
         <div
-          className={`displayBehindNameShortestCharacter`}
+          className={`displayBehindNameShortestCharacter items-center whitespace-nowrap mt-auto text-center z-10 relative`}
           ref={shortestName}
         ></div>
         <div
-          className={`nameDisplay items-center whitespace-nowrap mt-auto text-center z-10 transition-all duration-1000 ease-out`}
+          className={`nameDisplay items-center whitespace-nowrap mt-auto text-center z-20  transition-all duration-1000 ease-out absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2`}
           ref={nameDisplay}
         ></div>
         <div

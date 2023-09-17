@@ -127,8 +127,10 @@ const RandomNameApp: React.FC = () => {
 
     const maxAllowedFontSize = window.innerHeight * 0.95; // ディスプレイの高さの90%を上限とする
     const calculatedFontSize = Math.floor(
-      (window.innerWidth * 0.95) / ShortestName.length
+      (window.innerWidth * 0.65) / ShortestName.length
     );
+
+    const notifierFontSize = window.innerWidth * 0.025;
 
     fontSize.current = Math.min(calculatedFontSize, maxAllowedFontSize);
 
@@ -138,11 +140,11 @@ const RandomNameApp: React.FC = () => {
     shortestName.current.style.opacity = `${0}`;
 
     if (startNotifier.current) {
-      startNotifier.current.style.fontSize = `${fontSize.current * 0.2}px`;
+      startNotifier.current.style.fontSize = `${notifierFontSize}px`;
     }
 
     if (stopNotifier.current) {
-      stopNotifier.current.style.fontSize = `${fontSize.current * 0.2}px`;
+      stopNotifier.current.style.fontSize = `${notifierFontSize}px`;
     }
   };
   //以上、新フォントサイズ計算のdisplayBehindNameDisplayの高さを計算する。
@@ -327,7 +329,7 @@ const RandomNameApp: React.FC = () => {
           ref={shortestName}
         ></div>
         <div
-          className={`nameDisplay items-center whitespace-nowrap mt-auto text-center z-20  transition-all duration-1000 ease-out absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2`}
+          className={`nameDisplay items-center whitespace-nowrap mt-auto text-center z-20  absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2`}
           ref={nameDisplay}
         ></div>
         <div

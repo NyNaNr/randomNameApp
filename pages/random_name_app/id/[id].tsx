@@ -135,7 +135,7 @@ const RandomNameApp: React.FC = () => {
     if (!shortestName.current) return;
     shortestName.current.textContent = ShortestName;
     shortestName.current.style.fontSize = `${fontSize.current}px`;
-    shortestName.current.style.opacity = `${1}`;
+    shortestName.current.style.opacity = `${0}`;
 
     if (startNotifier.current) {
       startNotifier.current.style.fontSize = `${fontSize.current * 0.2}px`;

@@ -24,7 +24,7 @@ const Layout: React.FC<LayoutProps> = ({
 
   //以下詳細設定のローカルストレージ管理
 
-  //以下ユーザーオプションの開閉を検知する
+  //以下詳細設定の開閉を検知する
   const [isDetailsOpen, setIsDetailsOpen] = useState(false);
 
   useEffect(() => {
@@ -40,9 +40,9 @@ const Layout: React.FC<LayoutProps> = ({
       detailsElem?.removeEventListener("toggle", handleToggle);
     };
   }, []);
-  //以上ユーザーオプションの開閉を検知する
+  //以上詳細設定の開閉を検知する
 
-  // アコーディオンメニューを閉じる(黒背景クリック)
+  // 詳細設定を閉じる(黒背景クリック)
   const handleBackgroundClick = () => {
     setIsDetailsOpen(false);
   };

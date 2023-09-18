@@ -105,66 +105,72 @@ const RandomNameApp: React.FC = () => {
 
   // 1.リストの中身が英単語のみかどうか判定
 
-  const calcFontSize = (name: string) => {
-    if (!name) return; // nameがundefinedの場合、関数を早期に終了する。
+  const calcFontSize = useCallback(
+    (name: string) => {
+      if (!name) return; // nameがundefinedの場合、関数を早期に終了する。
 
-    //英単語の場合は、0.95=>1.5に変更
-    const scaleFactor = isAlphabetOrNumber ? 1.5 : 0.95;
-    const calculatedFontSize = Math.floor(
-      (window.innerWidth * scaleFactor) / name.length
-    );
-    const maxAllowedFontSize = window.innerHeight * 0.95; // ディスプレイの高さの90%を上限とする
+      //英単語の場合は、0.95=>1.5に変更
+      const scaleFactor = isAlphabetOrNumber ? 1.5 : 0.95;
+      const calculatedFontSize = Math.floor(
+        (window.innerWidth * scaleFactor) / name.length
+      );
+      const maxAllowedFontSize = window.innerHeight * 0.95; // ディスプレイの高さの90%を上限とする
 
-    fontSize.current = Math.min(calculatedFontSize, maxAllowedFontSize);
+      fontSize.current = Math.min(calculatedFontSize, maxAllowedFontSize);
 
-    if (!nameDisplay.current) return;
-    nameDisplay.current.style.fontSize = `${fontSize.current}px`;
-    nameDisplay.current.style.opacity = "1";
-    //旧フォントサイズで使用
-    //   if (startNotifier.current) {
-    //     startNotifier.current.style.fontSize = `${fontSize.current * 0.2}px`;
-    //   }
+      if (!nameDisplay.current) return;
+      nameDisplay.current.style.fontSize = `${fontSize.current}px`;
+      nameDisplay.current.style.opacity = "1";
+      //旧フォントサイズで使用
+      //   if (startNotifier.current) {
+      //     startNotifier.current.style.fontSize = `${fontSize.current * 0.2}px`;
+      //   }
 
-    //   if (stopNotifier.current) {
-    //     stopNotifier.current.style.fontSize = `${fontSize.current * 0.2}px`;
-    //   }
-  };
+      //   if (stopNotifier.current) {
+      //     stopNotifier.current.style.fontSize = `${fontSize.current * 0.2}px`;
+      //   }
+    },
+    [isAlphabetOrNumber]
+  );
 
   //以下、新フォントサイズ計算のdisplayBehindNameDisplayの高さを計算する。
   //1.最も短い文字数を取得
-  const calcShortestFontSize = (list: string[]) => {
-    if (list.length === 0) return; // リストが空の場合のエラーハンドリング
+  const calcShortestFontSize = useCallback(
+    (list: string[]) => {
+      if (list.length === 0) return; // リストが空の場合のエラーハンドリング
 
-    const ShortestName = list.reduce(
-      (shortest, name) => (name.length < shortest.length ? name : shortest),
-      list[0]
-    );
-    console.log(`shortestName:${ShortestName}`);
+      const ShortestName = list.reduce(
+        (shortest, name) => (name.length < shortest.length ? name : shortest),
+        list[0]
+      );
+      console.log(`shortestName:${ShortestName}`);
 
-    const maxAllowedFontSize = window.innerHeight * 0.95; // ディスプレイの高さの90%を上限とする
-    //英単語の場合は、0.65=>0.87に変更
-    const scaleFactor = isAlphabetOrNumber ? 0.87 : 0.65;
-    const calculatedFontSize = Math.floor(
-      (window.innerWidth * scaleFactor) / ShortestName.length
-    );
+      const maxAllowedFontSize = window.innerHeight * 0.95; // ディスプレイの高さの90%を上限とする
+      //英単語の場合は、0.65=>0.87に変更
+      const scaleFactor = isAlphabetOrNumber ? 0.87 : 0.65;
+      const calculatedFontSize = Math.floor(
+        (window.innerWidth * scaleFactor) / ShortestName.length
+      );
 
-    const notifierFontSize = window.innerWidth * 0.025;
+      const notifierFontSize = window.innerWidth * 0.025;
 
-    fontSize.current = Math.min(calculatedFontSize, maxAllowedFontSize);
+      fontSize.current = Math.min(calculatedFontSize, maxAllowedFontSize);
 
-    if (!shortestName.current) return;
-    shortestName.current.textContent = ShortestName;
-    shortestName.current.style.fontSize = `${fontSize.current}px`;
-    shortestName.current.style.opacity = `${0}`;
+      if (!shortestName.current) return;
+      shortestName.current.textContent = ShortestName;
+      shortestName.current.style.fontSize = `${fontSize.current}px`;
+      shortestName.current.style.opacity = `${0}`;
 
-    if (startNotifier.current) {
-      startNotifier.current.style.fontSize = `${notifierFontSize}px`;
-    }
+      if (startNotifier.current) {
+        startNotifier.current.style.fontSize = `${notifierFontSize}px`;
+      }
 
-    if (stopNotifier.current) {
-      stopNotifier.current.style.fontSize = `${notifierFontSize}px`;
-    }
-  };
+      if (stopNotifier.current) {
+        stopNotifier.current.style.fontSize = `${notifierFontSize}px`;
+      }
+    },
+    [isAlphabetOrNumber]
+  );
   //以上、新フォントサイズ計算のdisplayBehindNameDisplayの高さを計算する。
 
   const showRandomName = useCallback(() => {
@@ -180,7 +186,7 @@ const RandomNameApp: React.FC = () => {
     calcFontSize(randomName); //　新フォントサイズ計算
     calcShortestFontSize(remainingNames); //新フォントサイズ計算
     isAlphabetNumber(remainingNames); //英単語チェック
-  }, [remainingNames]);
+  }, [remainingNames, calcShortestFontSize, calcFontSize]);
 
   const clickResetButton = () => {
     const message = "はじめからにしますか？";

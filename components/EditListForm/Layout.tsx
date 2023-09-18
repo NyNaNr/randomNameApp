@@ -32,6 +32,7 @@ const Layout: React.FC<LayoutProps> = ({
   }, [isDeleteSpaceChecked, isNewLineChecked]);
 
   const saveToLocalStorage = () => {
+    if (!selectedListId) return;
     const currentData = localStorage.getItem("checkboxStates") || "{}";
     const parsedData = JSON.parse(currentData);
 
@@ -44,6 +45,7 @@ const Layout: React.FC<LayoutProps> = ({
   };
 
   const loadFromLocalStorage = () => {
+    if (!selectedListId) return;
     const currentData = localStorage.getItem("checkboxStates") || "{}";
     const parsedData = JSON.parse(currentData);
 

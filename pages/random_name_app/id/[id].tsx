@@ -43,6 +43,7 @@ const RandomNameApp: React.FC = () => {
   }, [router.isReady, router.query]);
 
   const [isShowingName, setIsShowingName] = useState<boolean>(false);
+  const [isAlphabetOrNumber, setIsAlphabetOrNumber] = useState<boolean>(false);
   const intervalId = useRef<number | null>(null);
   const [originalNames, setOriginalNames] = useState<string[]>([]);
   const [remainingNames, setRemainingNames] = useState<string[]>([]);
@@ -91,9 +92,15 @@ const RandomNameApp: React.FC = () => {
   //   }
   // };
 
+  // リストの中身が英単語のみかどうか判定
+  const isAlphabetNumber = (name: string) => {
+    if (!name) return; // nameがundefinedの場合、関数を早期に終了する。
+  };
+
   const calcFontSize = (name: string) => {
     if (!name) return; // nameがundefinedの場合、関数を早期に終了する。
 
+    //英単語の場合は、0.95=>1.5に変更
     const calculatedFontSize = Math.floor(
       (window.innerWidth * 0.95) / name.length
     );
@@ -126,6 +133,7 @@ const RandomNameApp: React.FC = () => {
     console.log(`shortestName:${ShortestName}`);
 
     const maxAllowedFontSize = window.innerHeight * 0.95; // ディスプレイの高さの90%を上限とする
+    //英単語の場合は、0.65=>0.87に変更
     const calculatedFontSize = Math.floor(
       (window.innerWidth * 0.65) / ShortestName.length
     );

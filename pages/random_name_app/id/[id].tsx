@@ -92,10 +92,18 @@ const RandomNameApp: React.FC = () => {
   //   }
   // };
 
-  // リストの中身が英単語のみかどうか判定
-  const isAlphabetNumber = (name: string) => {
-    if (!name) return; // nameがundefinedの場合、関数を早期に終了する。
+  // 1.リストの中身が英単語のみかどうか判定
+  const isAlphabetNumber = (names: string[]) => {
+    if (!names || names.length === 0) return; // リストがundefinedまたは空の場合、関数をfalseで終了する。
+
+    // アルファベット（大文字・小文字）や数字のみで構成されているか判定
+    const regex = /^[A-Za-z0-9]+$/;
+    // everyメソッドを使用して、すべての要素が条件を満たすかどうかをチェック
+    const result = names.every((name) => regex.test(name));
+    setIsAlphabetOrNumber(result);
   };
+
+  // 1.リストの中身が英単語のみかどうか判定
 
   const calcFontSize = (name: string) => {
     if (!name) return; // nameがundefinedの場合、関数を早期に終了する。
@@ -169,6 +177,7 @@ const RandomNameApp: React.FC = () => {
 
     calcFontSize(randomName); //　新フォントサイズ計算
     calcShortestFontSize(remainingNames); //新フォントサイズ計算
+    isAlphabetNumber(remainingNames); //英単語チェック
   }, [remainingNames]);
 
   const clickResetButton = () => {

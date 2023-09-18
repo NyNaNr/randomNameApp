@@ -124,9 +124,9 @@ const Layout: React.FC<LayoutProps> = ({
               <summary className={`  ${isDetailsOpen ? " animate-flash" : ""}`}>
                 詳細設定
               </summary>
-              <p></p>
+              <p>文字間のスペースの扱い</p>
               <fieldset>
-                <legend>文字間のスペースを削除する。</legend>
+                <legend>①文字間のスペースを削除する。</legend>
                 <div>
                   <input
                     type="checkbox"
@@ -144,8 +144,10 @@ const Layout: React.FC<LayoutProps> = ({
                 </div>
               </fieldset>
               <fieldset>
-                <legend>
-                  文字間のスペースを改行として表示する。（英単語の複合名詞の表示に便利です。）
+                <legend
+                  className={`${isDeleteSpaceChecked ? "text-gray-400" : ""}`}
+                >
+                  ②文字間のスペースを改行として表示する。（英単語の複合名詞が複数行で表示されます。）
                 </legend>
                 <div>
                   <input
@@ -155,37 +157,11 @@ const Layout: React.FC<LayoutProps> = ({
                     value="newLine"
                     checked={isNewLineChecked}
                     onChange={() => setIsNewLineChecked(!isNewLineChecked)}
+                    disabled={isDeleteSpaceChecked}
                   />
                   <label htmlFor="deleteSpace">する。</label>
                 </div>
               </fieldset>
-              <form>
-                <fieldset>
-                  <legend>フォントサイズの計算方法を選んでください。</legend>
-                  <div>
-                    <input
-                      type="radio"
-                      id="fontSizeChoice1"
-                      name="fontSize"
-                      value="vertical"
-                      checked
-                    />
-                    <label htmlFor="fontSizeChoice1">
-                      垂直方向にフォントサイズをそろえる。（最長文字数に依存します。）
-                    </label>
-                    <br />
-                    <input
-                      type="radio"
-                      id="fontSizeChoice2"
-                      name="fontSize"
-                      value="horizontal"
-                    />
-                    <label htmlFor="fontSizeChoice2">
-                      水平方向いっぱいに文字を大きく表示する。（画面いっぱいに表示できます。）
-                    </label>
-                  </div>
-                </fieldset>
-              </form>
             </details>
           </div>
         </div>

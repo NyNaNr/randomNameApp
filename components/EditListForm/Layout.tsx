@@ -23,6 +23,38 @@ const Layout: React.FC<LayoutProps> = ({
   const [isNewLineChecked, setIsNewLineChecked] = useState(false);
 
   //以下詳細設定のローカルストレージ管理
+  useEffect(() => {
+    loadFromLocalStorage();
+  }, [selectedListId]);
+
+  useEffect(() => {
+    saveToLocalStorage();
+  }, [isDeleteSpaceChecked, isNewLineChecked]);
+
+  const saveToLocalStorage = () => {
+    const currentData = localStorage.getItem("checkboxStates") || "{}";
+    const parsedData = JSON.parse(currentData);
+
+    parsedData[selectedListId] = {
+      isDeleteSpaceChecked: isDeleteSpaceChecked,
+      isNewLineChecked: isNewLineChecked,
+    };
+
+    localStorage.setItem("checkboxStates", JSON.stringify(parsedData));
+  };
+
+  const loadFromLocalStorage = () => {
+    const currentData = localStorage.getItem("checkboxStates") || "{}";
+    const parsedData = JSON.parse(currentData);
+
+    if (parsedData[selectedListId]) {
+      setIsDeleteSpaceChecked(
+        parsedData[selectedListId].isDeleteSpaceChecked || false
+      );
+      setIsNewLineChecked(parsedData[selectedListId].isNewLineChecked || false);
+    }
+  };
+  //以上詳細設定のローカルストレージ管理
 
   //以下詳細設定の開閉を検知する
   const [isDetailsOpen, setIsDetailsOpen] = useState(false);

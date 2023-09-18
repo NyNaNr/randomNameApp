@@ -109,8 +109,9 @@ const RandomNameApp: React.FC = () => {
     if (!name) return; // nameがundefinedの場合、関数を早期に終了する。
 
     //英単語の場合は、0.95=>1.5に変更
+    const scaleFactor = isAlphabetOrNumber ? 1.5 : 0.95;
     const calculatedFontSize = Math.floor(
-      (window.innerWidth * 0.95) / name.length
+      (window.innerWidth * scaleFactor) / name.length
     );
     const maxAllowedFontSize = window.innerHeight * 0.95; // ディスプレイの高さの90%を上限とする
 
@@ -142,8 +143,9 @@ const RandomNameApp: React.FC = () => {
 
     const maxAllowedFontSize = window.innerHeight * 0.95; // ディスプレイの高さの90%を上限とする
     //英単語の場合は、0.65=>0.87に変更
+    const scaleFactor = isAlphabetOrNumber ? 0.87 : 0.65;
     const calculatedFontSize = Math.floor(
-      (window.innerWidth * 0.65) / ShortestName.length
+      (window.innerWidth * scaleFactor) / ShortestName.length
     );
 
     const notifierFontSize = window.innerWidth * 0.025;

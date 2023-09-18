@@ -1,4 +1,4 @@
-import React, { ReactNode } from "react";
+import React, { ReactNode, useCallback } from "react";
 import Link from "next/link";
 import { useState, useEffect } from "react";
 type LayoutProps = {
@@ -23,15 +23,8 @@ const Layout: React.FC<LayoutProps> = ({
   const [isNewLineChecked, setIsNewLineChecked] = useState(false);
 
   //以下詳細設定のローカルストレージ管理
-  useEffect(() => {
-    loadFromLocalStorage();
-  }, [selectedListId]);
 
-  useEffect(() => {
-    saveToLocalStorage();
-  }, [isDeleteSpaceChecked, isNewLineChecked]);
-
-  const saveToLocalStorage = () => {
+  const saveCheckboxStatesToLocalStorage = useCallback(() => {
     if (!selectedListId) return;
     const currentData = localStorage.getItem("checkboxStates") || "{}";
     const parsedData = JSON.parse(currentData);
@@ -42,9 +35,9 @@ const Layout: React.FC<LayoutProps> = ({
     };
 
     localStorage.setItem("checkboxStates", JSON.stringify(parsedData));
-  };
+  }, [selectedListId, isDeleteSpaceChecked, isNewLineChecked]);
 
-  const loadFromLocalStorage = () => {
+  const loadCheckboxStatesFromLocalStorage = useCallback(() => {
     if (!selectedListId) return;
     const currentData = localStorage.getItem("checkboxStates") || "{}";
     const parsedData = JSON.parse(currentData);
@@ -55,7 +48,19 @@ const Layout: React.FC<LayoutProps> = ({
       );
       setIsNewLineChecked(parsedData[selectedListId].isNewLineChecked || false);
     }
-  };
+  }, [selectedListId]);
+
+  useEffect(() => {
+    loadCheckboxStatesFromLocalStorage();
+  }, [selectedListId, loadCheckboxStatesFromLocalStorage]);
+
+  useEffect(() => {
+    saveCheckboxStatesToLocalStorage();
+  }, [
+    isDeleteSpaceChecked,
+    isNewLineChecked,
+    saveCheckboxStatesToLocalStorage,
+  ]);
   //以上詳細設定のローカルストレージ管理
 
   //以下詳細設定の開閉を検知する

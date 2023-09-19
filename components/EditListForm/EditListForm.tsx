@@ -116,11 +116,6 @@ const EditListForm = ({
   const formatUserInput = (userInput: string): string[] => {
     const userInputList = userInput.split("\n");
 
-    // // 空白の削除
-    // const rib_space_from_listNames = userInputList.map((name) =>
-    //   name.replace(/[\s　]/g, "")
-    // );
-
     // 空文字列の削除
     const rib_null_from_userInputList = userInputList.filter(Boolean);
 

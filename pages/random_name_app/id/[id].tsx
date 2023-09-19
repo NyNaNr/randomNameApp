@@ -26,7 +26,7 @@ function Layout({ children }: LayoutProps) {
 }
 
 const RandomNameApp: React.FC = () => {
-  //ページ遷移について
+  //ページ遷移＆ユーザーオプションの反映
   const router = useRouter();
 
   useEffect(() => {

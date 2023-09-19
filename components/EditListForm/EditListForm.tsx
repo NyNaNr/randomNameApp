@@ -109,8 +109,8 @@ const EditListForm = ({
   //ユーザーの入力を整形して表示する。
   const formatUserInput = (userInput: string): string[] => {
     const userInputList = userInput.split("\n");
-    const rib_space_from_listNames = userInputList.map(
-      (name) => name.replace(/[\s　]/g, "") //"\n"
+    const rib_space_from_listNames = userInputList.map((name) =>
+      name.replace(/[\s　]/g, "")
     );
     const rib_null_from_userInputList =
       rib_space_from_listNames.filter(Boolean);

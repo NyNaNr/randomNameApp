@@ -23,7 +23,10 @@ const EditListForm = ({
   >([]);
   const [lineNumbersOfFormattedUserInput, setLineNumbersOfFormattedUserInput] =
     useState<number[]>([]);
+  //最低限の修正
   const [formattedInput, setFormattedInput] = useState<string[]>([]);
+  //ユーザーオプション反映
+  const [modifiedInput, setModifiedInput] = useState<string[]>([]);
   const [totalBytes, setTotalBytes] = useState(0);
   const [title, setTitle] = useState<string | null>("");
   const [cookieExpires, setCookieExpires] = useState(0);
@@ -133,6 +136,16 @@ const EditListForm = ({
   //ユーザーの入力を整形して表示する。（最低限）
 
   //詳細設定にてUserOptionを反映する
+  const applyUserOptions = useCallback(
+    (formattedInput: string[]): string[] => {
+      // isDeleteSpaceCheckedがtrueの場合、名前間のスペースを削除する
+      if (isDeleteSpaceChecked) {
+        return formattedInput.map((name) => name.replace(/[\s　]/g, ""));
+      }
+      return formattedInput;
+    },
+    [isDeleteSpaceChecked]
+  );
 
   //詳細設定にてUserOptionを反映する
 
@@ -212,6 +225,10 @@ const EditListForm = ({
     setTotalBytes(calculateBytes());
   }, [formattedInput, calculateBytes]);
 
+  useEffect(() => {
+    setModifiedInput(applyUserOptions(formattedInput));
+  }, [formattedInput, isDeleteSpaceChecked, applyUserOptions]); // こちらの依存配列を更新
+
   //selectedListIdが変わるにつれて、テキストエリアの末尾にカーソルを移動させる。スマホでは邪魔な機能かも？
   useEffect(() => {
     if (isMobile()) {
@@ -275,7 +292,7 @@ const EditListForm = ({
                     ))}
                   </div>
                   <div className="formatted-list overflow-hidden w-full">
-                    {formattedInput.map((item, index) => (
+                    {modifiedInput.map((item, index) => (
                       <p
                         className="text-ellipsis whitespace-nowrap overflow-hidden w-full"
                         key={index}

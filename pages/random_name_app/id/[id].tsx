@@ -28,14 +28,34 @@ function Layout({ children }: LayoutProps) {
 const RandomNameApp: React.FC = () => {
   //ページ遷移について
   const router = useRouter();
+
   useEffect(() => {
     if (router.isReady) {
       const { id } = router.query;
+
       if (typeof id === "string") {
+        // ローカルストレージから checkboxStates の値を取得
+        const checkboxStates = localStorage.getItem("checkboxStates");
+        const parsedCheckboxStates = checkboxStates
+          ? JSON.parse(checkboxStates)
+          : {};
+
+        // 現在の id に関連する isDeleteSpaceChecked の値を取得
+        const isDeleteSpaceChecked =
+          parsedCheckboxStates[id] &&
+          parsedCheckboxStates[id].isDeleteSpaceChecked;
         const cookieValue = Cookies.get(id);
-        const decodedNames = cookieValue
+        let decodedNames = cookieValue
           ? JSON.parse(decodeURIComponent(cookieValue))
           : [];
+
+        // isDeleteSpaceChecked が true の場合、文字間のスペースを削除
+        if (isDeleteSpaceChecked) {
+          decodedNames = decodedNames.map((name: string) =>
+            name.replace(/[\s　]/g, "")
+          );
+        }
+
         setOriginalNames(decodedNames);
         setRemainingNames(decodedNames);
       }

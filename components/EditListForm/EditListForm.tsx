@@ -40,7 +40,7 @@ const EditListForm = ({
   // クッキーからリストアイテムを取得して初期値とする
   const initialListItems =
     selectedListId && Cookies.get(selectedListId)
-      ? JSON.parse(Cookies.get(selectedListId) || "").join("\n") //
+      ? JSON.parse(Cookies.get(selectedListId) || "[]").join("\n") //
       : "";
   const [inputText, setInputText] = useState(initialListItems); // ユーザー入力を管理するためのstate
 

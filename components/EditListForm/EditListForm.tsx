@@ -106,18 +106,17 @@ const EditListForm = ({
     setLineNumbersOfUserInput(lines);
   };
 
-  //ユーザーの入力を整形して表示する。
+  //ユーザーの入力を整形して表示する。（最低限）
   const formatUserInput = (userInput: string): string[] => {
     const userInputList = userInput.split("\n");
 
-    // 空白の削除
-    const rib_space_from_listNames = userInputList.map((name) =>
-      name.replace(/[\s　]/g, "")
-    );
+    // // 空白の削除
+    // const rib_space_from_listNames = userInputList.map((name) =>
+    //   name.replace(/[\s　]/g, "")
+    // );
 
     // 空文字列の削除
-    const rib_null_from_userInputList =
-      rib_space_from_listNames.filter(Boolean);
+    const rib_null_from_userInputList = userInputList.filter(Boolean);
 
     //重複要素の削除
     const uniqueNameList = rib_null_from_userInputList.filter(

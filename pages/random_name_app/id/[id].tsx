@@ -82,8 +82,7 @@ const RandomNameApp: React.FC = () => {
     setIsAlphabetOrNumber(result);
   };
 
-  // 1.リストの中身が英単語のみかどうか判定
-
+  // 1.リストの中身が英単語のみかどうか判定して、フォントサイズ確定
   const calcFontSize = useCallback(
     (name: string) => {
       if (!name) return; // nameがundefinedの場合、関数を早期に終了する。

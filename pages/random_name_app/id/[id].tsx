@@ -71,27 +71,6 @@ const RandomNameApp: React.FC = () => {
     setMobileDevice(mobile !== undefined ? mobile : false);
   }, []);
 
-  // 旧、最長文字数に合わせたフォントサイズ計算
-  // const calcFontSize = (list: string[]) => {
-  //   const longestName = list.reduce(
-  //     (longest, name) => (name.length > longest.length ? name : longest),
-  //     ""
-  //   );
-  //   fontSize.current = Math.floor(
-  //     (window.innerWidth * 0.95) / longestName.length
-  //   );
-  //   if (!nameDisplay.current) return;
-  //   nameDisplay.current.style.fontSize = `${fontSize.current}px`;
-  //   nameDisplay.current.style.opacity = `${1}`;
-  //   if (startNotifier.current) {
-  //     startNotifier.current.style.fontSize = `${fontSize.current * 0.2}px`;
-  //   }
-
-  //   if (stopNotifier.current) {
-  //     stopNotifier.current.style.fontSize = `${fontSize.current * 0.2}px`;
-  //   }
-  // };
-
   // 1.リストの中身が英単語のみかどうか判定
   const isAlphabetNumber = (names: string[]) => {
     if (!names || names.length === 0) return; // リストがundefinedまたは空の場合、関数をfalseで終了する。
@@ -121,14 +100,6 @@ const RandomNameApp: React.FC = () => {
       if (!nameDisplay.current) return;
       nameDisplay.current.style.fontSize = `${fontSize.current}px`;
       nameDisplay.current.style.opacity = "1";
-      //旧フォントサイズで使用
-      //   if (startNotifier.current) {
-      //     startNotifier.current.style.fontSize = `${fontSize.current * 0.2}px`;
-      //   }
-
-      //   if (stopNotifier.current) {
-      //     stopNotifier.current.style.fontSize = `${fontSize.current * 0.2}px`;
-      //   }
     },
     [isAlphabetOrNumber]
   );
@@ -177,12 +148,7 @@ const RandomNameApp: React.FC = () => {
     if (!nameDisplay.current) return;
     const randomName =
       remainingNames[Math.floor(Math.random() * remainingNames.length)];
-    console.log("-1", randomName);
     nameDisplay.current.textContent = randomName;
-    console.log("0", nameDisplay.current.textContent);
-    // 旧フォントサイズ計算
-    // calcFontSize(remainingNames);
-
     calcFontSize(randomName); //　新フォントサイズ計算
     calcShortestFontSize(remainingNames); //新フォントサイズ計算
     isAlphabetNumber(remainingNames); //英単語チェック

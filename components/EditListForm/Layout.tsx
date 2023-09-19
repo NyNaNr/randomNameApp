@@ -8,6 +8,10 @@ type LayoutProps = {
   lineNumber: number;
   isOpen: boolean;
   toggleOpen: () => void;
+  isDeleteSpaceChecked: boolean;
+  setIsDeleteSpaceChecked: React.Dispatch<React.SetStateAction<boolean>>;
+  isNewLineChecked: boolean;
+  setIsNewLineChecked: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 const Layout: React.FC<LayoutProps> = ({
@@ -17,11 +21,11 @@ const Layout: React.FC<LayoutProps> = ({
   lineNumber,
   isOpen,
   toggleOpen,
+  isDeleteSpaceChecked,
+  setIsDeleteSpaceChecked,
+  isNewLineChecked,
+  setIsNewLineChecked,
 }) => {
-  //以下詳細設定のチェックボックスの状態管理
-  const [isDeleteSpaceChecked, setIsDeleteSpaceChecked] = useState(true);
-  const [isNewLineChecked, setIsNewLineChecked] = useState(false);
-
   //以下詳細設定のローカルストレージ管理
 
   const saveCheckboxStatesToLocalStorage = useCallback(() => {

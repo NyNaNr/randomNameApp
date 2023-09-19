@@ -31,6 +31,9 @@ const EditListForm = ({
   const [is640Over, setIs640Over] = useState<boolean>(
     typeof window !== "undefined" ? window.innerWidth > 639 : false
   );
+  //以下詳細設定のチェックボックスの状態管理
+  const [isDeleteSpaceChecked, setIsDeleteSpaceChecked] = useState(true);
+  const [isNewLineChecked, setIsNewLineChecked] = useState(false);
 
   //リストの名前が変更されたとき表示を上書きする
   useEffect(() => {
@@ -127,6 +130,11 @@ const EditListForm = ({
     const formattedUserInput = uniqueNameList;
     return formattedUserInput;
   };
+  //ユーザーの入力を整形して表示する。（最低限）
+
+  //詳細設定にてUserOptionを反映する
+
+  //詳細設定にてUserOptionを反映する
 
   //ユーザー入力整形後画面の行番号生成
   const getLineNumberOfFormattedUserInput = (formattedUserInput: string[]) => {
@@ -227,6 +235,10 @@ const EditListForm = ({
         lineNumber={lineNumber}
         isOpen={isOpen}
         toggleOpen={toggleOpen}
+        isDeleteSpaceChecked={isDeleteSpaceChecked}
+        setIsDeleteSpaceChecked={setIsDeleteSpaceChecked}
+        isNewLineChecked={isNewLineChecked}
+        setIsNewLineChecked={setIsNewLineChecked}
       >
         {selectedListId ? (
           <div className="">

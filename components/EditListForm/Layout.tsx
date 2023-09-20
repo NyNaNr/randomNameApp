@@ -52,7 +52,7 @@ const Layout: React.FC<LayoutProps> = ({
       );
       setIsNewLineChecked(parsedData[selectedListId].isNewLineChecked || false);
     }
-  }, [selectedListId]);
+  }, [selectedListId, setIsDeleteSpaceChecked, setIsNewLineChecked]);
 
   useEffect(() => {
     loadCheckboxStatesFromLocalStorage();

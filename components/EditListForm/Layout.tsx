@@ -26,7 +26,7 @@ const Layout: React.FC<LayoutProps> = ({
   isNewLineChecked,
   setIsNewLineChecked,
 }) => {
-  //以下詳細設定のローカルストレージ管理
+  //1.以下詳細設定のローカルストレージ管理
 
   const saveCheckboxStatesToLocalStorage = useCallback(() => {
     if (!selectedListId) return;
@@ -54,6 +54,13 @@ const Layout: React.FC<LayoutProps> = ({
     }
   }, [selectedListId, setIsDeleteSpaceChecked, setIsNewLineChecked]);
 
+  // isDeleteSpaceCheckedがtrueになったらisNewLineCheckedをfalseにする
+  useEffect(() => {
+    if (isDeleteSpaceChecked) {
+      setIsNewLineChecked(false);
+    }
+  }, [isDeleteSpaceChecked]);
+
   useEffect(() => {
     loadCheckboxStatesFromLocalStorage();
   }, [selectedListId, loadCheckboxStatesFromLocalStorage]);
@@ -65,7 +72,7 @@ const Layout: React.FC<LayoutProps> = ({
     isNewLineChecked,
     saveCheckboxStatesToLocalStorage,
   ]);
-  //以上詳細設定のローカルストレージ管理
+  //1.以上詳細設定のローカルストレージ管理
 
   //以下詳細設定の開閉を検知する
   const [isDetailsOpen, setIsDetailsOpen] = useState(false);

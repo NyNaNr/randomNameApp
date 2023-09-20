@@ -140,7 +140,7 @@ const EditListForm = ({
       // isNewLineCheckedがtrueの場合、名前間のスペースを改行に置き換える
       else if (isNewLineChecked) {
         return formattedInput.map((name) =>
-          name.replace(/(?<=\S) +(?=\S)/g, "\n")
+          name.replace(/(?<=\S)([ ]{1,}|\u3000{1,})(?=\S)/g, "\n")
         );
       }
       return formattedInput;

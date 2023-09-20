@@ -130,19 +130,25 @@ const EditListForm = ({
   };
   //ユーザーの入力を整形して表示する。（最低限）
 
-  //詳細設定にてUserOptionを反映する
+  //1.詳細設定にてUserOptionを反映する
   const applyUserOptions = useCallback(
     (formattedInput: string[]): string[] => {
       // isDeleteSpaceCheckedがtrueの場合、名前間のスペースを削除する
       if (isDeleteSpaceChecked) {
         return formattedInput.map((name) => name.replace(/[\s　]/g, ""));
       }
+      // isNewLineCheckedがtrueの場合、名前間のスペースを改行に置き換える
+      else if (isNewLineChecked) {
+        return formattedInput.map((name) =>
+          name.replace(/(?<=\S) +(?=\S)/g, "\n")
+        );
+      }
       return formattedInput;
     },
-    [isDeleteSpaceChecked]
+    [isDeleteSpaceChecked, isNewLineChecked]
   );
 
-  //詳細設定にてUserOptionを反映する
+  //1.詳細設定にてUserOptionを反映する
 
   //ユーザー入力整形後画面の行番号生成
   const getLineNumberOfFormattedUserInput = (formattedUserInput: string[]) => {
@@ -289,7 +295,11 @@ const EditListForm = ({
                   <div className="formatted-list overflow-hidden w-full">
                     {modifiedInput.map((item, index) => (
                       <p
-                        className="text-ellipsis whitespace-nowrap overflow-hidden w-full"
+                        className={`${
+                          isNewLineChecked
+                            ? "whitespace-pre-wrap"
+                            : "text-ellipsis"
+                        } whitespace-nowrap overflow-hidden w-full`}
                         key={index}
                       >
                         {item}

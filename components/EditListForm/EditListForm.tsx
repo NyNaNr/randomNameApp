@@ -22,7 +22,7 @@ const EditListForm = ({
     number[]
   >([]);
   const [lineNumbersOfFormattedUserInput, setLineNumbersOfFormattedUserInput] =
-    useState<number[]>([]);
+    useState<(string | number)[]>([]);
   //最低限の修正
   const [formattedInput, setFormattedInput] = useState<string[]>([]);
   //ユーザーオプション反映
@@ -152,11 +152,24 @@ const EditListForm = ({
 
   //ユーザー入力整形後画面の行番号生成
   const getLineNumberOfFormattedUserInput = (formattedUserInput: string[]) => {
-    const lineNumber = formattedUserInput.length;
-    const lines = [];
-    for (let i = 1; i <= lineNumber; i++) {
-      lines.push(i);
-    }
+    let currentLineNumber = 1;
+    const lines: (number | string)[] = [];
+
+    formattedUserInput.forEach((name) => {
+      // 各入力要素の中での改行数をカウント
+      const newLinesInName = (name.match(/\n/g) || []).length;
+
+      // 最初の行に行番号を追加
+      lines.push(currentLineNumber);
+
+      // 残りの行に何も割り当てない（または" "を割り当てる）
+      for (let i = 1; i <= newLinesInName; i++) {
+        lines.push(" ");
+      }
+
+      currentLineNumber += 1;
+    });
+
     return lines;
   };
 
@@ -214,9 +227,9 @@ const EditListForm = ({
 
   useEffect(() => {
     setLineNumbersOfFormattedUserInput(
-      getLineNumberOfFormattedUserInput(formattedInput)
+      getLineNumberOfFormattedUserInput(modifiedInput)
     );
-  }, [formattedInput]);
+  }, [modifiedInput]);
 
   useEffect(() => {
     handleInputConfirm();
@@ -289,7 +302,7 @@ const EditListForm = ({
                 <div className="flex">
                   <div className="line-number mr-4 text-right">
                     {lineNumbersOfFormattedUserInput.map((num, index) => (
-                      <p key={index}>{num}</p>
+                      <p key={index}>{num === " " ? <>&nbsp;</> : num}</p>
                     ))}
                   </div>
                   <div className="formatted-list overflow-hidden w-full">

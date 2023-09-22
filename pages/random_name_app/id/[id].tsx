@@ -175,11 +175,18 @@ const RandomNameApp: React.FC = () => {
     const randomName =
       remainingNames[Math.floor(Math.random() * remainingNames.length)];
 
-    nameDisplay.current.textContent = randomName;
-    calcFontSize(randomName); //　新フォントサイズ計算
-    calcShortestFontSize(remainingNames); //新フォントサイズ計算
-    isAlphabetNumber(remainingNames); //英単語チェック
-  }, [remainingNames, calcShortestFontSize, calcFontSize]);
+    // isNewLineChecked が true の場合、スペースを <br> に置き換える
+    if (isNewLineChecked) {
+      const formattedName = randomName.replace(/[\s　]/g, "<br>");
+      nameDisplay.current.innerHTML = formattedName; // 改行を表示するためにinnerHTMLを使用
+    } else {
+      nameDisplay.current.textContent = randomName;
+    }
+
+    calcFontSize(randomName);
+    calcShortestFontSize(remainingNames);
+    isAlphabetNumber(remainingNames);
+  }, [remainingNames, calcShortestFontSize, calcFontSize, isNewLineChecked]);
 
   const clickResetButton = () => {
     const message = "はじめからにしますか？";

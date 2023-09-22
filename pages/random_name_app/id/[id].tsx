@@ -177,7 +177,10 @@ const RandomNameApp: React.FC = () => {
 
     // isNewLineChecked が true の場合、スペースを <br> に置き換える
     if (isNewLineChecked) {
-      const formattedName = randomName.replace(/[\s　]/g, "<br>");
+      const formattedName = randomName.replace(
+        /(?<=\S)([ ]{1,}|\u3000{1,})(?=\S)/g,
+        "<br>"
+      );
       nameDisplay.current.innerHTML = formattedName; // 改行を表示するためにinnerHTMLを使用
     } else {
       nameDisplay.current.textContent = randomName;

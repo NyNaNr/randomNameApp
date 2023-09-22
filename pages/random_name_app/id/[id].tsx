@@ -242,6 +242,8 @@ const RandomNameApp: React.FC = () => {
     }
     setIsShowingName(false);
   };
+
+  //名前の削除
   const moveLastName = useCallback(() => {
     if (!nameDisplay.current) return;
     console.log("1", nameDisplay.current.textContent);

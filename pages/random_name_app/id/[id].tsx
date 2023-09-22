@@ -80,6 +80,7 @@ const RandomNameApp: React.FC = () => {
   const resetButtonRef = React.useRef<HTMLButtonElement | null>(null);
 
   const nameDisplay = useRef<HTMLDivElement>(null);
+  const nameDisplayForNewLine = useRef<HTMLDivElement>(null);
   const startNotifier = useRef<HTMLDivElement>(null);
   const stopNotifier = useRef<HTMLDivElement>(null);
   const shortestName = useRef<HTMLDivElement>(null);

@@ -56,6 +56,13 @@ const RandomNameApp: React.FC = () => {
           );
         }
 
+        // 現在の id に関連する isNewLineChecked の値を取得
+        const isNewLineChecked =
+          parsedCheckboxStates[id] && parsedCheckboxStates[id].isNewLineChecked;
+        decodedNames = cookieValue
+          ? JSON.parse(decodeURIComponent(cookieValue))
+          : [];
+
         setOriginalNames(decodedNames);
         setRemainingNames(decodedNames);
       }

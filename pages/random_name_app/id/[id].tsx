@@ -56,19 +56,6 @@ const RandomNameApp: React.FC = () => {
           );
         }
 
-        // 現在の id に関連する isNewLineChecked の値を取得
-        const isNewLineChecked =
-          parsedCheckboxStates[id] && parsedCheckboxStates[id].isNewLineChecked;
-        decodedNames = cookieValue
-          ? JSON.parse(decodeURIComponent(cookieValue))
-          : [];
-        // isNewLineChecked が true の場合、文字間のスペースを改行に置き換える。
-        if (isNewLineChecked) {
-          decodedNames = decodedNames.map((name: string) =>
-            name.replace(/(?<=\S)([ ]{1,}|\u3000{1,})(?=\S)/g, "\n")
-          );
-        }
-
         setOriginalNames(decodedNames);
         setRemainingNames(decodedNames);
       }
@@ -180,6 +167,7 @@ const RandomNameApp: React.FC = () => {
     if (!nameDisplay.current) return;
     const randomName =
       remainingNames[Math.floor(Math.random() * remainingNames.length)];
+
     nameDisplay.current.textContent = randomName;
     calcFontSize(randomName); //　新フォントサイズ計算
     calcShortestFontSize(remainingNames); //新フォントサイズ計算

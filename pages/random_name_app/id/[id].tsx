@@ -34,6 +34,11 @@ const RandomNameApp: React.FC = () => {
       const { id } = router.query;
 
       if (typeof id === "string") {
+        // idに関連した値（名簿）を取得＆デコード
+        const cookieValue = Cookies.get(id);
+        let decodedNames = cookieValue
+          ? JSON.parse(decodeURIComponent(cookieValue))
+          : [];
         // ローカルストレージから checkboxStates の値を取得
         const checkboxStates = localStorage.getItem("checkboxStates");
         const parsedCheckboxStates = checkboxStates
@@ -44,10 +49,6 @@ const RandomNameApp: React.FC = () => {
         const isDeleteSpaceChecked =
           parsedCheckboxStates[id] &&
           parsedCheckboxStates[id].isDeleteSpaceChecked;
-        const cookieValue = Cookies.get(id);
-        let decodedNames = cookieValue
-          ? JSON.parse(decodeURIComponent(cookieValue))
-          : [];
 
         // isDeleteSpaceChecked が true の場合、文字間のスペースを削除
         if (isDeleteSpaceChecked) {
@@ -80,7 +81,7 @@ const RandomNameApp: React.FC = () => {
   const resetButtonRef = React.useRef<HTMLButtonElement | null>(null);
 
   const nameDisplay = useRef<HTMLDivElement>(null);
-  const nameDisplayForNewLine = useRef<HTMLDivElement>(null);
+
   const startNotifier = useRef<HTMLDivElement>(null);
   const stopNotifier = useRef<HTMLDivElement>(null);
   const shortestName = useRef<HTMLDivElement>(null);
@@ -173,6 +174,7 @@ const RandomNameApp: React.FC = () => {
 
   const showRandomName = useCallback(() => {
     if (!nameDisplay.current) return;
+
     const randomName =
       remainingNames[Math.floor(Math.random() * remainingNames.length)];
 

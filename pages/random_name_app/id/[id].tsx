@@ -28,6 +28,9 @@ function Layout({ children }: LayoutProps) {
 const RandomNameApp: React.FC = () => {
   //ページ遷移＆ユーザーオプションの反映
   const router = useRouter();
+  const [namesWithIds, setNamesWithIds] = useState<
+    { id: number; name: string }[]
+  >([]);
 
   useEffect(() => {
     if (router.isReady) {
@@ -39,6 +42,16 @@ const RandomNameApp: React.FC = () => {
         let decodedNames = cookieValue
           ? JSON.parse(decodeURIComponent(cookieValue))
           : [];
+
+        // 取得した名簿に番号を紐づけて、useStateで管理→改行機能追加による、抽選候補リストから消せない問題解消のため
+        const namesWithIds = decodedNames.map(
+          (name: string, index: number) => ({
+            id: index + 1,
+            name,
+          })
+        );
+        setNamesWithIds(namesWithIds);
+
         // ローカルストレージから checkboxStates の値を取得
         const checkboxStates = localStorage.getItem("checkboxStates");
         const parsedCheckboxStates = checkboxStates
@@ -53,7 +66,7 @@ const RandomNameApp: React.FC = () => {
         // isDeleteSpaceChecked が true の場合、文字間のスペースを削除
         if (isDeleteSpaceChecked) {
           decodedNames = decodedNames.map((name: string) =>
-            name.replace(/[\s　]/g, "")
+            name.replace(/[\s\n　]/g, "")
           );
         }
 
@@ -249,10 +262,37 @@ const RandomNameApp: React.FC = () => {
   //名前の削除
   const moveLastName = useCallback(() => {
     if (!nameDisplay.current) return;
-    console.log("1", nameDisplay.current.textContent);
-    const lastName = nameDisplay.current.textContent;
-    console.log("2", lastName);
-    setLastName(lastName);
+    // 改行が入ったら抽選候補リストから削除されないバグに対応。削除する際に加工前のキーワードを使って削除していたから。
+    // const lastName = nameDisplay.current.textContent;
+
+    // 検索する名前から改行や空白を削除
+    const nameToSearch = nameDisplay.current.textContent;
+    if (!nameToSearch) return;
+    const cleanedNameToSearch = nameToSearch.replace(/[\s\n　]/g, "");
+    console.log(`cleanedNameToSearch ${cleanedNameToSearch}`);
+
+    // namesWithIdsリストから名前を検索
+    const found = namesWithIds.find(({ name }) => {
+      const cleanedName = name.replace(/[\s\n　]/g, "");
+
+      return cleanedName === cleanedNameToSearch;
+    });
+    console.log(`found ${found}`);
+    //取得した番号を元にnamesWithIdsから名前と番号を取得
+    if (found) {
+      const { name: lastName, id } = found; // foundから名前と番号を取得
+      //id をもとにnamesWithIdsのワードを抽出
+      const target = namesWithIds.find(({ id: currentId }) => currentId === id);
+      if (target) {
+        const { name: extractedName } = target;
+        console.log("Extracted Name:", extractedName);
+        setLastName(extractedName);
+      }
+
+      console.log("Found ID:", id); // 出力したい番号をconsole.logする。
+    } else {
+      console.error("Name not found");
+    }
 
     if (isMobile()) {
       lastName && setModalsOpen1(true);
@@ -266,7 +306,7 @@ const RandomNameApp: React.FC = () => {
       }
       setIsTiming(true);
     }
-  }, [remainingNames, selectedNameList]);
+  }, [remainingNames, selectedNameList, namesWithIds, lastName]);
 
   const stopNameDisplay = useCallback(() => {
     if (isShowingName) {

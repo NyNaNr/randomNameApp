@@ -263,45 +263,10 @@ const RandomNameApp: React.FC = () => {
   const moveLastName = useCallback(() => {
     if (!nameDisplay.current) return;
 
-    // 改行が入ったら抽選候補リストから削除されないバグに対応。削除する際に加工前のキーワードを使って削除していたから。
-    if (isNewLineChecked) {
-      // 検索する名前から改行や空白を削除
-      const nameToSearch = nameDisplay.current.textContent;
-      if (!nameToSearch) return;
-      const cleanedNameToSearch = nameToSearch.replace(/[\s\n　]/g, "");
-      console.log(`cleanedNameToSearch ${cleanedNameToSearch}`);
-
-      // namesWithIdsリストから名前を検索
-      const found = namesWithIds.find(({ name }) => {
-        const cleanedName = name.replace(/[\s\n　]/g, "");
-
-        return cleanedName === cleanedNameToSearch;
-      });
-      console.log(`found ${found}`);
-      //取得した番号を元にnamesWithIdsから名前と番号を取得
-      if (found) {
-        const { name: lastName, id } = found; // foundから名前と番号を取得
-        //id をもとにnamesWithIdsのワードを抽出
-        const target = namesWithIds.find(
-          ({ id: currentId }) => currentId === id
-        );
-        if (target) {
-          const { name: extractedName } = target;
-          console.log("Extracted Name:", extractedName);
-          setLastName(extractedName);
-        }
-
-        console.log("Found ID:", id); // 出力したい番号をconsole.logする。
-      } else {
-        console.error("Name not found");
-      }
-    } else {
-      const lastName = nameDisplay.current.textContent;
-
-      setLastName(lastName);
-    }
-
-    // const lastName = nameDisplay.current.textContent;
+    console.log("1", nameDisplay.current.textContent);
+    const lastName = nameDisplay.current.textContent;
+    console.log("2", lastName);
+    setLastName(lastName);
 
     if (isMobile()) {
       lastName && setModalsOpen1(true);
@@ -315,13 +280,7 @@ const RandomNameApp: React.FC = () => {
       }
       setIsTiming(true);
     }
-  }, [
-    remainingNames,
-    selectedNameList,
-    namesWithIds,
-    lastName,
-    isNewLineChecked,
-  ]);
+  }, [remainingNames, selectedNameList]);
 
   const stopNameDisplay = useCallback(() => {
     if (isShowingName) {
@@ -331,7 +290,7 @@ const RandomNameApp: React.FC = () => {
       setIsShowingName(false);
       setIsTiming(false);
     }
-    setTimeout(moveLastName, 100);
+    setTimeout(moveLastName, 100); //削除される名前と削除されるべき名前を一致させるために処理を0.1秒遅らせる。
   }, [isShowingName, moveLastName]);
 
   const forModalsDeleteLastName = () => {

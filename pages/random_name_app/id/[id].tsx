@@ -263,10 +263,44 @@ const RandomNameApp: React.FC = () => {
   const moveLastName = useCallback(() => {
     if (!nameDisplay.current) return;
 
-    console.log("1", nameDisplay.current.textContent);
-    const lastName = nameDisplay.current.textContent;
-    console.log("2", lastName);
-    setLastName(lastName);
+    // console.log("1", nameDisplay.current.textContent);
+    // const lastName = nameDisplay.current.textContent;
+    // console.log("2", lastName);
+    // setLastName(lastName);
+
+    // 改行が入ったら抽選候補リストから削除されないバグに対応。削除する際に加工前のキーワードを使って削除していたから。
+    // const lastName = nameDisplay.current.textContent;
+    if (isNewLineChecked) {
+      // 検索する名前から改行や空白を削除
+      const nameToSearch = nameDisplay.current.textContent;
+      if (!nameToSearch) return;
+      const cleanedNameToSearch = nameToSearch.replace(/[\s\n　]/g, "");
+      console.log(`cleanedNameToSearch ${cleanedNameToSearch}`);
+
+      // namesWithIdsリストから名前を検索
+      console.log(namesWithIds);
+      const found = namesWithIds.find(({ name }) => {
+        const cleanedName = name.replace(/[\s\n　]/g, "");
+
+        return cleanedName === cleanedNameToSearch;
+      });
+      console.log(`found ${found.id}`);
+      //取得した番号を元にnamesWithIdsから名前と番号を取得
+      if (found) {
+        const { name: extractedName, id } = found; // foundから名前と番号を取得
+        console.log("Extracted Name:", extractedName);
+        setLastName(extractedName);
+        console.log("Found ID:", id);
+      } else {
+        console.error("Name not found");
+      }
+    }
+
+    if (!isNewLineChecked) {
+      const lastName = nameDisplay.current.textContent;
+
+      setLastName(lastName);
+    }
 
     if (isMobile()) {
       lastName && setModalsOpen1(true);
@@ -280,7 +314,13 @@ const RandomNameApp: React.FC = () => {
       }
       setIsTiming(true);
     }
-  }, [remainingNames, selectedNameList]);
+  }, [
+    remainingNames,
+    selectedNameList,
+    isNewLineChecked,
+    namesWithIds,
+    lastName,
+  ]);
 
   const stopNameDisplay = useCallback(() => {
     if (isShowingName) {

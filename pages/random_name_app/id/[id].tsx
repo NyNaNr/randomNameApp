@@ -427,7 +427,7 @@ const RandomNameApp: React.FC = () => {
           ref={shortestName}
         ></div>
         <div
-          className={`nameDisplay items-center whitespace-nowrap mt-auto text-center z-20  absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2`}
+          className={`nameDisplay items-center whitespace-nowrap mt-auto text-center z-20  absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 leading-tight`}
           ref={nameDisplay}
         ></div>
         <div

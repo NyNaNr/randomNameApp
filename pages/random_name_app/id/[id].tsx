@@ -46,7 +46,7 @@ const RandomNameApp: React.FC = () => {
         // 取得した名簿に番号を紐づけて、useStateで管理→改行機能追加による、抽選候補リストから消せない問題解消のため
         const namesWithIds = decodedNames.map(
           (name: string, index: number) => ({
-            id: index + 1,
+            id: index,
             name,
           })
         );
@@ -155,7 +155,6 @@ const RandomNameApp: React.FC = () => {
         (shortest, name) => (name.length < shortest.length ? name : shortest),
         list[0]
       );
-      console.log(`shortestName:${ShortestName}`);
 
       const maxAllowedFontSize = window.innerHeight * 0.95; // ディスプレイの高さの90%を上限とする
       //英単語の場合は、0.65=>0.87に変更
@@ -259,48 +258,14 @@ const RandomNameApp: React.FC = () => {
     setIsShowingName(false);
   };
 
-  //名前の削除
+  //名前の削除 isNewLine Falseの時
   const moveLastName = useCallback(() => {
     if (!nameDisplay.current) return;
 
-    // console.log("1", nameDisplay.current.textContent);
-    // const lastName = nameDisplay.current.textContent;
-    // console.log("2", lastName);
-    // setLastName(lastName);
-
-    // 改行が入ったら抽選候補リストから削除されないバグに対応。削除する際に加工前のキーワードを使って削除していたから。
-    // const lastName = nameDisplay.current.textContent;
-    if (isNewLineChecked) {
-      // 検索する名前から改行や空白を削除
-      const nameToSearch = nameDisplay.current.textContent;
-      if (!nameToSearch) return;
-      const cleanedNameToSearch = nameToSearch.replace(/[\s\n　]/g, "");
-      console.log(`cleanedNameToSearch ${cleanedNameToSearch}`);
-
-      // namesWithIdsリストから名前を検索
-      console.log(namesWithIds);
-      const found = namesWithIds.find(({ name }) => {
-        const cleanedName = name.replace(/[\s\n　]/g, "");
-
-        return cleanedName === cleanedNameToSearch;
-      });
-      console.log(`found ${found.id}`);
-      //取得した番号を元にnamesWithIdsから名前と番号を取得
-      if (found) {
-        const { name: extractedName, id } = found; // foundから名前と番号を取得
-        console.log("Extracted Name:", extractedName);
-        setLastName(extractedName);
-        console.log("Found ID:", id);
-      } else {
-        console.error("Name not found");
-      }
-    }
-
-    if (!isNewLineChecked) {
-      const lastName = nameDisplay.current.textContent;
-
-      setLastName(lastName);
-    }
+    console.log("1", nameDisplay.current.textContent);
+    const lastName = nameDisplay.current.textContent;
+    console.log("2", lastName);
+    setLastName(lastName);
 
     if (isMobile()) {
       lastName && setModalsOpen1(true);
@@ -314,13 +279,52 @@ const RandomNameApp: React.FC = () => {
       }
       setIsTiming(true);
     }
-  }, [
-    remainingNames,
-    selectedNameList,
-    isNewLineChecked,
-    namesWithIds,
-    lastName,
-  ]);
+  }, [remainingNames, selectedNameList]);
+
+  //isNewLineChecked がtrueの場合
+  const moveLastName_newLine = useCallback(() => {
+    if (!nameDisplay.current) return;
+    let sharedVariable: string | undefined;
+
+    // 検索する名前から改行や空白を削除
+    const nameToSearch = nameDisplay.current.textContent;
+    if (!nameToSearch) return;
+    const cleanedNameToSearch = nameToSearch.replace(/[\s\n　]/g, "");
+    console.log(`cleanedNameToSearch ${cleanedNameToSearch}`);
+
+    // namesWithIdsリストから名前を検索
+    console.log(namesWithIds);
+    const found = namesWithIds.find(({ name }) => {
+      const cleanedName = name.replace(/[\s\n　]/g, "");
+
+      return cleanedName === cleanedNameToSearch;
+    });
+    console.log(`found ${found?.id}`);
+    console.log(`found ${found?.name}`);
+    //取得した番号を元にnamesWithIdsから名前と番号を取得
+    if (found) {
+      const { name: extractedName, id } = found; // foundから名前と番号を取得
+      console.log("Extracted Name:", extractedName);
+
+      sharedVariable = extractedName;
+      console.log("Found ID:", id);
+    }
+
+    if (isMobile()) {
+      sharedVariable && setModalsOpen1(true);
+    } else {
+      const shouldRemove = confirm(
+        `${sharedVariable}を抽選済みリストに移動しますか？`
+      );
+      if (shouldRemove && sharedVariable) {
+        setSelectedNameList([...selectedNameList, sharedVariable]);
+        setRemainingNames(
+          remainingNames.filter((name) => name !== sharedVariable)
+        );
+      }
+      setIsTiming(true);
+    }
+  }, [remainingNames, selectedNameList, namesWithIds]);
 
   const stopNameDisplay = useCallback(() => {
     if (isShowingName) {
@@ -330,8 +334,15 @@ const RandomNameApp: React.FC = () => {
       setIsShowingName(false);
       setIsTiming(false);
     }
-    setTimeout(moveLastName, 100); //削除される名前と削除されるべき名前を一致させるために処理を0.1秒遅らせる。
-  }, [isShowingName, moveLastName]);
+
+    if (isNewLineChecked) {
+      setTimeout(moveLastName_newLine, 100);
+    }
+
+    if (!isNewLineChecked) {
+      setTimeout(moveLastName, 100);
+    } //削除される名前と削除されるべき名前を一致させるために処理を0.1秒遅らせる。
+  }, [isShowingName, isNewLineChecked, moveLastName, moveLastName_newLine]);
 
   const forModalsDeleteLastName = () => {
     if (lastName) {

@@ -209,7 +209,12 @@ const Layout: React.FC<LayoutProps> = ({
                     onChange={() => setIsNewLineChecked(!isNewLineChecked)}
                     disabled={isDeleteSpaceChecked}
                   />
-                  <label htmlFor="deleteSpace">する。</label>
+                  <label
+                    htmlFor="deleteSpace"
+                    className={`${isDeleteSpaceChecked ? "text-gray-400" : ""}`}
+                  >
+                    する。
+                  </label>
                 </div>
               </fieldset>
             </details>

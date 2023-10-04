@@ -25,26 +25,6 @@
   margin: 0.5em 1em;
 }
 
-.display {
-  /*nameDisplayが現れる前の下地*/
-  position: relative;
-  border: 1px solid #a5a5a5;
-  border-radius: 10px;
-  margin: 1em;
-}
-
-.nameDisplay {
-  align-items: center;
-
-  white-space: nowrap;
-  margin-top: auto;
-  text-align: center;
-  z-index: 1;
-  transition: all 1s ease-out;
-
-  /* margin-bottom: 2em;  下に謎の空白を作る */
-}
-
 .startNotifier {
   animation: flash 1.5s linear infinite;
   position: absolute;
@@ -52,7 +32,7 @@
   left: 50%;
   transform: translate(-50%, -50%);
   white-space: nowrap;
-  z-index: 2;
+  z-index: 20;
   color: rgb(42, 95, 141);
   background-color: ivory;
   border-radius: 0.5rem;
@@ -66,7 +46,7 @@
   left: 50%;
   transform: translate(-50%, -50%);
   white-space: nowrap;
-  z-index: 2;
+  z-index: 20;
   color: rgb(42, 95, 141);
   background-color: ivory;
   border-radius: 0.5rem;

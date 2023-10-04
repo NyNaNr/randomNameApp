@@ -26,16 +26,55 @@ function Layout({ children }: LayoutProps) {
 }
 
 const RandomNameApp: React.FC = () => {
-  //ページ遷移について
+  //ページ遷移＆ユーザーオプションの反映
   const router = useRouter();
+  const [namesWithIds, setNamesWithIds] = useState<
+    { id: number; name: string }[]
+  >([]);
+
   useEffect(() => {
     if (router.isReady) {
       const { id } = router.query;
+
       if (typeof id === "string") {
+        // idに関連した値（名簿）を取得＆デコード
         const cookieValue = Cookies.get(id);
-        const decodedNames = cookieValue
+        let decodedNames = cookieValue
           ? JSON.parse(decodeURIComponent(cookieValue))
           : [];
+
+        // 取得した名簿に番号を紐づけて、useStateで管理→改行機能追加による、抽選候補リストから消せない問題解消のため
+        const namesWithIds = decodedNames.map(
+          (name: string, index: number) => ({
+            id: index,
+            name,
+          })
+        );
+        setNamesWithIds(namesWithIds);
+
+        // ローカルストレージから checkboxStates の値を取得
+        const checkboxStates = localStorage.getItem("checkboxStates");
+        const parsedCheckboxStates = checkboxStates
+          ? JSON.parse(checkboxStates)
+          : {};
+
+        // 現在の id に関連する isDeleteSpaceChecked の値を取得
+        const isDeleteSpaceChecked =
+          parsedCheckboxStates[id] &&
+          parsedCheckboxStates[id].isDeleteSpaceChecked;
+
+        // isDeleteSpaceChecked が true の場合、文字間のスペースを削除
+        if (isDeleteSpaceChecked) {
+          decodedNames = decodedNames.map((name: string) =>
+            name.replace(/[\s\n　]/g, "")
+          );
+        }
+
+        // 現在の id に関連する isNewLineChecked の値を取得
+        const isNewLineChecked =
+          parsedCheckboxStates[id] && parsedCheckboxStates[id].isNewLineChecked;
+        setIsNewLineChecked(isNewLineChecked);
+
         setOriginalNames(decodedNames);
         setRemainingNames(decodedNames);
       }
@@ -43,6 +82,9 @@ const RandomNameApp: React.FC = () => {
   }, [router.isReady, router.query]);
 
   const [isShowingName, setIsShowingName] = useState<boolean>(false);
+  const [isAlphabetOrNumber, setIsAlphabetOrNumber] = useState<boolean>(false);
+  const [isNewLineChecked, setIsNewLineChecked] = useState<boolean>(false);
+
   const intervalId = useRef<number | null>(null);
   const [originalNames, setOriginalNames] = useState<string[]>([]);
   const [remainingNames, setRemainingNames] = useState<string[]>([]);
@@ -52,8 +94,10 @@ const RandomNameApp: React.FC = () => {
   const resetButtonRef = React.useRef<HTMLButtonElement | null>(null);
 
   const nameDisplay = useRef<HTMLDivElement>(null);
+
   const startNotifier = useRef<HTMLDivElement>(null);
   const stopNotifier = useRef<HTMLDivElement>(null);
+  const shortestName = useRef<HTMLDivElement>(null);
   const [modalsOpen1, setModalsOpen1] = useState(false);
   const [modalsOpen2, setModalsOpen2] = useState(false);
   const [modalContent1, setModalContent1] = useState("");
@@ -69,35 +113,98 @@ const RandomNameApp: React.FC = () => {
     setMobileDevice(mobile !== undefined ? mobile : false);
   }, []);
 
-  const calcFontSize = (list: string[]) => {
-    const longestName = list.reduce(
-      (longest, name) => (name.length > longest.length ? name : longest),
-      ""
-    );
-    fontSize.current = Math.floor(
-      (window.innerWidth * 0.95) / longestName.length
-    );
-    if (!nameDisplay.current) return;
-    nameDisplay.current.style.fontSize = `${fontSize.current}px`;
-    nameDisplay.current.style.opacity = `${1}`;
-    if (startNotifier.current) {
-      startNotifier.current.style.fontSize = `${fontSize.current * 0.2}px`;
-    }
+  // 1.リストの中身が英単語のみかどうか判定
+  const isAlphabetNumber = (names: string[]) => {
+    if (!names || names.length === 0) return; // リストがundefinedまたは空の場合、関数をfalseで終了する。
 
-    if (stopNotifier.current) {
-      stopNotifier.current.style.fontSize = `${fontSize.current * 0.2}px`;
-    }
+    // アルファベット（大文字・小文字）や数字のみで構成されているか判定
+    const regex = /^[A-Za-z0-9]+$/;
+    // everyメソッドを使用して、すべての要素が条件を満たすかどうかをチェック
+    const result = names.every((name) => regex.test(name));
+    setIsAlphabetOrNumber(result);
   };
+
+  // 1.リストの中身が英単語のみかどうか判定して、フォントサイズ確定
+  const calcFontSize = useCallback(
+    (name: string) => {
+      if (!name) return; // nameがundefinedの場合、関数を早期に終了する。
+
+      //英単語の場合は、0.95=>1.5に変更
+      const scaleFactor = isAlphabetOrNumber ? 1.5 : 0.95;
+      const calculatedFontSize = Math.floor(
+        (window.innerWidth * scaleFactor) / name.length
+      );
+      const maxAllowedFontSize = window.innerHeight * 0.95; // ディスプレイの高さの90%を上限とする
+
+      fontSize.current = Math.min(calculatedFontSize, maxAllowedFontSize);
+
+      if (!nameDisplay.current) return;
+      nameDisplay.current.style.fontSize = `${fontSize.current}px`;
+      nameDisplay.current.style.opacity = "1";
+    },
+    [isAlphabetOrNumber]
+  );
+
+  //以下、新フォントサイズ計算のdisplayBehindNameDisplayの高さを計算する。
+  //1.最も短い文字数を取得
+  const calcShortestFontSize = useCallback(
+    (list: string[]) => {
+      if (list.length === 0) return; // リストが空の場合のエラーハンドリング
+
+      const ShortestName = list.reduce(
+        (shortest, name) => (name.length < shortest.length ? name : shortest),
+        list[0]
+      );
+
+      const maxAllowedFontSize = window.innerHeight * 0.95; // ディスプレイの高さの90%を上限とする
+      //英単語の場合は、0.65=>0.87に変更
+      const scaleFactor = isAlphabetOrNumber ? 0.87 : 0.65;
+      const calculatedFontSize = Math.floor(
+        (window.innerWidth * scaleFactor) / ShortestName.length
+      );
+
+      const notifierFontSize = window.innerWidth * 0.025;
+
+      fontSize.current = Math.min(calculatedFontSize, maxAllowedFontSize);
+
+      if (!shortestName.current) return;
+      shortestName.current.textContent = ShortestName;
+      shortestName.current.style.fontSize = `${fontSize.current}px`;
+      shortestName.current.style.opacity = `${0}`;
+
+      if (startNotifier.current) {
+        startNotifier.current.style.fontSize = `${notifierFontSize}px`;
+      }
+
+      if (stopNotifier.current) {
+        stopNotifier.current.style.fontSize = `${notifierFontSize}px`;
+      }
+    },
+    [isAlphabetOrNumber]
+  );
+  //以上、新フォントサイズ計算のdisplayBehindNameDisplayの高さを計算する。
 
   const showRandomName = useCallback(() => {
     if (!nameDisplay.current) return;
+
     const randomName =
       remainingNames[Math.floor(Math.random() * remainingNames.length)];
-    console.log("-1", randomName);
-    nameDisplay.current.textContent = randomName;
-    console.log("0", nameDisplay.current.textContent);
-    calcFontSize(remainingNames);
-  }, [remainingNames]);
+
+    // isNewLineChecked が true の場合、スペースを <br> に置き換える
+    if (isNewLineChecked) {
+      const formattedName = randomName.replace(
+        /(?<=\S)([ ]{1,}|\u3000{1,})(?=\S)/g,
+        "<br>"
+      );
+      nameDisplay.current.innerHTML = formattedName; // 改行を表示するためにinnerHTMLを使用
+    } else {
+      nameDisplay.current.textContent = randomName;
+    }
+
+    calcFontSize(randomName);
+    calcShortestFontSize(remainingNames);
+    isAlphabetNumber(remainingNames);
+  }, [remainingNames, calcShortestFontSize, calcFontSize, isNewLineChecked]);
 
   const clickResetButton = () => {
     const message = "はじめからにしますか？";
@@ -150,8 +257,11 @@ const RandomNameApp: React.FC = () => {
     }
     setIsShowingName(false);
   };
+
+  //名前の削除 isNewLine Falseの時
   const moveLastName = useCallback(() => {
     if (!nameDisplay.current) return;
+
     console.log("1", nameDisplay.current.textContent);
     const lastName = nameDisplay.current.textContent;
     console.log("2", lastName);
@@ -171,6 +281,51 @@ const RandomNameApp: React.FC = () => {
     }
   }, [remainingNames, selectedNameList]);
 
+  //isNewLineChecked がtrueの場合
+  const moveLastName_newLine = useCallback(() => {
+    if (!nameDisplay.current) return;
+    let sharedVariable: string | undefined;
+
+    // 検索する名前から改行や空白を削除
+    const nameToSearch = nameDisplay.current.textContent;
+    if (!nameToSearch) return;
+    const cleanedNameToSearch = nameToSearch.replace(/[\s\n　]/g, "");
+    console.log(`cleanedNameToSearch ${cleanedNameToSearch}`);
+
+    // namesWithIdsリストから名前を検索
+    console.log(namesWithIds);
+    const found = namesWithIds.find(({ name }) => {
+      const cleanedName = name.replace(/[\s\n　]/g, "");
+
+      return cleanedName === cleanedNameToSearch;
+    });
+    console.log(`found ${found?.id}`);
+    console.log(`found ${found?.name}`);
+    //取得した番号を元にnamesWithIdsから名前と番号を取得
+    if (found) {
+      const { name: extractedName, id } = found; // foundから名前と番号を取得
+      console.log("Extracted Name:", extractedName);
+
+      sharedVariable = extractedName;
+      console.log("Found ID:", id);
+    }
+
+    if (isMobile()) {
+      sharedVariable && setModalsOpen1(true);
+    } else {
+      const shouldRemove = confirm(
+        `${sharedVariable}を抽選済みリストに移動しますか？`
+      );
+      if (shouldRemove && sharedVariable) {
+        setSelectedNameList([...selectedNameList, sharedVariable]);
+        setRemainingNames(
+          remainingNames.filter((name) => name !== sharedVariable)
+        );
+      }
+      setIsTiming(true);
+    }
+  }, [remainingNames, selectedNameList, namesWithIds]);
+
   const stopNameDisplay = useCallback(() => {
     if (isShowingName) {
       if (intervalId.current !== null) {
@@ -179,8 +334,15 @@ const RandomNameApp: React.FC = () => {
       setIsShowingName(false);
       setIsTiming(false);
     }
-    setTimeout(moveLastName, 100);
-  }, [isShowingName, moveLastName]);
+
+    if (isNewLineChecked) {
+      setTimeout(moveLastName_newLine, 100);
+    }
+
+    if (!isNewLineChecked) {
+      setTimeout(moveLastName, 100);
+    } //削除される名前と削除されるべき名前を一致させるために処理を0.1秒遅らせる。
+  }, [isShowingName, isNewLineChecked, moveLastName, moveLastName_newLine]);
 
   const forModalsDeleteLastName = () => {
     if (lastName) {
@@ -248,13 +410,26 @@ const RandomNameApp: React.FC = () => {
       <div className={styles.lists}>
         <div className={styles.cleanedNames}>
           {/* 未選択の名前を表示 */}
-          <h2 className="underline ">抽選候補リスト</h2>
+          <details open>
+            <summary className="underline ">
+              抽選候補リスト(折りたためます)
+            </summary>
 
-          <p>{remainingNames.join(" ")}</p>
+            <p>{remainingNames.join(" ")}</p>
+          </details>
         </div>
       </div>
-      <div className={styles.display}>
-        <div className={styles.nameDisplay} ref={nameDisplay}></div>
+      <div
+        className={`displayBehindNameDisplay relative border border-gray-400 rounded-lg m-4`}
+      >
+        <div
+          className={`displayBehindNameShortestCharacter items-center whitespace-nowrap mt-auto text-center z-10 relative`}
+          ref={shortestName}
+        ></div>
+        <div
+          className={`nameDisplay items-center whitespace-nowrap mt-auto text-center z-20  absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 leading-tight`}
+          ref={nameDisplay}
+        ></div>
         <div
           className="overlay absolute top-0 left-0 w-full h-full opacity-0"
           onClick={isShowingName ? stopNameDisplay : startNameDisplay}
@@ -288,9 +463,11 @@ const RandomNameApp: React.FC = () => {
       <div className={styles.lists}>
         <div className={styles.removedNames}>
           {/* 選択済みの名前を表示 */}
-          <h2 className="underline">抽選済みリスト</h2>
+          <details open>
+            <summary className="underline">抽選済みリスト</summary>
 
-          <p>{selectedNameList.join(" ")}</p>
+            <p>{selectedNameList.join(" ")}</p>
+          </details>
         </div>
       </div>
       <div className="flex justify-between">

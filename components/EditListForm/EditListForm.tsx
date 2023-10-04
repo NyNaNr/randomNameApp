@@ -22,8 +22,11 @@ const EditListForm = ({
     number[]
   >([]);
   const [lineNumbersOfFormattedUserInput, setLineNumbersOfFormattedUserInput] =
-    useState<number[]>([]);
+    useState<(string | number)[]>([]);
+  //最低限の修正
   const [formattedInput, setFormattedInput] = useState<string[]>([]);
+  //ユーザーオプション反映
+  const [modifiedInput, setModifiedInput] = useState<string[]>([]);
   const [totalBytes, setTotalBytes] = useState(0);
   const [title, setTitle] = useState<string | null>("");
   const [cookieExpires, setCookieExpires] = useState(0);
@@ -31,6 +34,9 @@ const EditListForm = ({
   const [is640Over, setIs640Over] = useState<boolean>(
     typeof window !== "undefined" ? window.innerWidth > 639 : false
   );
+  //以下詳細設定のチェックボックスの状態管理
+  const [isDeleteSpaceChecked, setIsDeleteSpaceChecked] = useState(true);
+  const [isNewLineChecked, setIsNewLineChecked] = useState(false);
 
   //リストの名前が変更されたとき表示を上書きする
   useEffect(() => {
@@ -40,7 +46,7 @@ const EditListForm = ({
   // クッキーからリストアイテムを取得して初期値とする
   const initialListItems =
     selectedListId && Cookies.get(selectedListId)
-      ? JSON.parse(Cookies.get(selectedListId) || "").join("\n") //
+      ? JSON.parse(Cookies.get(selectedListId) || "[]").join("\n") //
       : "";
   const [inputText, setInputText] = useState(initialListItems); // ユーザー入力を管理するためのstate
 
@@ -106,14 +112,14 @@ const EditListForm = ({
     setLineNumbersOfUserInput(lines);
   };
 
-  //ユーザーの入力を整形して表示する。
+  //ユーザーの入力を整形して表示する。（最低限）
   const formatUserInput = (userInput: string): string[] => {
     const userInputList = userInput.split("\n");
-    const rib_space_from_listNames = userInputList.map((name) =>
-      name.replace(/[\s　]/g, "")
-    );
-    const rib_null_from_userInputList =
-      rib_space_from_listNames.filter(Boolean);
+
+    // 空文字列の削除
+    const rib_null_from_userInputList = userInputList.filter(Boolean);
+
+    //重複要素の削除
     const uniqueNameList = rib_null_from_userInputList.filter(
       (value, index, self) => {
         return self.indexOf(value) === index;
@@ -122,14 +128,48 @@ const EditListForm = ({
     const formattedUserInput = uniqueNameList;
     return formattedUserInput;
   };
+  //ユーザーの入力を整形して表示する。（最低限）
+
+  //1.詳細設定にてUserOptionを反映する
+  const applyUserOptions = useCallback(
+    (formattedInput: string[]): string[] => {
+      // isDeleteSpaceCheckedがtrueの場合、名前間のスペースを削除する
+      if (isDeleteSpaceChecked) {
+        return formattedInput.map((name) => name.replace(/[\s　]/g, ""));
+      }
+      // isNewLineCheckedがtrueの場合、名前間のスペースを改行に置き換える
+      else if (isNewLineChecked) {
+        return formattedInput.map((name) =>
+          name.replace(/(?<=\S)([ ]{1,}|\u3000{1,})(?=\S)/g, "\n")
+        );
+      }
+      return formattedInput;
+    },
+    [isDeleteSpaceChecked, isNewLineChecked]
+  );
+
+  //1.詳細設定にてUserOptionを反映する
 
   //ユーザー入力整形後画面の行番号生成
   const getLineNumberOfFormattedUserInput = (formattedUserInput: string[]) => {
-    const lineNumber = formattedUserInput.length;
-    const lines = [];
-    for (let i = 1; i <= lineNumber; i++) {
-      lines.push(i);
-    }
+    let currentLineNumber = 1;
+    const lines: (number | string)[] = [];
+
+    formattedUserInput.forEach((name) => {
+      // 各入力要素の中での改行数をカウント
+      const newLinesInName = (name.match(/\n/g) || []).length;
+
+      // 最初の行に行番号を追加
+      lines.push(currentLineNumber);
+
+      // 残りの行に何も割り当てない（または" "を割り当てる）
+      for (let i = 1; i <= newLinesInName; i++) {
+        lines.push(" ");
+      }
+
+      currentLineNumber += 1;
+    });
+
     return lines;
   };
 
@@ -187,9 +227,9 @@ const EditListForm = ({
 
   useEffect(() => {
     setLineNumbersOfFormattedUserInput(
-      getLineNumberOfFormattedUserInput(formattedInput)
+      getLineNumberOfFormattedUserInput(modifiedInput)
     );
-  }, [formattedInput]);
+  }, [modifiedInput]);
 
   useEffect(() => {
     handleInputConfirm();
@@ -198,6 +238,10 @@ const EditListForm = ({
   useEffect(() => {
     setTotalBytes(calculateBytes());
   }, [formattedInput, calculateBytes]);
+
+  useEffect(() => {
+    setModifiedInput(applyUserOptions(formattedInput));
+  }, [formattedInput, isDeleteSpaceChecked, applyUserOptions]); // こちらの依存配列を更新
 
   //selectedListIdが変わるにつれて、テキストエリアの末尾にカーソルを移動させる。スマホでは邪魔な機能かも？
   useEffect(() => {
@@ -222,6 +266,10 @@ const EditListForm = ({
         lineNumber={lineNumber}
         isOpen={isOpen}
         toggleOpen={toggleOpen}
+        isDeleteSpaceChecked={isDeleteSpaceChecked}
+        setIsDeleteSpaceChecked={setIsDeleteSpaceChecked}
+        isNewLineChecked={isNewLineChecked}
+        setIsNewLineChecked={setIsNewLineChecked}
       >
         {selectedListId ? (
           <div className="">
@@ -254,13 +302,17 @@ const EditListForm = ({
                 <div className="flex">
                   <div className="line-number mr-4 text-right">
                     {lineNumbersOfFormattedUserInput.map((num, index) => (
-                      <p key={index}>{num}</p>
+                      <p key={index}>{num === " " ? <>&nbsp;</> : num}</p>
                     ))}
                   </div>
                   <div className="formatted-list overflow-hidden w-full">
-                    {formattedInput.map((item, index) => (
+                    {modifiedInput.map((item, index) => (
                       <p
-                        className="text-ellipsis whitespace-nowrap overflow-hidden w-full"
+                        className={`${
+                          isNewLineChecked
+                            ? "whitespace-pre-wrap"
+                            : "text-ellipsis"
+                        } whitespace-nowrap overflow-hidden w-full`}
                         key={index}
                       >
                         {item}

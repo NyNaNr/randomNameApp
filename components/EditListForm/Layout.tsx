@@ -171,7 +171,7 @@ const Layout: React.FC<LayoutProps> = ({
                 isDetailsOpen ? "" : "mr-4"
               }`}
             >
-              <summary className={`  ${isDetailsOpen ? " animate-flash" : ""}`}>
+              <summary className={`${isDetailsOpen ? " animate-flash" : ""}`}>
                 詳細設定
               </summary>
               <p>文字間のスペースの扱い</p>

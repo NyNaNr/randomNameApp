@@ -171,12 +171,18 @@ const Layout: React.FC<LayoutProps> = ({
                 isDetailsOpen ? "" : "mr-4"
               }`}
             >
-              <summary className={`${isDetailsOpen ? " animate-flash" : ""}`}>
+              <summary
+                className={`dark:text-black ${
+                  isDetailsOpen ? " animate-flash" : ""
+                }`}
+              >
                 詳細設定
               </summary>
-              <p>文字間のスペースの扱い</p>
+              <p className="dark:text-black">文字間のスペースの扱い</p>
               <fieldset>
-                <legend>①文字間のスペースを削除する。</legend>
+                <legend className="dark:text-black">
+                  ①文字間のスペースを削除する。
+                </legend>
                 <div>
                   <input
                     type="checkbox"
@@ -188,14 +194,16 @@ const Layout: React.FC<LayoutProps> = ({
                       setIsDeleteSpaceChecked(!isDeleteSpaceChecked)
                     }
                   />
-                  <label htmlFor="deleteSpace">
+                  <label htmlFor="deleteSpace" className="dark:text-black">
                     する。（したほうが少しでも文字が大きく表示できます。）
                   </label>
                 </div>
               </fieldset>
               <fieldset>
                 <legend
-                  className={`${isDeleteSpaceChecked ? "text-gray-400" : ""}`}
+                  className={`dark:text-black ${
+                    isDeleteSpaceChecked ? "text-gray-400" : ""
+                  }`}
                 >
                   ②文字間のスペースを改行として表示する。（英単語の複合名詞が複数行で表示されます。）
                 </legend>
@@ -211,7 +219,9 @@ const Layout: React.FC<LayoutProps> = ({
                   />
                   <label
                     htmlFor="deleteSpace"
-                    className={`${isDeleteSpaceChecked ? "text-gray-400" : ""}`}
+                    className={`dark:text-black ${
+                      isDeleteSpaceChecked ? "text-gray-400" : ""
+                    }`}
                   >
                     する。
                   </label>

@@ -308,6 +308,7 @@ const RandomNameApp: React.FC = () => {
 
       sharedVariable = extractedName;
       console.log("Found ID:", id);
+      setLastName(sharedVariable);
     }
 
     if (isMobile()) {

@@ -151,7 +151,7 @@ const RandomNameApp: React.FC = () => {
       if (!name_length) return;
 
       //英単語の場合は、0.95=>1.5に変更
-      const scaleFactor = isAlphabetOrNumber ? 1.5 : 0.95;
+      const scaleFactor = isAlphabetOrNumber ? 1.42 : 0.95;
       console.log(isAlphabetOrNumber);
       const calculatedFontSize = Math.floor(
         (window.innerWidth * scaleFactor) / name_length
@@ -207,6 +207,7 @@ const RandomNameApp: React.FC = () => {
     },
     [isAlphabetOrNumber]
   );
+  // isNewLineChecked がtrueの場合に、行数が最長且つ、セグメントの最長文字数が最も少ない物を選ぶ
   //以上、新フォントサイズ計算のdisplayBehindNameDisplayの高さを計算する。
 
   const showRandomName = useCallback(() => {
@@ -226,8 +227,7 @@ const RandomNameApp: React.FC = () => {
       nameDisplay.current.textContent = randomName;
     }
 
-    // たぶんここでisNewLineCheckedがtrueのときに、改行後の列で一番長い物が収まるようにフォントサイズを計算すればいい
-    // 違うかもcalcFontSize↓で計算？
+    // calcFontSize内での計算を避けるため事前に文字数を計算しておく。
 
     calcFontSize(randomName);
     calcShortestFontSize(remainingNames);

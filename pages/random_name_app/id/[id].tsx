@@ -117,8 +117,8 @@ const RandomNameApp: React.FC = () => {
   const isAlphabetNumber = (names: string[]) => {
     if (!names || names.length === 0) return; // リストがundefinedまたは空の場合、関数をfalseで終了する。
 
-    // アルファベット（大文字・小文字）や数字のみで構成されているか判定
-    const regex = /^[A-Za-z0-9]+$/;
+    // アルファベット（大文字・小文字）、数字、半角スペース、全角スペースのみで構成されているか判定
+    const regex = /^[A-Za-z0-9\s　]+$/;
     // everyメソッドを使用して、すべての要素が条件を満たすかどうかをチェック
     const result = names.every((name) => regex.test(name));
     setIsAlphabetOrNumber(result);
@@ -129,20 +129,44 @@ const RandomNameApp: React.FC = () => {
     (name: string) => {
       if (!name) return; // nameがundefinedの場合、関数を早期に終了する。
 
+      // 文字間の空白で分け、その後各セグメントの最長文字数を取得する。
+      const getLongestSegmentLength = (str: string) => {
+        const regex = /(?<=\S)([ ]{1,}|\u3000{1,})(?=\S)/g;
+        const segments = str.split(regex);
+        const lengths = segments.map((segment) => segment.length);
+        return Math.max(...lengths);
+      };
+
+      let name_length;
+      // name.lengthに対してisNewLineCheckedの分岐処理を行う。
+      if (isNewLineChecked) {
+        name_length = getLongestSegmentLength(name);
+        console.log(`name_length ${name_length}`);
+      }
+
+      if (!isNewLineChecked) {
+        name_length = name.length;
+      }
+
+      if (!name_length) return;
+
       //英単語の場合は、0.95=>1.5に変更
       const scaleFactor = isAlphabetOrNumber ? 1.5 : 0.95;
+      console.log(isAlphabetOrNumber);
       const calculatedFontSize = Math.floor(
-        (window.innerWidth * scaleFactor) / name.length
+        (window.innerWidth * scaleFactor) / name_length
       );
-      const maxAllowedFontSize = window.innerHeight * 0.95; // ディスプレイの高さの90%を上限とする
+      console.log(`calculatedFontSize${calculatedFontSize}`);
+      // const maxAllowedFontSize = window.innerHeight * 0.95; // ディスプレイの高さの90%を上限とする
 
-      fontSize.current = Math.min(calculatedFontSize, maxAllowedFontSize);
+      // fontSize.current = Math.min(calculatedFontSize, maxAllowedFontSize);
+      fontSize.current = calculatedFontSize;
 
       if (!nameDisplay.current) return;
       nameDisplay.current.style.fontSize = `${fontSize.current}px`;
       nameDisplay.current.style.opacity = "1";
     },
-    [isAlphabetOrNumber]
+    [isAlphabetOrNumber, isNewLineChecked]
   );
 
   //以下、新フォントサイズ計算のdisplayBehindNameDisplayの高さを計算する。
@@ -155,6 +179,7 @@ const RandomNameApp: React.FC = () => {
         (shortest, name) => (name.length < shortest.length ? name : shortest),
         list[0]
       );
+      console.log(shortestName);
 
       const maxAllowedFontSize = window.innerHeight * 0.95; // ディスプレイの高さの90%を上限とする
       //英単語の場合は、0.65=>0.87に変更
@@ -200,6 +225,9 @@ const RandomNameApp: React.FC = () => {
     } else {
       nameDisplay.current.textContent = randomName;
     }
+
+    // たぶんここでisNewLineCheckedがtrueのときに、改行後の列で一番長い物が収まるようにフォントサイズを計算すればいい
+    // 違うかもcalcFontSize↓で計算？
 
     calcFontSize(randomName);
     calcShortestFontSize(remainingNames);

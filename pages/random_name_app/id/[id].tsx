@@ -247,8 +247,6 @@ const RandomNameApp: React.FC = () => {
     shortestNameWithLines.current.textContent = selectedName;
     shortestNameWithLines.current.style.fontSize = `${fontSize.current}px`;
     shortestNameWithLines.current.style.opacity = `${0}`;
-
-    return selectedName;
   }, []);
   //以上、新フォントサイズ計算のdisplayBehindNameDisplayの高さを計算する。
 
@@ -274,9 +272,7 @@ const RandomNameApp: React.FC = () => {
     calcFontSize(randomName);
     calcShortestFontSize(remainingNames);
     isAlphabetNumber(remainingNames);
-    console.log(
-      `calcwithline:${calcShortestFontSizeWithLines(remainingNames)}`
-    );
+    calcShortestFontSizeWithLines(remainingNames);
   }, [
     remainingNames,
     calcShortestFontSize,

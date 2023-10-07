@@ -98,6 +98,7 @@ const RandomNameApp: React.FC = () => {
   const startNotifier = useRef<HTMLDivElement>(null);
   const stopNotifier = useRef<HTMLDivElement>(null);
   const shortestName = useRef<HTMLDivElement>(null);
+  const shortestNameWithLines = useRef<HTMLDivElement>(null);
   const [modalsOpen1, setModalsOpen1] = useState(false);
   const [modalsOpen2, setModalsOpen2] = useState(false);
   const [modalContent1, setModalContent1] = useState("");
@@ -207,7 +208,48 @@ const RandomNameApp: React.FC = () => {
     },
     [isAlphabetOrNumber]
   );
-  // isNewLineChecked がtrueの場合に、行数が最長且つ、セグメントの最長文字数が最も少ない物を選ぶ
+  // 2.isNewLineChecked がtrueの場合に、行数が最長且つ、セグメントの最長文字数が最も少ない物を選ぶ
+  const calcShortestFontSizeWithLines = useCallback((namesList: string[]) => {
+    // スペースによる分割とその数のカウント
+    const countSpaces = (name: string) => {
+      const spaces = name.match(/(?<=\S)([ ]{1,}|\u3000{1,})(?=\S)/g);
+      return spaces ? spaces.length : 0;
+    };
+
+    // スペースで名前を分割し、最も短いセグメントの長さを返す
+    const shortestSegmentLength = (name: string) => {
+      const segments = name.split(/\s|　/); // 半角スペースまたは全角スペースで分割
+      return Math.min(...segments.map((segment) => segment.length));
+    };
+
+    // 行数が最長のものを見つける
+    let maxSpaces = -1;
+    let shortestWordLength = Infinity;
+    let selectedName = "";
+
+    for (let name of namesList) {
+      const currentSpaces = countSpaces(name);
+      if (currentSpaces > maxSpaces) {
+        maxSpaces = currentSpaces;
+        shortestWordLength = shortestSegmentLength(name);
+        selectedName = name;
+      } else if (currentSpaces === maxSpaces) {
+        const currentShortestWordLength = shortestSegmentLength(name);
+        if (currentShortestWordLength < shortestWordLength) {
+          shortestWordLength = currentShortestWordLength;
+          selectedName = name;
+        }
+      }
+    }
+
+    // 下のリターンを削除して、useRefでshortestNameWithLinesに埋め込む。フォントサイズはどうする？
+    if (!shortestNameWithLines.current) return;
+    shortestNameWithLines.current.textContent = selectedName;
+    shortestNameWithLines.current.style.fontSize = `${fontSize.current}px`;
+    shortestNameWithLines.current.style.opacity = `${0}`;
+
+    return selectedName;
+  }, []);
   //以上、新フォントサイズ計算のdisplayBehindNameDisplayの高さを計算する。
 
   const showRandomName = useCallback(() => {
@@ -232,7 +274,16 @@ const RandomNameApp: React.FC = () => {
     calcFontSize(randomName);
     calcShortestFontSize(remainingNames);
     isAlphabetNumber(remainingNames);
-  }, [remainingNames, calcShortestFontSize, calcFontSize, isNewLineChecked]);
+    console.log(
+      `calcwithline:${calcShortestFontSizeWithLines(remainingNames)}`
+    );
+  }, [
+    remainingNames,
+    calcShortestFontSize,
+    calcFontSize,
+    calcShortestFontSizeWithLines,
+    isNewLineChecked,
+  ]);
 
   const clickResetButton = () => {
     const message = "はじめからにしますか？";
@@ -452,11 +503,15 @@ const RandomNameApp: React.FC = () => {
         className={`displayBehindNameDisplay relative border border-gray-400 rounded-lg m-4`}
       >
         <div
-          className={`displayBehindNameShortestCharacter items-center whitespace-nowrap mt-auto text-center z-10 relative`}
+          className={`displayBehindNameShortestCharacter items-center whitespace-nowrap mt-auto text-center z-10 relative leading-none`}
           ref={shortestName}
         ></div>
         <div
-          className={`nameDisplay items-center whitespace-nowrap mt-auto text-center z-20  absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 leading-tight`}
+          className={`shortestNameWithLines items-center whitespace-nowrap mt-auto text-center z-10 relative leading-none`}
+          ref={shortestNameWithLines}
+        ></div>
+        <div
+          className={`nameDisplay items-center whitespace-nowrap mt-auto text-center z-20  absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 leading-none align-top`}
           ref={nameDisplay}
         ></div>
         <div

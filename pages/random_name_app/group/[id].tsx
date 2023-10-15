@@ -98,6 +98,15 @@ const RosterShuffler: React.FC = () => {
     }
   };
 
+  // エンターキーで〇〇クリック時に発火する関数
+  const onClickShuffle = () => {
+    if (isShowingName) {
+      stopNameDisplay();
+    } else {
+      startNameDisplay();
+    }
+  };
+
   // 以下エンターキーでスタート
   const [isShowingName, setIsShowingName] = useState<boolean>(false);
   const intervalId = useRef<number | null>(null);
@@ -145,7 +154,7 @@ const RosterShuffler: React.FC = () => {
       <div className="header flex justify-between ">
         <div className="left">
           <button
-            onClick={handleShuffle}
+            onClick={onClickShuffle}
             className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
           >
             {isShowingName ? "Enterキーでストップ" : "Enterキーでスタート"}

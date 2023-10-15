@@ -125,8 +125,8 @@ const Layout: React.FC<LayoutProps> = ({
             ""
           )}
           <header className="header fixed top-0 w-full z-30 p-1 bg-white shadow-md">
-            <div className="container flex justify-between">
-              <div className="">
+            <div className="container md:flex flex-col justify-between">
+              <div className="left">
                 <div className="text-black">
                   <p>保存可能な文字容量: {totalBytes}/4058 bytes</p>
                 </div>
@@ -146,7 +146,7 @@ const Layout: React.FC<LayoutProps> = ({
                   <div></div>
                 )}
               </div>
-              <div className="right fixed start-links z-5 flex top-2 right-0 space-x-3">
+              <div className="right md:fixed start-links z-5 flex top-2 right-0 space-x-3">
                 <div className=" w-32">
                   {totalBytes > 4058 || lineNumber < 2 ? (
                     <div className="link-blocker absolute h-15 px-2 py-1 text-lg text-white font-semibold rounded z-20 cursor-not-allowed">

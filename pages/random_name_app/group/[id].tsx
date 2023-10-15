@@ -92,7 +92,7 @@ const RosterShuffler: React.FC = () => {
         {shuffledRoster.map((name, index) => (
           <div
             key={index}
-            className="p-6 bg-gray-200 rounded-lg overflow-hidden whitespace-nowrap overflow-ellipsis"
+            className=" bg-gray-200 rounded-lg overflow-hidden whitespace-nowrap overflow-ellipsis text-center text-[min(3.5vw)]"
           >
             {name}
           </div>

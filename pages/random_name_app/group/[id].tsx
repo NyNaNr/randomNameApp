@@ -18,7 +18,7 @@ function shuffleArray<T>(array: T[]): T[] {
 const RosterShuffler: React.FC = () => {
   const [originalNames, setOriginalNames] = useState<string[]>([]);
   const selectRef = useRef<HTMLSelectElement>(null);
-  const buttonRef = useRef<HTMLSelectElement>(null);
+  const buttonRef = useRef<HTMLButtonElement>(null);
   const [mobileDevice, setMobileDevice] = useState(false);
 
   //ページ遷移＆ユーザーオプションの反映

@@ -87,7 +87,9 @@ const RosterShuffler: React.FC = () => {
   const handleShuffle = useCallback(() => {
     setShuffledRoster(shuffleArray(originalNames));
   }, [originalNames]);
+  // 以上名簿シャッフル
 
+  //何列のするかのセレクトのonClick
   const handleChangeColumns = (event: React.ChangeEvent<HTMLSelectElement>) => {
     setNumColumns(Number(event.target.value));
     // Remove focus from the select element
@@ -95,8 +97,6 @@ const RosterShuffler: React.FC = () => {
       selectRef.current?.blur();
     }
   };
-
-  // 以上名簿シャッフル
 
   // 以下エンターキーでスタート
   const [isShowingName, setIsShowingName] = useState<boolean>(false);

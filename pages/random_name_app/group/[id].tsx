@@ -2,6 +2,7 @@ import React, { useState, useEffect, useCallback, useRef } from "react";
 import { useRouter } from "next/router";
 import Link from "next/link";
 import Cookies from "js-cookie";
+import { isMobile } from "../../../utils/random_name_app";
 
 // シャッフル関数
 function shuffleArray<T>(array: T[]): T[] {
@@ -17,6 +18,7 @@ function shuffleArray<T>(array: T[]): T[] {
 const RosterShuffler: React.FC = () => {
   const [originalNames, setOriginalNames] = useState<string[]>([]);
   const selectRef = useRef<HTMLSelectElement>(null);
+  const [mobileDevice, setMobileDevice] = useState(false);
 
   //ページ遷移＆ユーザーオプションの反映
   const router = useRouter();
@@ -56,6 +58,12 @@ const RosterShuffler: React.FC = () => {
       }
     }
   }, [router.isReady, router.query]);
+
+  // モバイルかどうかの判定
+  useEffect(() => {
+    const mobile = isMobile();
+    setMobileDevice(mobile !== undefined ? mobile : false);
+  }, []);
 
   // 以下、行番号計算
   function generateNumberedArray(numRows: number) {
@@ -157,7 +165,13 @@ const RosterShuffler: React.FC = () => {
             onClick={onClickShuffle}
             className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
           >
-            {isShowingName ? "Enterキーでストップ" : "Enterキーでスタート"}
+            {isShowingName
+              ? mobileDevice
+                ? "ストップ"
+                : "Enterキーでストップ"
+              : mobileDevice
+              ? "スタート"
+              : "Enterキーでスタート"}
           </button>
           <select
             ref={selectRef}

@@ -66,7 +66,7 @@ const RosterShuffler: React.FC = () => {
 
   useEffect(() => {
     const numberOfElements = originalNames.length;
-    let line_numbers = Math.floor(numberOfElements / numColumns) + 1;
+    let line_numbers = Math.ceil(numberOfElements / numColumns);
     if (line_numbers) {
       const numberedArray = generateNumberedArray(line_numbers);
       setNumRows(numberedArray);
@@ -109,23 +109,25 @@ const RosterShuffler: React.FC = () => {
         <option value={5}>5 Columns</option>
         <option value={6}>6 Columns</option>
       </select>
-      <div className={`mt-6 grid grid-cols-1 gap-4`}>
-        {(numRows || []).map((name, index) => (
-          <div key={index} className=" bg-gray-200 rounded-lg ">
-            <div className="overflow-hidden whitespace-nowrap overflow-ellipsis text-center text-[min(3.5vw)]">
-              {name}
+      <div className="mt-6 flex">
+        <div className={`grid grid-cols-1 gap-4`}>
+          {(numRows || []).map((name, index) => (
+            <div key={index} className=" bg-gray-200 rounded-lg ">
+              <div className="overflow-hidden whitespace-nowrap overflow-ellipsis text-center text-[min(3vw)]">
+                {name}
+              </div>
             </div>
-          </div>
-        ))}
-      </div>
-      <div className={`mt-6 grid grid-cols-${numColumns} gap-4`}>
-        {shuffledRoster.map((name, index) => (
-          <div key={index} className=" bg-gray-200 rounded-lg ">
-            <div className="overflow-hidden whitespace-nowrap overflow-ellipsis text-center text-[min(3.5vw)]">
-              {name}
+          ))}
+        </div>
+        <div className={` grid grid-cols-${numColumns} gap-4`}>
+          {shuffledRoster.map((name, index) => (
+            <div key={index} className=" bg-gray-200 rounded-lg ">
+              <div className="overflow-hidden whitespace-nowrap overflow-ellipsis text-center text-[min(3.5vw)]">
+                {name}
+              </div>
             </div>
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
     </div>
   );

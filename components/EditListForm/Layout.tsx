@@ -125,48 +125,68 @@ const Layout: React.FC<LayoutProps> = ({
             ""
           )}
           <header className="header fixed top-0 w-full z-30 p-1 bg-white shadow-md">
-            <div className="container">
-              <div className="text-black">
-                <p>保存可能な文字容量: {totalBytes}/4058 bytes</p>
-              </div>
-              {totalBytes > 4058 ? (
-                <div className="text-black animate-flash">
-                  <p>文字数が保存容量を超えています。減らしてください。</p>
+            <div className="container flex justify-between">
+              <div className="">
+                <div className="text-black">
+                  <p>保存可能な文字容量: {totalBytes}/4058 bytes</p>
                 </div>
-              ) : (
-                <div></div>
-              )}
-              <div className="text-black">合計 : {lineNumber}人</div>
-              {lineNumber < 2 ? (
-                <div className="text-black animate-flash">
-                  <p>2人以上入力してください</p>
-                </div>
-              ) : (
-                <div></div>
-              )}
-
-              <div className="fixed start-links z-5 flex top-2 right-0 w-24">
-                {totalBytes > 4058 || lineNumber < 2 ? (
-                  <div className="link-blocker absolute h-15 px-2 py-1 text-lg text-white font-semibold rounded z-20 cursor-not-allowed">
-                    スタート
+                {totalBytes > 4058 ? (
+                  <div className="text-black animate-flash">
+                    <p>文字数が保存容量を超えています。減らしてください。</p>
                   </div>
-                ) : null}
+                ) : (
+                  <div></div>
+                )}
+                <div className="text-black">合計 : {lineNumber}人</div>
+                {lineNumber < 2 ? (
+                  <div className="text-black animate-flash">
+                    <p>2人以上入力してください</p>
+                  </div>
+                ) : (
+                  <div></div>
+                )}
+              </div>
+              <div className="right fixed start-links z-5 flex top-2 right-0 space-x-3">
+                <div className=" w-32">
+                  {totalBytes > 4058 || lineNumber < 2 ? (
+                    <div className="link-blocker absolute h-15 px-2 py-1 text-lg text-white font-semibold rounded z-20 cursor-not-allowed">
+                      グループスタート
+                    </div>
+                  ) : null}
+                  <Link
+                    href={`/random_name_app/group/${selectedListId}`}
+                    className={`absolute h-15 z-10 shadow-lg px-2 py-1 bg-blue-400 text-lg text-white font-semibold rounded hover:shadow-sm  ${
+                      totalBytes > 4058 || lineNumber < 2
+                        ? " bg-gray-500/50"
+                        : "hover:bg-blue-500"
+                    }`}
+                  >
+                    グループスタート
+                  </Link>
+                </div>
+                <div className="bingo-start-links  w-32">
+                  {totalBytes > 4058 || lineNumber < 2 ? (
+                    <div className="link-blocker absolute h-15 px-2 py-1 text-lg text-white font-semibold rounded z-20 cursor-not-allowed">
+                      ビンゴスタート
+                    </div>
+                  ) : null}
 
-                <Link
-                  href={`/random_name_app/id/${selectedListId}`}
-                  className={`absolute h-15 z-10 shadow-lg px-2 py-1 bg-blue-400 text-lg text-white font-semibold rounded hover:shadow-sm  ${
-                    totalBytes > 4058 || lineNumber < 2
-                      ? " bg-gray-500/50"
-                      : "hover:bg-blue-500"
-                  }`}
-                >
-                  スタート
-                </Link>
+                  <Link
+                    href={`/random_name_app/id/${selectedListId}`}
+                    className={`absolute h-15 z-10 shadow-lg px-2 py-1 bg-blue-400 text-lg text-white font-semibold rounded hover:shadow-sm  ${
+                      totalBytes > 4058 || lineNumber < 2
+                        ? " bg-gray-500/50"
+                        : "hover:bg-blue-500"
+                    }`}
+                  >
+                    ビンゴスタート
+                  </Link>
+                </div>
               </div>
             </div>
           </header>
           <div
-            className={`user-options absolute ${
+            className={`user-options fixed ${
               lineNumber < 2 ? "top-20" : "top-14"
             } right-0 z-30`}
           >

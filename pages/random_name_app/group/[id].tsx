@@ -36,23 +36,9 @@ const RosterShuffler: React.FC = () => {
           ? JSON.parse(decodeURIComponent(cookieValue))
           : [];
 
-        // ローカルストレージから checkboxStates の値を取得
-        const checkboxStates = localStorage.getItem("checkboxStates");
-        const parsedCheckboxStates = checkboxStates
-          ? JSON.parse(checkboxStates)
-          : {};
-
-        // 現在の id に関連する isDeleteSpaceChecked の値を取得
-        const isDeleteSpaceChecked =
-          parsedCheckboxStates[id] &&
-          parsedCheckboxStates[id].isDeleteSpaceChecked;
-
-        // isDeleteSpaceChecked が true の場合、文字間のスペースを削除
-        if (isDeleteSpaceChecked) {
-          decodedNames = decodedNames.map((name: string) =>
-            name.replace(/[\s\n　]/g, "")
-          );
-        }
+        decodedNames = decodedNames.map((name: string) =>
+          name.replace(/[\s\n　]/g, "")
+        );
 
         setOriginalNames(decodedNames);
       }

@@ -19,6 +19,7 @@ const RosterShuffler: React.FC = () => {
   //ページ遷移＆ユーザーオプションの反映
   const router = useRouter();
   const [numColumns, setNumColumns] = useState(2); // 列数を管理するステート
+  const [numRows, setNumRows] = useState<string[]>(); // 行数を管理するステート
 
   useEffect(() => {
     if (router.isReady) {
@@ -54,11 +55,25 @@ const RosterShuffler: React.FC = () => {
     }
   }, [router.isReady, router.query]);
 
-  // 行番号計算
+  // 以下、行番号計算
+  function generateNumberedArray(numRows: number) {
+    let numberedArray = [];
+    for (let i = 1; i <= numRows; i++) {
+      numberedArray.push(String.fromCodePoint(9311 + i));
+    }
+    return numberedArray;
+  }
+
   useEffect(() => {
     const numberOfElements = originalNames.length;
     let line_numbers = Math.floor(numberOfElements / numColumns) + 1;
-  }, [numColumns, originalNames]);
+    if (line_numbers) {
+      const numberedArray = generateNumberedArray(line_numbers);
+      setNumRows(numberedArray);
+    }
+  }, [numColumns, originalNames, numRows]);
+
+  // 以上、行番号計算
 
   useEffect(() => {
     // originalNames がセットされたら、shuffledRoster も更新。つまり初回読み込み時に表示できる
@@ -94,6 +109,15 @@ const RosterShuffler: React.FC = () => {
         <option value={5}>5 Columns</option>
         <option value={6}>6 Columns</option>
       </select>
+      <div className={`mt-6 grid grid-cols-1 gap-4`}>
+        {(numRows || []).map((name, index) => (
+          <div key={index} className=" bg-gray-200 rounded-lg ">
+            <div className="overflow-hidden whitespace-nowrap overflow-ellipsis text-center text-[min(3.5vw)]">
+              {name}
+            </div>
+          </div>
+        ))}
+      </div>
       <div className={`mt-6 grid grid-cols-${numColumns} gap-4`}>
         {shuffledRoster.map((name, index) => (
           <div key={index} className=" bg-gray-200 rounded-lg ">

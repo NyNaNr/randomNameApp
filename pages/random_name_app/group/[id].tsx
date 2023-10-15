@@ -148,7 +148,7 @@ const RosterShuffler: React.FC = () => {
             onClick={handleShuffle}
             className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
           >
-            Shuffle Roster
+            {isShowingName ? "Enterキーでストップ" : "Enterキーでスタート"}
           </button>
           <select
             ref={selectRef}
@@ -156,11 +156,11 @@ const RosterShuffler: React.FC = () => {
             value={numColumns}
             className="ml-4 p-2 rounded"
           >
-            <option value={2}>2 Columns</option>
-            <option value={3}>3 Columns</option>
-            <option value={4}>4 Columns</option>
-            <option value={5}>5 Columns</option>
-            <option value={6}>6 Columns</option>
+            <option value={2}>2 人ペア</option>
+            <option value={3}>3 人トリオ</option>
+            <option value={4}>4 人グループ</option>
+            <option value={5}>5 人グループ</option>
+            <option value={6}>6 人グループ</option>
           </select>
         </div>
         <div className="right ml-4 p-2">

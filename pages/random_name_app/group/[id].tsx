@@ -18,6 +18,7 @@ function shuffleArray<T>(array: T[]): T[] {
 const RosterShuffler: React.FC = () => {
   const [originalNames, setOriginalNames] = useState<string[]>([]);
   const selectRef = useRef<HTMLSelectElement>(null);
+  const buttonRef = useRef<HTMLSelectElement>(null);
   const [mobileDevice, setMobileDevice] = useState(false);
 
   //ページ遷移＆ユーザーオプションの反映
@@ -99,6 +100,10 @@ const RosterShuffler: React.FC = () => {
     } else {
       startNameDisplay();
     }
+    // Remove focus from the select element
+    if (buttonRef.current) {
+      buttonRef.current?.blur();
+    }
   };
 
   // 以下エンターキーでスタート
@@ -148,6 +153,7 @@ const RosterShuffler: React.FC = () => {
       <div className="header flex justify-between ">
         <div className="left">
           <button
+            ref={buttonRef}
             onClick={onClickShuffle}
             className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded text-[min(2vw)]"
           >

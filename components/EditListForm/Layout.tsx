@@ -166,7 +166,7 @@ const Layout: React.FC<LayoutProps> = ({
             </div>
           </header>
           <div
-            className={`user-options absolute ${
+            className={`user-options fixed ${
               lineNumber < 2 ? "top-20" : "top-14"
             } right-0 z-30`}
           >

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback, useRef } from "react";
 import { useRouter } from "next/router";
 import Link from "next/link";
 import Cookies from "js-cookie";
@@ -83,15 +83,57 @@ const RosterShuffler: React.FC = () => {
 
   // 以下名簿シャッフル
   const [shuffledRoster, setShuffledRoster] = useState<string[]>(originalNames);
-  const handleShuffle = () => {
+  const handleShuffle = useCallback(() => {
     setShuffledRoster(shuffleArray(originalNames));
-  };
+  }, [originalNames]);
 
   const handleChangeColumns = (event: React.ChangeEvent<HTMLSelectElement>) => {
     setNumColumns(Number(event.target.value));
   };
 
   // 以上名簿シャッフル
+
+  // 以下エンターキーでスタート
+  const [isShowingName, setIsShowingName] = useState<boolean>(false);
+  const intervalId = useRef<number | null>(null);
+
+  const showRandomName = useCallback(() => {
+    handleShuffle();
+  }, [handleShuffle]);
+
+  const startNameDisplay = useCallback(() => {
+    if (!isShowingName) {
+      setIsShowingName(true);
+      intervalId.current = window.setInterval(showRandomName, 16);
+    }
+  }, [showRandomName, isShowingName]);
+
+  const stopNameDisplay = useCallback(() => {
+    if (isShowingName) {
+      setIsShowingName(false);
+      if (intervalId.current !== null) {
+        clearInterval(intervalId.current);
+      }
+    }
+  }, [isShowingName]);
+
+  useEffect(() => {
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Enter") {
+        if (isShowingName) {
+          stopNameDisplay();
+        } else {
+          startNameDisplay();
+        }
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [startNameDisplay, stopNameDisplay, isShowingName]);
 
   return (
     <div className="p-6">

@@ -85,6 +85,8 @@ const Layout: React.FC<LayoutProps> = ({
     };
 
     detailsElem?.addEventListener("toggle", handleToggle);
+
+    // setIsDetailsOpen(false)を実行するでdetailsタグも閉じることができる。
     if (detailsElem) {
       detailsElem.open = isDetailsOpen;
     }

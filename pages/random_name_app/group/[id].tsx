@@ -59,7 +59,7 @@ const RosterShuffler: React.FC = () => {
   function generateNumberedArray(numRows: number) {
     let numberedArray = [];
     for (let i = 1; i <= numRows; i++) {
-      numberedArray.push(String.fromCodePoint(9311 + i));
+      numberedArray.push(i.toString());
     }
     return numberedArray;
   }
@@ -110,16 +110,16 @@ const RosterShuffler: React.FC = () => {
         <option value={6}>6 Columns</option>
       </select>
       <div className="mt-6 flex">
-        <div className={`grid grid-cols-1 gap-4`}>
+        <div className={`min-w-max grid grid-cols-1 gap-4`}>
           {(numRows || []).map((name, index) => (
-            <div key={index} className=" bg-gray-200 rounded-lg ">
-              <div className="overflow-hidden whitespace-nowrap overflow-ellipsis text-center text-[min(3vw)]">
+            <div key={index} className="min-w-max bg-gray-200 rounded-lg ">
+              <div className="overflow-hidden whitespace-nowrap  text-center text-[min(3.5vw)]">
                 {name}
               </div>
             </div>
           ))}
         </div>
-        <div className={` grid grid-cols-${numColumns} gap-4`}>
+        <div className={`ml-4 grid grid-cols-${numColumns} gap-4`}>
           {shuffledRoster.map((name, index) => (
             <div key={index} className=" bg-gray-200 rounded-lg ">
               <div className="overflow-hidden whitespace-nowrap overflow-ellipsis text-center text-[min(3.5vw)]">

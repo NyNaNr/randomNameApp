@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useRouter } from "next/router";
+import Link from "next/link";
 import Cookies from "js-cookie";
 
 // シャッフル関数
@@ -92,23 +93,38 @@ const RosterShuffler: React.FC = () => {
 
   return (
     <div className="p-6">
-      <button
-        onClick={handleShuffle}
-        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-      >
-        Shuffle Roster
-      </button>
-      <select
-        onChange={handleChangeColumns}
-        value={numColumns}
-        className="ml-4 p-2"
-      >
-        <option value={2}>2 Columns</option>
-        <option value={3}>3 Columns</option>
-        <option value={4}>4 Columns</option>
-        <option value={5}>5 Columns</option>
-        <option value={6}>6 Columns</option>
-      </select>
+      <div className="header flex justify-between ">
+        <div className="right">
+          <button
+            onClick={handleShuffle}
+            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+          >
+            Shuffle Roster
+          </button>
+          <select
+            onChange={handleChangeColumns}
+            value={numColumns}
+            className="ml-4 p-2"
+          >
+            <option value={2}>2 Columns</option>
+            <option value={3}>3 Columns</option>
+            <option value={4}>4 Columns</option>
+            <option value={5}>5 Columns</option>
+            <option value={6}>6 Columns</option>
+          </select>
+        </div>
+        <div className="left ml-4 p-2">
+          <Link
+            href="/random_name_app/home"
+            className={
+              "border border-solid py-2 px-4 rounded-lg border-gray-400  bg-blue-100 dark:text-black hover:bg-blue-700 hover:text-white font-semibold "
+            }
+          >
+            選択画面へ戻る
+          </Link>
+        </div>
+      </div>
+
       <div className="mt-6 flex">
         <div className={`min-w-max grid grid-cols-1 gap-4`}>
           {(numRows || []).map((name, index) => (

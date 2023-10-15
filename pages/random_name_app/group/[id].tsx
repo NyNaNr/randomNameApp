@@ -18,6 +18,7 @@ const RosterShuffler: React.FC = () => {
 
   //ページ遷移＆ユーザーオプションの反映
   const router = useRouter();
+  const [numColumns, setNumColumns] = useState(2); // 列数を管理するステート
 
   useEffect(() => {
     if (router.isReady) {
@@ -53,13 +54,18 @@ const RosterShuffler: React.FC = () => {
     }
   }, [router.isReady, router.query]);
 
+  // 行番号計算
+  useEffect(() => {
+    const numberOfElements = originalNames.length;
+    let line_numbers = Math.floor(numberOfElements / numColumns) + 1;
+  }, [numColumns, originalNames]);
+
   useEffect(() => {
     // originalNames がセットされたら、shuffledRoster も更新。つまり初回読み込み時に表示できる
     setShuffledRoster(shuffleArray(originalNames));
   }, [originalNames]);
 
   const [shuffledRoster, setShuffledRoster] = useState<string[]>(originalNames);
-  const [numColumns, setNumColumns] = useState(2); // 列数を管理するステート
 
   const handleShuffle = () => {
     setShuffledRoster(shuffleArray(originalNames));

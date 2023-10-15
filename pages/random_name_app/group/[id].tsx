@@ -81,8 +81,8 @@ const RosterShuffler: React.FC = () => {
     setShuffledRoster(shuffleArray(originalNames));
   }, [originalNames]);
 
+  // 以下名簿シャッフル
   const [shuffledRoster, setShuffledRoster] = useState<string[]>(originalNames);
-
   const handleShuffle = () => {
     setShuffledRoster(shuffleArray(originalNames));
   };
@@ -90,6 +90,8 @@ const RosterShuffler: React.FC = () => {
   const handleChangeColumns = (event: React.ChangeEvent<HTMLSelectElement>) => {
     setNumColumns(Number(event.target.value));
   };
+
+  // 以上名簿シャッフル
 
   return (
     <div className="p-6">
@@ -104,7 +106,7 @@ const RosterShuffler: React.FC = () => {
           <select
             onChange={handleChangeColumns}
             value={numColumns}
-            className="ml-4 p-2"
+            className="ml-4 p-2 rounded"
           >
             <option value={2}>2 Columns</option>
             <option value={3}>3 Columns</option>

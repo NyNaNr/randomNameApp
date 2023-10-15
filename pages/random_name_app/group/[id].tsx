@@ -151,6 +151,7 @@ const RosterShuffler: React.FC = () => {
             Shuffle Roster
           </button>
           <select
+            ref={selectRef}
             onChange={handleChangeColumns}
             value={numColumns}
             className="ml-4 p-2 rounded"

@@ -90,11 +90,10 @@ const RosterShuffler: React.FC = () => {
       </select>
       <div className={`mt-6 grid grid-cols-${numColumns} gap-4`}>
         {shuffledRoster.map((name, index) => (
-          <div
-            key={index}
-            className=" bg-gray-200 rounded-lg overflow-hidden whitespace-nowrap overflow-ellipsis text-center text-[min(3.5vw)]"
-          >
-            {name}
+          <div key={index} className=" bg-gray-200 rounded-lg ">
+            <div className="overflow-hidden whitespace-nowrap overflow-ellipsis text-center text-[min(3.5vw)]">
+              {name}
+            </div>
           </div>
         ))}
       </div>

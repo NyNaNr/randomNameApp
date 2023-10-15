@@ -85,11 +85,14 @@ const Layout: React.FC<LayoutProps> = ({
     };
 
     detailsElem?.addEventListener("toggle", handleToggle);
+    if (detailsElem) {
+      detailsElem.open = isDetailsOpen;
+    }
 
     return () => {
       detailsElem?.removeEventListener("toggle", handleToggle);
     };
-  }, []);
+  }, [isDetailsOpen]);
   //以上詳細設定の開閉を検知する
 
   // 詳細設定を閉じる(黒背景クリック)

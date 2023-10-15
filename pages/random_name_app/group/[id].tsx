@@ -16,6 +16,7 @@ function shuffleArray<T>(array: T[]): T[] {
 // コンポーネント
 const RosterShuffler: React.FC = () => {
   const [originalNames, setOriginalNames] = useState<string[]>([]);
+  const selectRef = useRef<HTMLSelectElement>(null);
 
   //ページ遷移＆ユーザーオプションの反映
   const router = useRouter();
@@ -72,7 +73,7 @@ const RosterShuffler: React.FC = () => {
       const numberedArray = generateNumberedArray(line_numbers);
       setNumRows(numberedArray);
     }
-  }, [numColumns, originalNames, numRows]);
+  }, [numColumns, originalNames]);
 
   // 以上、行番号計算
 
@@ -89,6 +90,10 @@ const RosterShuffler: React.FC = () => {
 
   const handleChangeColumns = (event: React.ChangeEvent<HTMLSelectElement>) => {
     setNumColumns(Number(event.target.value));
+    // Remove focus from the select element
+    if (selectRef.current) {
+      selectRef.current?.blur();
+    }
   };
 
   // 以上名簿シャッフル

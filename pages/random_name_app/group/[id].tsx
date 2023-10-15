@@ -138,7 +138,7 @@ const RosterShuffler: React.FC = () => {
   return (
     <div className="p-6">
       <div className="header flex justify-between ">
-        <div className="right">
+        <div className="left">
           <button
             onClick={handleShuffle}
             className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
@@ -157,7 +157,7 @@ const RosterShuffler: React.FC = () => {
             <option value={6}>6 Columns</option>
           </select>
         </div>
-        <div className="left ml-4 p-2">
+        <div className="right ml-4 p-2">
           <Link
             href="/random_name_app/home"
             className={

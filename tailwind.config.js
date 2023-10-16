@@ -5,6 +5,12 @@ module.exports = {
     "./components/**/*.{js,ts,jsx,tsx}",
     "./app/**/*.{js,ts,jsx,tsx}",
   ],
+  purge: {
+    content: ["./index.html", "./index.js"],
+    options: {
+      whitelist: [/^grid-cols/],
+    },
+  },
   theme: {
     extend: {
       width: {

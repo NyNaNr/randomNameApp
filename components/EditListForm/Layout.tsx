@@ -147,7 +147,7 @@ const Layout: React.FC<LayoutProps> = ({
                 )}
               </div>
               <div className="right md:fixed start-links z-5 flex top-2 right-0 space-x-3">
-                <div className=" w-32">
+                {/* <div className=" w-32">
                   {totalBytes > 4058 || lineNumber < 2 ? (
                     <div className="link-blocker absolute h-15 px-2 py-1 text-lg text-white font-semibold rounded z-20 cursor-not-allowed">
                       グループスタート
@@ -163,7 +163,7 @@ const Layout: React.FC<LayoutProps> = ({
                   >
                     グループスタート
                   </Link>
-                </div>
+                </div> */}
                 <div className="bingo-start-links  w-32">
                   {totalBytes > 4058 || lineNumber < 2 ? (
                     <div className="link-blocker absolute h-15 px-2 py-1 text-lg text-white font-semibold rounded z-20 cursor-not-allowed">

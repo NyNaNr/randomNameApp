@@ -41,6 +41,8 @@ const RosterShuffler: React.FC = () => {
           name.replace(/[\s\n　]/g, "")
         );
 
+        decodedNames = decodedNames.filter((name: string) => name !== "");
+
         setOriginalNames(decodedNames);
       }
     }
@@ -200,6 +202,7 @@ const RosterShuffler: React.FC = () => {
             </div>
           ))}
         </div>
+
         <div className={`ml-4 grid grid-cols-${numColumns} gap-4`}>
           {shuffledRoster.map((name, index) => (
             <div key={index} className=" bg-gray-200 rounded-lg ">

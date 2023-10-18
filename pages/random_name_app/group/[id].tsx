@@ -97,6 +97,19 @@ const RosterShuffler: React.FC = () => {
     }
   };
 
+  // コラムオブジェクト
+  const columnClassMap: {
+    [key: number]: string;
+  } = {
+    1: "grid-cols-1",
+    2: "grid-cols-2",
+    3: "grid-cols-3",
+    4: "grid-cols-4",
+    5: "grid-cols-5",
+    6: "grid-cols-6",
+  };
+  const columnClass = columnClassMap[numColumns] || "2"; // デフォルトの値を指定
+
   // エンターキーで〇〇クリック時に発火する関数
   const onClickShuffle = () => {
     if (isShowingName) {
@@ -205,7 +218,7 @@ const RosterShuffler: React.FC = () => {
           ))}
         </div>
 
-        <div className={`ml-4 grid grid-cols-${numColumns} gap-4`}>
+        <div className={`ml-4 grid ${columnClass} gap-4`}>
           {shuffledRoster.map((name, index) => (
             <div key={index} className=" bg-gray-200 rounded-lg ">
               <div className="overflow-hidden whitespace-nowrap overflow-ellipsis text-center text-[min(3.5vw)]">

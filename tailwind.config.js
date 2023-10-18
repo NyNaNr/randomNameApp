@@ -5,6 +5,10 @@ module.exports = {
     "./components/**/*.{js,ts,jsx,tsx}",
     "./app/**/*.{js,ts,jsx,tsx}",
   ],
+  purge: {
+    enabled: true,
+    content: ["./components/**/*.tsx", "./pages/**/*.tsx"],
+  },
   theme: {
     extend: {
       width: {

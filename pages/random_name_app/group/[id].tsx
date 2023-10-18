@@ -88,7 +88,9 @@ const RosterShuffler: React.FC = () => {
 
   //何列のするかのセレクトのonClick
   const handleChangeColumns = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    setNumColumns(Number(event.target.value));
+    const numberOfColum = Number(event.target.value);
+    console.log(numberOfColum);
+    setNumColumns(numberOfColum);
     // Remove focus from the select element
     if (selectRef.current) {
       selectRef.current?.blur();

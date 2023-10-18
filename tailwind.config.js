@@ -5,15 +5,10 @@ module.exports = {
     "./components/**/*.{js,ts,jsx,tsx}",
     "./app/**/*.{js,ts,jsx,tsx}",
   ],
-  // purge: {
-  //   content: [
-  //     ".random_name_app/group/*.html",
-  //     ".random_name_app/group/*.jsx",
-  //     ".random_name_app/group/*.tsx",
-  //   ],
-
-  //   safelist: [/^grid-cols/],
-  // },
+  purge: {
+    enabled: true,
+    content: ["./components/**/*.jsx", "./pages/**/*.jsx"],
+  },
   theme: {
     extend: {
       width: {

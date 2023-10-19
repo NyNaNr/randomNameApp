@@ -146,16 +146,16 @@ const Layout: React.FC<LayoutProps> = ({
                   <div></div>
                 )}
               </div>
-              <div className="right md:fixed start-links z-5 flex top-2 right-0 space-x-3">
-                {/* <div className=" w-32">
+              <div className="right md:fixed start-links z-5 flex top-2 right-0 space-x-3 text-[min(2vw)]">
+                <div className=" w-32">
                   {totalBytes > 4058 || lineNumber < 2 ? (
-                    <div className="link-blocker absolute h-15 px-2 py-1 text-lg text-white font-semibold rounded z-20 cursor-not-allowed">
+                    <div className="link-blocker absolute h-15 px-2 py-1 text-white font-semibold rounded z-20 cursor-not-allowed">
                       グループスタート
                     </div>
                   ) : null}
                   <Link
                     href={`/random_name_app/group/${selectedListId}`}
-                    className={`absolute h-15 z-10 shadow-lg px-2 py-1 bg-blue-400 text-lg text-white font-semibold rounded hover:shadow-sm  ${
+                    className={`absolute h-15 z-10 shadow-lg px-2 py-1 bg-blue-400 text-white font-semibold rounded hover:shadow-sm  ${
                       totalBytes > 4058 || lineNumber < 2
                         ? " bg-gray-500/50"
                         : "hover:bg-blue-500"
@@ -163,17 +163,17 @@ const Layout: React.FC<LayoutProps> = ({
                   >
                     グループスタート
                   </Link>
-                </div> */}
+                </div>
                 <div className="bingo-start-links  w-32">
                   {totalBytes > 4058 || lineNumber < 2 ? (
-                    <div className="link-blocker absolute h-15 px-2 py-1 text-lg text-white font-semibold rounded z-20 cursor-not-allowed">
+                    <div className="link-blocker absolute h-15 px-2 py-1 text-white font-semibold rounded z-20 cursor-not-allowed">
                       ビンゴスタート
                     </div>
                   ) : null}
 
                   <Link
                     href={`/random_name_app/id/${selectedListId}`}
-                    className={`absolute h-15 z-10 shadow-lg px-2 py-1 bg-blue-400 text-lg text-white font-semibold rounded hover:shadow-sm  ${
+                    className={`absolute h-15 z-10 shadow-lg px-2 py-1 bg-blue-400 text-white font-semibold rounded hover:shadow-sm  ${
                       totalBytes > 4058 || lineNumber < 2
                         ? " bg-gray-500/50"
                         : "hover:bg-blue-500"

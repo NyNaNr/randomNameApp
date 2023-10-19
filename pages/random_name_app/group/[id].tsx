@@ -186,7 +186,7 @@ const RosterShuffler: React.FC = () => {
             ref={selectRef}
             onChange={handleChangeColumns}
             value={numColumns}
-            className="ml-4 p-2 rounded text-[min(2vw)]"
+            className="ml-4 p-2 rounded text-[min(2vw)] dark:text-black"
           >
             <option value={2}>2 人ペア</option>
             <option value={3}>3 人トリオ</option>
@@ -211,7 +211,7 @@ const RosterShuffler: React.FC = () => {
         <div className={`min-w-max grid grid-cols-1 gap-4`}>
           {(numRows || []).map((name, index) => (
             <div key={index} className="min-w-max bg-gray-200 rounded-lg ">
-              <div className="overflow-hidden whitespace-nowrap  text-center text-[min(3.5vw)]">
+              <div className="overflow-hidden whitespace-nowrap  text-center text-[min(3.5vw)] dark:text-black">
                 {name}
               </div>
             </div>
@@ -221,7 +221,7 @@ const RosterShuffler: React.FC = () => {
         <div className={`ml-4 grid ${columnClass} gap-4`}>
           {shuffledRoster.map((name, index) => (
             <div key={index} className=" bg-gray-200 rounded-lg ">
-              <div className="overflow-hidden whitespace-nowrap overflow-ellipsis text-center text-[min(3.5vw)]">
+              <div className="overflow-hidden whitespace-nowrap overflow-ellipsis text-center text-[min(3.5vw)] dark:text-black">
                 {name}
               </div>
             </div>

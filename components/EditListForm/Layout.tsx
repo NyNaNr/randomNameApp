@@ -125,7 +125,7 @@ const Layout: React.FC<LayoutProps> = ({
             ""
           )}
           <header className="header fixed top-0 w-full z-30 p-1 bg-white shadow-md">
-            <div className="container md:flex flex-col justify-between">
+            <div className="container flex md:flex-row flex-col ">
               <div className="left">
                 <div className="text-black">
                   <p>保存可能な文字容量: {totalBytes}/4058 bytes</p>
@@ -146,41 +146,43 @@ const Layout: React.FC<LayoutProps> = ({
                   <div></div>
                 )}
               </div>
-              <div className="right md:fixed start-links z-5 flex top-2 right-0 space-x-3 text-[min(2vw)]">
-                <div className=" w-32">
-                  {totalBytes > 4058 || lineNumber < 2 ? (
-                    <div className="link-blocker absolute h-15 px-2 py-1 text-white font-semibold rounded z-20 cursor-not-allowed">
+              <div className="right start-links md:fixed top-3 right-0 z-5 ">
+                <div className="buttons flex md:justify-end">
+                  <div className="group-start w-32">
+                    {totalBytes > 4058 || lineNumber < 2 ? (
+                      <div className="link-blocker absolute h-15 px-2 py-1 text-white font-semibold rounded z-20 cursor-not-allowed">
+                        グループスタート
+                      </div>
+                    ) : null}
+                    <Link
+                      href={`/random_name_app/group/${selectedListId}`}
+                      className={`absolute h-15 z-10 shadow-lg px-2 py-1 bg-blue-400 text-white font-semibold rounded hover:shadow-sm  ${
+                        totalBytes > 4058 || lineNumber < 2
+                          ? " bg-gray-500/50"
+                          : "hover:bg-blue-500"
+                      }`}
+                    >
                       グループスタート
-                    </div>
-                  ) : null}
-                  <Link
-                    href={`/random_name_app/group/${selectedListId}`}
-                    className={`absolute h-15 z-10 shadow-lg px-2 py-1 bg-blue-400 text-white font-semibold rounded hover:shadow-sm  ${
-                      totalBytes > 4058 || lineNumber < 2
-                        ? " bg-gray-500/50"
-                        : "hover:bg-blue-500"
-                    }`}
-                  >
-                    グループスタート
-                  </Link>
-                </div>
-                <div className="bingo-start-links  w-32">
-                  {totalBytes > 4058 || lineNumber < 2 ? (
-                    <div className="link-blocker absolute h-15 px-2 py-1 text-white font-semibold rounded z-20 cursor-not-allowed">
-                      ビンゴスタート
-                    </div>
-                  ) : null}
+                    </Link>
+                  </div>
+                  <div className="bingo-start-links w-32">
+                    {totalBytes > 4058 || lineNumber < 2 ? (
+                      <div className="link-blocker absolute h-15 px-2 py-1 text-white font-semibold rounded z-20 cursor-not-allowed">
+                        ビンゴスタート
+                      </div>
+                    ) : null}
 
-                  <Link
-                    href={`/random_name_app/id/${selectedListId}`}
-                    className={`absolute h-15 z-10 shadow-lg px-2 py-1 bg-blue-400 text-white font-semibold rounded hover:shadow-sm  ${
-                      totalBytes > 4058 || lineNumber < 2
-                        ? " bg-gray-500/50"
-                        : "hover:bg-blue-500"
-                    }`}
-                  >
-                    ビンゴスタート
-                  </Link>
+                    <Link
+                      href={`/random_name_app/id/${selectedListId}`}
+                      className={`absolute h-15 z-10 shadow-lg px-2 py-1 bg-blue-400 text-white font-semibold rounded hover:shadow-sm  ${
+                        totalBytes > 4058 || lineNumber < 2
+                          ? " bg-gray-500/50"
+                          : "hover:bg-blue-500"
+                      }`}
+                    >
+                      ビンゴスタート
+                    </Link>
+                  </div>
                 </div>
               </div>
             </div>

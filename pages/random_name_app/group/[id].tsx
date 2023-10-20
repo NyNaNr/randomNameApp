@@ -172,7 +172,7 @@ const RosterShuffler: React.FC = () => {
           <button
             ref={buttonRef}
             onClick={onClickShuffle}
-            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded text-[min(2vw)]"
+            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
           >
             {isShowingName
               ? mobileDevice
@@ -186,7 +186,7 @@ const RosterShuffler: React.FC = () => {
             ref={selectRef}
             onChange={handleChangeColumns}
             value={numColumns}
-            className="ml-4 p-2 rounded text-[min(2vw)] dark:text-black"
+            className="ml-4 p-2 rounded dark:text-black"
           >
             <option value={2}>2 人ペア</option>
             <option value={3}>3 人トリオ</option>
@@ -199,7 +199,7 @@ const RosterShuffler: React.FC = () => {
           <Link
             href="/random_name_app/home"
             className={
-              "border border-solid py-2 px-4 rounded-lg border-gray-400  bg-blue-100 dark:text-black hover:bg-blue-700 hover:text-white font-semibold text-[min(2vw)]"
+              "border border-solid py-2 px-4 rounded-lg border-gray-400  bg-blue-100 dark:text-black hover:bg-blue-700 hover:text-white font-semibold"
             }
           >
             選択画面へ戻る

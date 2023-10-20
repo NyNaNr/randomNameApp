@@ -297,7 +297,7 @@ const EditListForm = ({
               </div>
               <div className="formatted flex flex-col w-[175px] ">
                 <div className="info border border-solid p-1 ml-8 rounded-lg text-center border-gray-400">
-                  <p>整形後の名前</p>
+                  <p>表示される名前</p>
                 </div>
                 <div className="flex">
                   <div className="line-number mr-4 text-right">

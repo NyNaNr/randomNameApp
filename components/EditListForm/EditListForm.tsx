@@ -25,6 +25,9 @@ const EditListForm = ({
     useState<(string | number)[]>([]);
   //最低限の修正
   const [formattedInput, setFormattedInput] = useState<string[]>([]);
+  // 除外する管理
+  const [checkedIndexes, setCheckedIndexes] = useState<number[]>([]);
+
   //ユーザーオプション反映
   const [modifiedInput, setModifiedInput] = useState<string[]>([]);
   const [totalBytes, setTotalBytes] = useState(0);
@@ -87,10 +90,17 @@ const EditListForm = ({
     }
   }, [formattedInput, selectedListId]);
 
-  //現在時刻からcookieの有効期限までの残り時間計算
-  //
-  //
-  //
+  // チェックボックスがクリックされたときのハンドラ
+  const handleCheckboxChange = (index: number, isChecked: boolean) => {
+    let updatedIndexes = [...checkedIndexes];
+    if (isChecked) {
+      updatedIndexes.push(index);
+    } else {
+      updatedIndexes = updatedIndexes.filter((i) => i !== index);
+    }
+    setCheckedIndexes(updatedIndexes);
+    localStorage.setItem("checkedIndexes", JSON.stringify(updatedIndexes));
+  };
 
   // selectedListIdが変わるたびに、クッキーからリストアイテムを取得してstateを更新する
   useEffect(() => {
@@ -243,6 +253,14 @@ const EditListForm = ({
     setModifiedInput(applyUserOptions(formattedInput));
   }, [formattedInput, isDeleteSpaceChecked, applyUserOptions]); // こちらの依存配列を更新
 
+  // 除外をローカルストレージから読み込む
+  useEffect(() => {
+    const storedIndexes = localStorage.getItem("checkedIndexes");
+    if (storedIndexes) {
+      setCheckedIndexes(JSON.parse(storedIndexes));
+    }
+  }, []);
+
   //selectedListIdが変わるにつれて、テキストエリアの末尾にカーソルを移動させる。スマホでは邪魔な機能かも？
   useEffect(() => {
     if (isMobile()) {
@@ -296,13 +314,27 @@ const EditListForm = ({
                 </div>
               </div>
               <div className="formatted flex flex-col w-[175px] ">
-                <div className="info border border-solid p-1 ml-8 rounded-lg text-center border-gray-400">
-                  <p>表示される名前</p>
+                <div className="info flex justify-between ">
+                  <p className="border border-solid p-1 rounded-lg border-gray-400 ml-4">
+                    除外
+                  </p>
+                  <p className="border border-solid p-1 rounded-lg text-center border-gray-400">
+                    表示される名前
+                  </p>
                 </div>
                 <div className="flex">
                   <div className="line-number mr-4 text-right">
                     {lineNumbersOfFormattedUserInput.map((num, index) => (
-                      <p key={index}>{num === " " ? <>&nbsp;</> : num}</p>
+                      <div key={index} className="flex justify-end space-x-2">
+                        <p>{num === " " ? <>&nbsp;</> : num}</p>
+                        <input
+                          type="checkbox"
+                          checked={checkedIndexes.includes(index)}
+                          onChange={(e) =>
+                            handleCheckboxChange(index, e.target.checked)
+                          }
+                        />
+                      </div>
                     ))}
                   </div>
                   <div className="formatted-list overflow-hidden w-full">

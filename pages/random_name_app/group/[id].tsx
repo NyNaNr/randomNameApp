@@ -36,12 +36,21 @@ const RosterShuffler: React.FC = () => {
         let decodedNames = cookieValue
           ? JSON.parse(decodeURIComponent(cookieValue))
           : [];
+        //idに関連したcheckedIndexesの値を取得
+        const storedData = JSON.parse(
+          localStorage.getItem("checkedIndexes") || "{}"
+        );
+        const indexesForCurrentList = storedData[id] || [];
 
+        // 取得した名簿に処理を加える。
         decodedNames = decodedNames.map((name: string) =>
           name.replace(/[\s\n　]/g, "")
         );
-
+        decodedNames = decodedNames.filter((name: string, index: number) => {
+          return !indexesForCurrentList.includes(index);
+        });
         decodedNames = decodedNames.filter((name: string) => name !== "");
+        console.log(decodedNames);
 
         setOriginalNames(decodedNames);
       }

@@ -11,6 +11,9 @@ module.exports = {
   },
   theme: {
     extend: {
+      screens: {
+        forDetails: "870px",
+      },
       width: {
         custom: "calc(100% - 260px)",
       },

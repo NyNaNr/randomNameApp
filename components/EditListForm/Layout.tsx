@@ -147,7 +147,7 @@ const Layout: React.FC<LayoutProps> = ({
                 )}
               </div>
               <div className="right start-links md:fixed top-3 right-0 z-5 ">
-                <div className="buttons flex md:justify-end">
+                <div className="buttons flex md:justify-end space-x-3">
                   <div className="group-start w-32">
                     {totalBytes > 4058 || lineNumber < 2 ? (
                       <div className="link-blocker absolute h-15 px-2 py-1 text-white font-semibold rounded z-20 cursor-not-allowed">
@@ -195,7 +195,7 @@ const Layout: React.FC<LayoutProps> = ({
             <details
               open={isDetailsOpen}
               onToggle={() => setIsDetailsOpen(!isDetailsOpen)}
-              className={`rounded-lg shadow-md rounded-tl-none rounded-tr-none bg-white px-2 ${
+              className={`rounded-lg shadow-md rounded-tl-none rounded-tr-none sm:max-w-sm forDetails:max-w-fit bg-white px-2 ${
                 isDetailsOpen ? "" : "mr-4"
               }`}
             >

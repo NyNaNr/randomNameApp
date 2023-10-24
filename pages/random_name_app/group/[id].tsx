@@ -36,12 +36,21 @@ const RosterShuffler: React.FC = () => {
         let decodedNames = cookieValue
           ? JSON.parse(decodeURIComponent(cookieValue))
           : [];
+        //idに関連したcheckedIndexesの値を取得
+        const storedData = JSON.parse(
+          localStorage.getItem("checkedIndexes") || "{}"
+        );
+        const indexesForCurrentList = storedData[id] || [];
 
+        // 取得した名簿に処理を加える。
         decodedNames = decodedNames.map((name: string) =>
           name.replace(/[\s\n　]/g, "")
         );
-
+        decodedNames = decodedNames.filter((name: string, index: number) => {
+          return !indexesForCurrentList.includes(index);
+        });
         decodedNames = decodedNames.filter((name: string) => name !== "");
+        console.log(decodedNames);
 
         setOriginalNames(decodedNames);
       }
@@ -172,7 +181,7 @@ const RosterShuffler: React.FC = () => {
           <button
             ref={buttonRef}
             onClick={onClickShuffle}
-            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded text-[min(2vw)]"
+            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
           >
             {isShowingName
               ? mobileDevice
@@ -186,7 +195,7 @@ const RosterShuffler: React.FC = () => {
             ref={selectRef}
             onChange={handleChangeColumns}
             value={numColumns}
-            className="ml-4 p-2 rounded text-[min(2vw)] dark:text-black"
+            className="ml-4 p-2 rounded dark:text-black"
           >
             <option value={2}>2 人ペア</option>
             <option value={3}>3 人トリオ</option>
@@ -199,7 +208,7 @@ const RosterShuffler: React.FC = () => {
           <Link
             href="/random_name_app/home"
             className={
-              "border border-solid py-2 px-4 rounded-lg border-gray-400  bg-blue-100 dark:text-black hover:bg-blue-700 hover:text-white font-semibold text-[min(2vw)]"
+              "border border-solid py-2 px-4 rounded-lg border-gray-400  bg-blue-100 dark:text-black hover:bg-blue-700 hover:text-white font-semibold"
             }
           >
             選択画面へ戻る

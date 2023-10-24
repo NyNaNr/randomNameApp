@@ -25,6 +25,9 @@ const EditListForm = ({
     useState<(string | number)[]>([]);
   //最低限の修正
   const [formattedInput, setFormattedInput] = useState<string[]>([]);
+  // 除外する管理
+  const [checkedIndexes, setCheckedIndexes] = useState<number[]>([]);
+
   //ユーザーオプション反映
   const [modifiedInput, setModifiedInput] = useState<string[]>([]);
   const [totalBytes, setTotalBytes] = useState(0);
@@ -87,10 +90,23 @@ const EditListForm = ({
     }
   }, [formattedInput, selectedListId]);
 
-  //現在時刻からcookieの有効期限までの残り時間計算
-  //
-  //
-  //
+  // チェックボックスがクリックされたときのハンドラ
+  const handleCheckboxChange = (index: number, isChecked: boolean) => {
+    let updatedIndexes = [...checkedIndexes];
+    if (isChecked) {
+      updatedIndexes.push(index);
+    } else {
+      updatedIndexes = updatedIndexes.filter((i) => i !== index);
+    }
+    setCheckedIndexes(updatedIndexes);
+
+    const storedData = JSON.parse(
+      localStorage.getItem("checkedIndexes") || "{}"
+    );
+    if (selectedListId === null) return; // 追加
+    storedData[selectedListId] = updatedIndexes;
+    localStorage.setItem("checkedIndexes", JSON.stringify(storedData));
+  };
 
   // selectedListIdが変わるたびに、クッキーからリストアイテムを取得してstateを更新する
   useEffect(() => {
@@ -243,6 +259,16 @@ const EditListForm = ({
     setModifiedInput(applyUserOptions(formattedInput));
   }, [formattedInput, isDeleteSpaceChecked, applyUserOptions]); // こちらの依存配列を更新
 
+  // 除外をローカルストレージから読み込む
+  useEffect(() => {
+    if (selectedListId === null) return; // 追加
+    const storedData = JSON.parse(
+      localStorage.getItem("checkedIndexes") || "{}"
+    );
+    const indexesForCurrentList = storedData[selectedListId] || [];
+    setCheckedIndexes(indexesForCurrentList);
+  }, [selectedListId]);
+
   //selectedListIdが変わるにつれて、テキストエリアの末尾にカーソルを移動させる。スマホでは邪魔な機能かも？
   useEffect(() => {
     if (isMobile()) {
@@ -296,23 +322,39 @@ const EditListForm = ({
                 </div>
               </div>
               <div className="formatted flex flex-col w-[175px] ">
-                <div className="info border border-solid p-1 ml-8 rounded-lg text-center border-gray-400">
-                  <p>整形後の名前</p>
+                <div className="info flex justify-between ">
+                  <p className="border border-solid p-1 rounded-lg border-gray-400 ml-4">
+                    除外
+                  </p>
+                  <p className="border border-solid p-1 rounded-lg text-center border-gray-400">
+                    表示される名前
+                  </p>
                 </div>
                 <div className="flex">
                   <div className="line-number mr-4 text-right">
                     {lineNumbersOfFormattedUserInput.map((num, index) => (
-                      <p key={index}>{num === " " ? <>&nbsp;</> : num}</p>
+                      <div key={index} className="flex justify-end space-x-2">
+                        <p>{num === " " ? <>&nbsp;</> : num}</p>
+                        <input
+                          type="checkbox"
+                          checked={checkedIndexes.includes(index)}
+                          onChange={(e) =>
+                            handleCheckboxChange(index, e.target.checked)
+                          }
+                        />
+                      </div>
                     ))}
                   </div>
-                  <div className="formatted-list overflow-hidden w-full">
+                  <div className="formatted-list overflow-hidden w-full ">
                     {modifiedInput.map((item, index) => (
                       <p
                         className={`${
                           isNewLineChecked
                             ? "whitespace-pre-wrap"
                             : "text-ellipsis"
-                        } whitespace-nowrap overflow-hidden w-full`}
+                        } whitespace-nowrap overflow-hidden w-full ${
+                          checkedIndexes.includes(index) ? "line-through" : ""
+                        }`}
                         key={index}
                       >
                         {item}
@@ -360,14 +402,13 @@ const EditListForm = ({
                 </div>
                 <div className="text-center text-gray-500 dark:text-gray-400 ">
                   <div className="mb-2">
-                    入力された名前データの保存期間は、基本的に365日、一部ブラウザで7日間です。
+                    このWebアプリは、児童生徒の名前をランダムにビンゴ形式で表示したり、グループやペアをランダムに瞬時に決定したりすることができます。
                   </div>
                   <div className="mb-2">
-                    リスト名をクリックすると、そのリストのcookieの保存期間が更新・延長されます。
+                    特にランダムにペアやグループを作れる機能は、授業を効率的に進めるために有効です。
                   </div>
                   <div className="mb-10">
-                    もしリストの保存期間を確認されたい場合は、「cookie
-                    確認方法」などと検索してください。
+                    名前だけでなく、英単語を表示したり結婚式などの余興でも使うことができます。
                   </div>
                 </div>
               </div>

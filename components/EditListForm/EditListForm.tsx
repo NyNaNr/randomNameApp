@@ -99,7 +99,13 @@ const EditListForm = ({
       updatedIndexes = updatedIndexes.filter((i) => i !== index);
     }
     setCheckedIndexes(updatedIndexes);
-    localStorage.setItem("checkedIndexes", JSON.stringify(updatedIndexes));
+
+    const storedData = JSON.parse(
+      localStorage.getItem("checkedIndexes") || "{}"
+    );
+    if (selectedListId === null) return; // 追加
+    storedData[selectedListId] = updatedIndexes;
+    localStorage.setItem("checkedIndexes", JSON.stringify(storedData));
   };
 
   // selectedListIdが変わるたびに、クッキーからリストアイテムを取得してstateを更新する
@@ -255,11 +261,13 @@ const EditListForm = ({
 
   // 除外をローカルストレージから読み込む
   useEffect(() => {
-    const storedIndexes = localStorage.getItem("checkedIndexes");
-    if (storedIndexes) {
-      setCheckedIndexes(JSON.parse(storedIndexes));
-    }
-  }, []);
+    if (selectedListId === null) return; // 追加
+    const storedData = JSON.parse(
+      localStorage.getItem("checkedIndexes") || "{}"
+    );
+    const indexesForCurrentList = storedData[selectedListId] || [];
+    setCheckedIndexes(indexesForCurrentList);
+  }, [selectedListId]);
 
   //selectedListIdが変わるにつれて、テキストエリアの末尾にカーソルを移動させる。スマホでは邪魔な機能かも？
   useEffect(() => {

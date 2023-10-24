@@ -337,14 +337,16 @@ const EditListForm = ({
                       </div>
                     ))}
                   </div>
-                  <div className="formatted-list overflow-hidden w-full">
+                  <div className="formatted-list overflow-hidden w-full ">
                     {modifiedInput.map((item, index) => (
                       <p
                         className={`${
                           isNewLineChecked
                             ? "whitespace-pre-wrap"
                             : "text-ellipsis"
-                        } whitespace-nowrap overflow-hidden w-full`}
+                        } whitespace-nowrap overflow-hidden w-full ${
+                          checkedIndexes.includes(index) ? "line-through" : ""
+                        }`}
                         key={index}
                       >
                         {item}

@@ -43,6 +43,16 @@ const RandomNameApp: React.FC = () => {
           ? JSON.parse(decodeURIComponent(cookieValue))
           : [];
 
+        //idに関連したcheckedIndexesの値を取得
+        const storedData = JSON.parse(
+          localStorage.getItem("checkedIndexes") || "{}"
+        );
+        const indexesForCurrentList = storedData[id] || [];
+
+        decodedNames = decodedNames.filter((name: string, index: number) => {
+          return !indexesForCurrentList.includes(index);
+        });
+
         // 取得した名簿に番号を紐づけて、useStateで管理→改行機能追加による、抽選候補リストから消せない問題解消のため
         const namesWithIds = decodedNames.map(
           (name: string, index: number) => ({

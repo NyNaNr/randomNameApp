@@ -335,13 +335,20 @@ const EditListForm = ({
                     {lineNumbersOfFormattedUserInput.map((num, index) => (
                       <div key={index} className="flex justify-end space-x-2">
                         <p>{num === " " ? <>&nbsp;</> : num}</p>
-                        <input
-                          type="checkbox"
-                          checked={checkedIndexes.includes(index)}
-                          onChange={(e) =>
-                            handleCheckboxChange(index, e.target.checked)
-                          }
-                        />
+                        <p>
+                          {num !== " " && (
+                            <input
+                              type="checkbox"
+                              checked={checkedIndexes.includes(Number(num) - 1)} // 実際の行番号を使う
+                              onChange={(e) =>
+                                handleCheckboxChange(
+                                  Number(num) - 1,
+                                  e.target.checked
+                                )
+                              }
+                            />
+                          )}
+                        </p>
                       </div>
                     ))}
                   </div>

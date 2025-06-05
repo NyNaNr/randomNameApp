@@ -21,7 +21,7 @@ export default function Home() {
         <div className="m-10">
           <h1 className="text-4xl text-center font-bold mb-10">
             <p className="md:inline-block">とにかく大きい</p>
-            <p className="md:inline-block">ランダムネームアップ</p>
+            <p className="md:inline-block">ランダムネームアプリ</p>
           </h1>
           <h2 className="text-2xl font-semibold pl-3">アプリ紹介</h2>
           <div className="paragraph mb-10">

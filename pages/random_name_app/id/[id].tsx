@@ -15,7 +15,7 @@ import { isMobile } from "../../../utils/random_name_app";
 import Modals from "../../../components/Modals";
 import { useLeavePageConfirmation } from "../../../hooks";
 
-// TODO レイアウトが崩れないようにする。人数が何人入力されても表示の上限を決めておく。
+// TODO レイアウトが崩れないようにする。人数が何人入力されても表示の上限を決めておく
 
 type LayoutProps = {
   children: ReactNode;

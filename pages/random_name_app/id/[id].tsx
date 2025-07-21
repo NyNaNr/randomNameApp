@@ -296,8 +296,16 @@ const RandomNameApp: React.FC = () => {
   const clickResetButton = () => {
     const message = "はじめからにしますか？";
     if (selectedNameList.length > 0) {
-      setModalContent2(message);
-      setModalsOpen2(true);
+      const shouldReload = confirm(message);
+      // スマホ・PC問わず、confirmで確認を出す。リセット確認はかなり大事なので、このような実装にした。
+      if (shouldReload) {
+        setRemainingNames(originalNames);
+        setSelectedNameList([]);
+        if (intervalId.current !== null) {
+          clearInterval(intervalId.current);
+        }
+        setIsShowingName(false);
+      }
       // フォーカスを外す
       if (resetButtonRef.current) {
         resetButtonRef.current.blur();

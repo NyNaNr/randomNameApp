@@ -45,7 +45,7 @@ const RandomNameApp: React.FC = () => {
 
         //idに関連したcheckedIndexesの値を取得
         const storedData = JSON.parse(
-          localStorage.getItem("checkedIndexes") || "{}"
+          localStorage.getItem("checkedIndexes") || "{}",
         );
         const indexesForCurrentList = storedData[id] || [];
 
@@ -58,7 +58,7 @@ const RandomNameApp: React.FC = () => {
           (name: string, index: number) => ({
             id: index,
             name,
-          })
+          }),
         );
         setNamesWithIds(namesWithIds);
 
@@ -76,7 +76,7 @@ const RandomNameApp: React.FC = () => {
         // isDeleteSpaceChecked が true の場合、文字間のスペースを削除
         if (isDeleteSpaceChecked) {
           decodedNames = decodedNames.map((name: string) =>
-            name.replace(/[\s\n　]/g, "")
+            name.replace(/[\s\n　]/g, ""),
           );
         }
 
@@ -112,7 +112,9 @@ const RandomNameApp: React.FC = () => {
   const [modalsOpen1, setModalsOpen1] = useState(false);
   const [modalsOpen2, setModalsOpen2] = useState(false);
   const [modalContent1, setModalContent1] = useState("");
-  const [modalContent2] = useState("最後の1人になりました。初めからしますか？");
+  const [modalContent2, setModalContent2] = useState(
+    "最後の1人になりました。初めからしますか？",
+  );
   const [mobileDevice, setMobileDevice] = useState(false);
   const [showLeavingAlert, setShowLeavingAlert] = useState(true);
   const [isTiming, setIsTiming] = useState(true);
@@ -165,7 +167,7 @@ const RandomNameApp: React.FC = () => {
       const scaleFactor = isAlphabetOrNumber ? 1.42 : 0.95;
       console.log(isAlphabetOrNumber);
       const calculatedFontSize = Math.floor(
-        (window.innerWidth * scaleFactor) / name_length
+        (window.innerWidth * scaleFactor) / name_length,
       );
       console.log(`calculatedFontSize${calculatedFontSize}`);
       // const maxAllowedFontSize = window.innerHeight * 0.95; // ディスプレイの高さの90%を上限とする
@@ -177,7 +179,7 @@ const RandomNameApp: React.FC = () => {
       nameDisplay.current.style.fontSize = `${fontSize.current}px`;
       nameDisplay.current.style.opacity = "1";
     },
-    [isAlphabetOrNumber, isNewLineChecked]
+    [isAlphabetOrNumber, isNewLineChecked],
   );
 
   //以下、新フォントサイズ計算のdisplayBehindNameDisplayの高さを計算する。
@@ -188,7 +190,7 @@ const RandomNameApp: React.FC = () => {
 
       const ShortestName = list.reduce(
         (shortest, name) => (name.length < shortest.length ? name : shortest),
-        list[0]
+        list[0],
       );
       console.log(shortestName);
 
@@ -196,7 +198,7 @@ const RandomNameApp: React.FC = () => {
       //英単語の場合は、0.65=>0.87に変更
       const scaleFactor = isAlphabetOrNumber ? 0.87 : 0.65;
       const calculatedFontSize = Math.floor(
-        (window.innerWidth * scaleFactor) / ShortestName.length
+        (window.innerWidth * scaleFactor) / ShortestName.length,
       );
 
       const notifierFontSize = window.innerWidth * 0.025;
@@ -216,7 +218,7 @@ const RandomNameApp: React.FC = () => {
         stopNotifier.current.style.fontSize = `${notifierFontSize}px`;
       }
     },
-    [isAlphabetOrNumber]
+    [isAlphabetOrNumber],
   );
   // 2.isNewLineChecked がtrueの場合に、行数が最長且つ、セグメントの最長文字数が最も少ない物を選ぶ
   const calcShortestFontSizeWithLines = useCallback((namesList: string[]) => {
@@ -270,7 +272,7 @@ const RandomNameApp: React.FC = () => {
     if (isNewLineChecked) {
       const formattedName = randomName.replace(
         /(?<=\S)([ ]{1,}|\u3000{1,})(?=\S)/g,
-        "<br>"
+        "<br>",
       );
       nameDisplay.current.innerHTML = formattedName; // 改行を表示するためにinnerHTMLを使用
     } else {
@@ -295,6 +297,7 @@ const RandomNameApp: React.FC = () => {
     const message = "はじめからにしますか？";
     if (selectedNameList.length > 0) {
       const shouldReload = confirm(message);
+      // スマホ・PC問わず、confirmで確認を出す。リセット確認はかなり大事なので、このような実装にした。
       if (shouldReload) {
         setRemainingNames(originalNames);
         setSelectedNameList([]);
@@ -317,20 +320,8 @@ const RandomNameApp: React.FC = () => {
     }
 
     if (remainingNames.length === 1) {
-      if (isMobile()) {
-        setModalsOpen2(true);
-      } else {
-        const message = "最後の1人になりました。はじめからにしますか？";
-        const shouldReload = confirm(message);
-        if (shouldReload) {
-          setRemainingNames(originalNames);
-          setSelectedNameList([]);
-          if (intervalId.current !== null) {
-            clearInterval(intervalId.current);
-          }
-          setIsShowingName(false);
-        }
-      }
+      setModalContent2("最後の1人になりました。初めからしますか？");
+      setModalsOpen2(true);
     }
   }, [showRandomName, remainingNames.length, isShowingName, originalNames]);
 
@@ -352,17 +343,8 @@ const RandomNameApp: React.FC = () => {
     console.log("2", lastName);
     setLastName(lastName);
 
-    if (isMobile()) {
-      lastName && setModalsOpen1(true);
-    } else {
-      const shouldRemove = confirm(
-        `${lastName}を抽選済みリストに移動しますか？`
-      );
-      if (shouldRemove && lastName) {
-        setSelectedNameList([...selectedNameList, lastName]);
-        setRemainingNames(remainingNames.filter((name) => name !== lastName));
-      }
-      setIsTiming(true);
+    if (lastName) {
+      setModalsOpen1(true);
     }
   }, [remainingNames, selectedNameList]);
 
@@ -396,19 +378,8 @@ const RandomNameApp: React.FC = () => {
       setLastName(sharedVariable);
     }
 
-    if (isMobile()) {
-      sharedVariable && setModalsOpen1(true);
-    } else {
-      const shouldRemove = confirm(
-        `${sharedVariable}を抽選済みリストに移動しますか？`
-      );
-      if (shouldRemove && sharedVariable) {
-        setSelectedNameList([...selectedNameList, sharedVariable]);
-        setRemainingNames(
-          remainingNames.filter((name) => name !== sharedVariable)
-        );
-      }
-      setIsTiming(true);
+    if (sharedVariable) {
+      setModalsOpen1(true);
     }
   }, [remainingNames, selectedNameList, namesWithIds]);
 
